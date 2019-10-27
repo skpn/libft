@@ -18,7 +18,6 @@
 
 typedef struct		s_room
 {
-	long			number;
 	char			*line;
 	char			*name;
 	t_lst			*parents;

@@ -45,6 +45,8 @@
 # include <stdarg.h>
 # include <stddef.h>
 #include <stdio.h>
+#define PRINTPOS printf("%s %d", __func__, __LINE__)
+#define PRINTPOSN printf("%s %d\n", __func__, __LINE__)
 typedef struct				s_lst
 {
 	void					*content;

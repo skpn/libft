@@ -20,7 +20,7 @@ void	free_room(t_room **room)
 		return ;
 	ft_lstclr(&(*room)->parents);
 	ft_lstclr(&(*room)->children);
-	(*room)->number = 0;
+	ft_free((void **)&(*room)->name);
 	free(*room);
 	*room = 0;
 }

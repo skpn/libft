@@ -14,14 +14,13 @@
 #include "libft.h"
 #include "lem_in.h"
 
-t_room	*new_room(int nb, t_lst *parents, t_lst *children)
+t_room	*new_room(t_lst *parents, t_lst *children)
 {
 	t_room	*room;
 
 	if (!(room = (t_room *)malloc(sizeof(*room))))
 		return (0);
 	ft_memset(room, 0, sizeof(*room));
-	room->number = nb;
 	room->parents = parents;
 	room->children = children;
 	return (room);
@@ -39,10 +38,12 @@ int		main(void)
 {
 	t_lem	*lem;
 
+	printf("%s %d\n", __func__, __LINE__);
 	if (!(init_lem_struct(&lem)))
 		return (exit_lem(lem, "init failed\n", 1));
+	printf("%s %d\n", __func__, __LINE__);
 	if (!parse_input(lem))
 		return (exit_lem(lem, "bad input\n", 2));
-	print_anthill(lem);
+	printf("%s %d\n", __func__, __LINE__);
 	return (0);
 }

@@ -19,17 +19,19 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		len1;
 	int		len2;
 
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-		return (ft_strdup((char *)s2));
-	if (!s2)
-		return (ft_strdup((char *)s1));
-	len1 = ft_strlen((char *)s1);
-	len2 = ft_strlen((char *)s2);
-	if (!(new = (char *)easymalloc(sizeof(*new) * (len1 + len2 + 1))))
-		return (NULL);
-	ft_strcpy(new, (char *)s1);
-	ft_strcpy(new + len1, (char *)s2);
+	new = NULL;
+	if (s1 && s2)
+	{
+		len1 = ft_strlen((char *)s1);
+		len2 = ft_strlen((char *)s2);
+		if (!(new = (char *)easymalloc(sizeof(*new) * (len1 + len2 + 1))))
+			return (NULL);
+		ft_strcpy(new, (char *)s1);
+		ft_strcpy(new + len1, (char *)s2);
+	}
+	else if (s1 || s2)
+	{
+		return (ft_strdup(s1 ? s1 : s2));
+	}
 	return (new);
 }
