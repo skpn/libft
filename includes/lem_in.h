@@ -18,6 +18,8 @@
 
 typedef struct		s_room
 {
+	long			dist;
+	long			lvl;
 	char			*line;
 	char			*name;
 	t_lst			*parents;
@@ -36,6 +38,7 @@ typedef struct 		s_lem
 }					t_lem;
 
 void				print_anthill(t_lem *lem);
+void				print_lem(t_lem *lem, char *args);
 void				free_room(t_room **room);
 int					exit_lem(t_lem *lem, char *msg, int ret);
 int					parse_input(t_lem *lem);
