@@ -127,6 +127,7 @@ char						*ft_convert_base(char *nbr, char *base_from
 	, char *base_to);
 void						ft_fili(char *file, int line);
 void						ft_free(void **match);
+void						easyfree(void **match);
 int							ft_free_ptr(void **ptr);
 int							ft_free_tab(void **tab, size_t len);
 void						ft_free_gc(void);

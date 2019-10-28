@@ -30,8 +30,8 @@ char	*ft_strjoin_free(char const *s1, char const *s2, int opt)
 		ft_strcpy(new + len1, (char *)s2);
 	}
 	else if (s1 || s2)
-		return (ft_strdup(s1 ? s1 : s2));
-	opt == 3 || opt == 1 ? ft_free((void **)&s1) : 0;
-	opt == 3 || opt == 2 ? ft_free((void **)&s2) : 0;	
+		new = ft_strdup(s1 ? s1 : s2);
+	opt == 3 || opt == 1 ? easyfree((void **)&s1) : 0;
+	opt == 3 || opt == 2 ? easyfree((void **)&s2) : 0;
 	return (new);
 }

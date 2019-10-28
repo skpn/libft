@@ -28,7 +28,7 @@ SRCFILES = \
 			ft_check_base.c \
 			ft_convert_base.c \
 			ft_fili.c \
-			ft_free_ptr.c \
+			ft_free.c \
 			ft_free_tab.c \
 			ft_isalnum.c \
 			ft_isalpha.c \

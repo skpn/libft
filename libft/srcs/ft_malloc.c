@@ -58,7 +58,7 @@ int			get_gc_data(int opt)
 	return (gc_list->len);
 }
 
-void		ft_free_gc(void)
+void		easyfree_gc(void)
 {
 	t_lst			*elem;
 	t_lst			*tmp;
@@ -86,7 +86,7 @@ void		ft_free_gc(void)
 	get_gc_list(-1);
 }
 
-void		ft_free(void **match)
+void		easyfree(void **match)
 {
 	t_lst		*elem;
 	t_gc_list	*gc_list;

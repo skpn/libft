@@ -17,7 +17,7 @@ int							ft_display(t_buf *buf, int opt)
 {
 	if (!opt)
 	{
-		ft_free((void **)buf->str);
+		easyfree((void **)buf->str);
 		exit(0);
 	}
 	return (buf->pos);
@@ -36,7 +36,7 @@ int							add_to_buf(char *str, t_buf *buf)
 				return (0);
 		buf->str[buf->pos++] = str[pos++];
 	}
-	ft_free((void **)&str);
+	easyfree((void **)&str);
 	return (1);
 }
 

@@ -79,7 +79,7 @@ char	*ft_strdiv(char **nb, int turns, int len, int pos)
 		ret[pos] += 48;
 	while (ret[--pos] == '0')
 		ret[pos] = 0;
-	ft_free((void **)nb);
+	easyfree((void **)nb);
 	return (ret);
 }
 

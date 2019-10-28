@@ -43,11 +43,11 @@ int		filler_gnl(int fd, char **line)
 
 	if (!line)
 		return (0);
-	*line ? ft_free((void **)line) : 0;
+	*line ? easyfree((void **)line) : 0;
 	*line = NULL;
 	if (keep && !(*line = ft_strdup(keep)))
 		return (0);
-	keep ? ft_free((void **)&keep) : 0;
+	keep ? easyfree((void **)&keep) : 0;
 	pos = *line ? ft_strchr_pos(*line, '\n') : -1;
 	if (pos == -1 && !(read_loop(buf, fd, &pos, line)))
 		return (0);

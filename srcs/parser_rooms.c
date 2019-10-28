@@ -64,7 +64,7 @@ int		parse_room(t_lem *lem, char *line, int *index)
 		return (0);
 	i = -1;
 	printf("%s %d\n", __func__, __LINE__);	
-	if (!(room = (t_room *)easymalloc(sizeof(t_room))))
+	if (!(room = (t_room *)malloc(sizeof(t_room))))
 		return (0);
 	printf("%s %d\n", __func__, __LINE__);	
 	while (line[++i] && line[i] != ' ')

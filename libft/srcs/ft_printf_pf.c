@@ -28,7 +28,7 @@ int		ft_printf(const char *str, ...)
 	base_func(&buf, str, arg_list);
 	write(1, buf.str, buf.pos);
 	if (buf.str)
-		ft_free((void **)buf.str);
+		easyfree((void **)buf.str);
 	ret = buf.pos;
 	return (ret);
 }
@@ -47,7 +47,7 @@ int		ft_fprintf(int fd, const char *str, ...)
 	base_func(&buf, str, arg_list);
 	write(fd, buf.str, buf.pos);
 	if (buf.str)
-		ft_free((void **)buf.str);
+		easyfree((void **)buf.str);
 	ret = buf.pos;
 	return (ret);
 }

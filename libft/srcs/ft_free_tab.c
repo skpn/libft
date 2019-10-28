@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_tab.c                                      :+:      :+:    :+:   */
+/*   easyfree_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -22,11 +22,11 @@ int		ft_free_tab(void **tab, size_t len)
 	while (pos < len)
 	{
 		if (tab[pos])
-			ft_free((void **)tab[pos]);
+			easyfree((void **)tab[pos]);
 		tab[pos] = NULL;
 		pos++;
 	}
-	ft_free((void **)tab);
+	easyfree((void **)tab);
 	tab = NULL;
 	return (pos);
 }

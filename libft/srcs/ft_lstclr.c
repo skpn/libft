@@ -21,8 +21,8 @@ void	ft_lstclr(t_lst **begin_list)
 	while (*begin_list)
 	{
 		tmp = (*begin_list)->next;
-		ft_free((void **)(*begin_list)->content);
-		ft_free((void **)begin_list);
+		easyfree((void **)(*begin_list)->content);
+		easyfree((void **)begin_list);
 		*begin_list = tmp;
 	}
 }

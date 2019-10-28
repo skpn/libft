@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_ptr.c                                      :+:      :+:    :+:   */
+/*   easyfree_ptr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-int		ft_free_ptr(void **ptr)
+void	ft_free(void **ptr)
 {
 	if (!*ptr)
-		return (0);
-	ft_free((void **)ptr);
+		return ;
+	EASY ? easyfree((void **)ptr) : free((void **)ptr);
 	*ptr = NULL;
-	return (0);
+	return ;
 }
