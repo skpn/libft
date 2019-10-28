@@ -49,6 +49,6 @@ int		parse_input(t_lem *lem)
 		return (0);
 	lem->nb_ants = ft_atoi(lem->anthill);
 	print_anthill(lem);
-	print_lem(lem, "aserp");
+//	print_lem(lem, "aserp");
 	return (1);
 }

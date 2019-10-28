@@ -51,10 +51,8 @@ int		filler_gnl(int fd, char **line)
 	pos = *line ? ft_strchr_pos(*line, '\n') : -1;
 	if (pos == -1 && !(read_loop(buf, fd, &pos, line)))
 		return (0);
-	printf("%s %d, line: %s\n", __func__, __LINE__, *line);
 	if (pos > -1 && !(keep = ft_strdup(*line + pos + 1)))
 		return (0);
 	pos > -1 ? (*line)[pos + 1] = 0 : 0;
-	printf("%s %d, line: %s\n", __func__, __LINE__, *line);
 	return (*line ? 1 : 0);
 }

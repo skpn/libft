@@ -11,19 +11,20 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
 char	*ft_strjoin_free(char const *s1, char const *s2, int opt)
 {
-	char	*new;
 	int		len1;
 	int		len2;
+	char	*new;
 
 	new = NULL;
 	if (s1 && s2)
 	{
 		len1 = ft_strlen((char *)s1);
 		len2 = ft_strlen((char *)s2);
-		if (!(new = (char *)easymalloc(sizeof(*new) * (len1 + len2 + 1))))
+		if (!(new = (char *)malloc(len1 + len2 + 1)))
 			return (NULL);
 		ft_strcpy(new, (char *)s1);
 		ft_strcpy(new + len1, (char *)s2);
