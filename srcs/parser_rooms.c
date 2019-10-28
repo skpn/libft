@@ -68,5 +68,6 @@ int		parse_room(t_lem *lem, char *line, int *index)
 		lem->start = room;
 	else if (start_end == END)
 		lem->end = room;
+	lem->nb_rooms++;
 	return (1);
 }
