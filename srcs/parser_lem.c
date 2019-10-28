@@ -25,9 +25,6 @@ int		get_anthill(t_lem *lem)
 		if (*line != '#' || !ft_strcmp((const char *)line, "##start\n")
 			|| !ft_strcmp((const char *)line, "##end\n"))
 		{
-	printf("%s %d, joining \n--\n%s--\n to \n--\n%s--\n"
-		, __func__, __LINE__, line, lem->anthill);
-	fflush(0);
 			lem->anthill = ft_strjoin_free(lem->anthill, line, 3);
 		}
 	}
@@ -40,6 +37,6 @@ int		parse_input(t_lem *lem)
 		return (0);
 	lem->nb_ants = ft_atoi(lem->anthill);
 	print_anthill(lem);
-	print_lem(lem, "aserp");
+//	print_lem(lem, "aserp");
 	return (1);
 }

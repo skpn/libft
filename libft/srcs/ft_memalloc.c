@@ -19,7 +19,10 @@ void	*ft_memalloc(size_t size)
 
 	if (!size)
 		return (NULL);
-	newzone = EASY ? easymalloc(size) : malloc(size);
+	if (EASY)
+		newzone = easymalloc(size);
+	else
+		newzone = malloc(size);
 	if (!(newzone))
 		return (NULL);
 	ft_memset(newzone, '\0', size);
