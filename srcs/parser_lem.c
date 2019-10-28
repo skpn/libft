@@ -26,7 +26,7 @@ int		get_anthill(t_lem *lem)
 	char	*line;
 	int		ret;
 	int		index;
-	int		(*tab[3])(t_lem *, char *, int *);
+	int		(*tab[3])(t_lem *, char **, int *);
 
 	line = 0;
 	init_tab(tab);
