@@ -22,6 +22,7 @@ void	print_room(t_room *room)
 		printf("no room\n");
 		return ;
 	}
+	printf("room %p\n", room);
 	printf("\tname: %s\n", room->name);
 	printf("\tdist: %ld\n", room->dist);
 	printf("\tlvl : %ld\n", room->lvl);
@@ -35,7 +36,7 @@ void	print_room(t_room *room)
 	}
 	printf("\n\tchildren: ");
 	elem = room->children;
-	while (elem)
+	while (elem && elem->content)
 	{
 		printf("%s ", ((t_room *)(elem->content))->name);
 		elem = elem->next;

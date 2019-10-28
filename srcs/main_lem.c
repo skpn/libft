@@ -38,12 +38,9 @@ int		main(void)
 {
 	t_lem	*lem;
 
-	printf("%s %d\n", __func__, __LINE__);
 	if (!(init_lem_struct(&lem)))
 		return (exit_lem(lem, "init failed\n", 1));
-	printf("%s %d\n", __func__, __LINE__);
 	if (!parse_input(lem))
 		return (exit_lem(lem, "bad input\n", 2));
-	printf("%s %d\n", __func__, __LINE__);
 	return (0);
 }

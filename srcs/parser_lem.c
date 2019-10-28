@@ -33,8 +33,8 @@ int		get_anthill(t_lem *lem)
 	index = 0;
 	while ((ret = filler_gnl(0, &line) > 0))
 	{
-			if (!(tab[index](lem, &line, &index)))
-				return (-1);
+		if (!(tab[index](lem, &line, &index)))
+			return (-1);
 	}
 	return (ret ? 0 : 1);
 }
