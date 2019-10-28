@@ -16,7 +16,6 @@ char	*ft_strcpy(char *dst, char *src)
 	long	*long_dst;
 	char	*end;
 
-	printf("copying %s\n", src);
 	long_src = (long *)src;
 	long_dst = (long *)dst;
 	while (!(!(char)(*long_src) || !(char)(*long_src >> 8)
@@ -28,6 +27,5 @@ char	*ft_strcpy(char *dst, char *src)
 	src = (char *)long_src;
 	while (*src)
 		*end++ = *src++;
-	printf("copied %s\n", dst);
 	return (dst);
 }

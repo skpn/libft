@@ -43,6 +43,7 @@ int					parse_tube(t_lem *lem, char **line, int *index);
 void				print_anthill(t_lem *lem);
 void				print_lem(t_lem *lem, char *args);
 void				free_room(t_room **room);
+t_room				*new_room(t_lst *parents, t_lst *children);
 int					exit_lem(t_lem *lem, char *msg, int ret);
 int					parse_input(t_lem *lem);
 

@@ -26,8 +26,9 @@ void	print_room(t_room *room)
 	printf("\tdist: %ld\n", room->dist);
 	printf("\tlvl : %ld\n", room->lvl);
 	printf("\tparents : ");
+	fflush(0);
 	elem = room->parents;
-	while (elem)
+	while (elem && elem->content)
 	{
 		printf("%s ", ((t_room *)(elem->content))->name);
 		elem = elem->next;
@@ -72,20 +73,20 @@ void	print_lem(t_lem *lem, char *args)
 		args = "";
 	printf("nb ants  : %lu\n", lem->nb_ants);
 	printf("nb rooms : %lu\n", lem->nb_rooms);
-	if (ft_strchr_pos(args, 'a'))
+	if (ft_strchr_pos(args, 'a') > -1)
 		printf("anthill  :\n---\n%s\n---\n", lem->anthill);
-	if (ft_strchr_pos(args, 'r'))
+	if (ft_strchr_pos(args, 'r') > -1)
 		print_rooms(lem->rooms);
-	if (ft_strchr_pos(args, 's'))
+	if (ft_strchr_pos(args, 's') > -1)
 	{
 		printf("start    :\n");
 		print_room(lem->start);
 	}
-	if (ft_strchr_pos(args, 'e'))
+	if (ft_strchr_pos(args, 'e') > -1)
 	{
 		printf("end      :\n");
 		print_room(lem->end);
 	}
-	if (ft_strchr_pos(args, 'p'))
+	if (ft_strchr_pos(args, 'p') > -1)
 		print_paths(lem->paths);
 }
