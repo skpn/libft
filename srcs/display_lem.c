@@ -17,7 +17,6 @@ void	print_room(t_room *room)
 {
 	t_lst	*elem;
 
-	printf("line: %s\n", room->line);
 	printf("\tname: %s\n", room->name);
 	printf("\tdist: %ld\n", room->dist);
 	printf("\tlvl : %ld\n", room->lvl);

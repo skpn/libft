@@ -21,6 +21,9 @@ SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 SRC_FILES =	main_lem.c				\
 			exit_lem.c				\
 			parser_lem.c			\
+			parser_ants.c			\
+			parser_rooms.c			\
+			parser_tubes.c			\
 			display_lem.c
 
 SRC_DIR = ./srcs/

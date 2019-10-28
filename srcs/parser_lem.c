@@ -14,21 +14,30 @@
 #include "lem_in.h"
 #include <stdlib.h>
 
+static void	init_tab(int (*tab[3])(t_lem *, char *, int *))
+{
+	tab[0] = parse_ants;
+	tab[1] = parse_room;
+	tab[2] = parse_tube;
+}
+
 int		get_anthill(t_lem *lem)
 {
 	char	*line;
 	int		ret;
+	int		index;
+	int		(*tab[3])(t_lem *, char *, int *);
 
 	line = 0;
+	init_tab(tab);
+	index = 0;
 	while ((ret = filler_gnl(0, &line) > 0))
 	{
-		if (*line != '#' || !ft_strcmp((const char *)line, "##start\n")
-			|| !ft_strcmp((const char *)line, "##end\n"))
 		{
-	printf("%s %d, joining \n--\n%s--\n to \n--\n%s--\n"
-		, __func__, __LINE__, line, lem->anthill);
-	fflush(0);
-			lem->anthill = ft_strjoin_free(lem->anthill, line, 3);
+			printf("%s %d, joining \n--\n%s--\n to \n--\n%s--\n", __func__, __LINE__, line, lem->anthill);
+			fflush(0);
+			if (!(tab[index](lem, line, &index)))
+				return (-1);
 		}
 	}
 	return (ret ? 0 : 1);

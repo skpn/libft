@@ -20,7 +20,6 @@ typedef struct		s_room
 {
 	long			dist;
 	long			lvl;
-	char			*line;
 	char			*name;
 	t_lst			*parents;
 	t_lst			*children;
@@ -36,6 +35,10 @@ typedef struct 		s_lem
 	t_room			*end;
 	t_lst			*paths;
 }					t_lem;
+
+int					parse_ants(t_lem *lem, char *line, int *index);
+int					parse_room(t_lem *lem, char *line, int *index);
+int					parse_tube(t_lem *lem, char *line, int *index);
 
 void				print_anthill(t_lem *lem);
 void				print_lem(t_lem *lem, char *args);
