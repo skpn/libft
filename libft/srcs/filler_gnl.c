@@ -26,7 +26,7 @@ int		read_loop(char buf[1000], int fd, int *pos, char **line)
 			return (0);
 		}
 		buf[ret] = 0;
-		if (ret && !(*line = ft_strjoin_free(*line, buf, 1)))
+		if (ret && !(*line = ft_strjoin_free(line, &buf, 1)))
 		{
 			return (0);
 		}

@@ -21,7 +21,7 @@ void	free_room(t_room **room)
 	ft_lstclr(&(*room)->parents);
 	ft_lstclr(&(*room)->children);
 	ft_free((void **)&(*room)->name);
-	free(*room);
+	ft_free((void **)*room);
 	*room = 0;
 }
 
@@ -37,11 +37,11 @@ void	free_paths(t_lst **paths)
 	{
 		tmp = path->next;
 		ft_lstclr(path->content);
-		free(path);
+		ft_free((void **)path);
 		path = 0;
 		path = tmp;
 	}
-	free(*paths);
+	ft_free((void **)*paths);
 	*paths = 0;
 }
 

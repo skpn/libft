@@ -16,6 +16,6 @@ int		parse_ants(t_lem *lem, char *line, int *index)
 		return (0);
 	lem->nb_ants = nb_ants;
 	(*index)++;
-	lem->anthill = ft_strjoin_free(lem->anthill, line, 3);
+	lem->anthill = ft_strjoin_free(&(lem->anthill), &line, 3);
 	return (1);
 }

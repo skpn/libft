@@ -33,12 +33,10 @@ int		get_anthill(t_lem *lem)
 	index = 0;
 	while ((ret = filler_gnl(0, &line) > 0))
 	{
-		{
 			printf("%s %d, joining \n--\n%s--\n to \n--\n%s--\n", __func__, __LINE__, line, lem->anthill);
 			fflush(0);
 			if (!(tab[index](lem, line, &index)))
 				return (-1);
-		}
 	}
 	return (ret ? 0 : 1);
 }
@@ -47,8 +45,6 @@ int		parse_input(t_lem *lem)
 {
 	if (!(get_anthill(lem)))
 		return (0);
-	lem->nb_ants = ft_atoi(lem->anthill);
-	print_anthill(lem);
 	print_lem(lem, "aser");
 	return (1);
 }

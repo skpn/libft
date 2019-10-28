@@ -49,7 +49,7 @@ int		parse_tube(t_lem *lem, char *line, int *index)
 	if (add_links(lem, name1, name2))
 		return (0);
 	printf("%s %d\n", __func__, __LINE__);
-	if (!ft_strjoin_free(lem->anthill, line, 3))
+	if (!ft_strjoin_free(&(lem->anthill), &line, 3))
 		return (0);
 	return (1);
 }
