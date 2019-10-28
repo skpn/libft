@@ -26,7 +26,7 @@ int		add_links(t_lem *lem, char *name1, char *name2)
 	return (1);
 }
 
-int		parse_tube(t_lem *lem, char *line, int *index)
+int		parse_tube(t_lem *lem, char **line, int *index)
 {
 	int		pos1;
 	int		pos2;
@@ -34,12 +34,12 @@ int		parse_tube(t_lem *lem, char *line, int *index)
 	char	*name2;
 
 	(void)index;
-	if (*line == '#')
-		return (line[1] == '#' ? 0 : 1);
-	if ((pos1 = ft_strchr_pos(line, '-')) < 1 || !(name1 = ft_strsub(line, 0,
+	if (**line == '#')
+		return ((*line)[1] == '#' ? 0 : 1);
+	if ((pos1 = ft_strchr_pos(*line, '-')) < 1 || !(name1 = ft_strsub(*line, 0,
 		pos1 - 1)))
 		return (0);
-	if ((pos2 = ft_strchr_pos(line, '\n')) < 3 || !(name2 = ft_strsub(line, pos1 +
+	if ((pos2 = ft_strchr_pos(*line, '\n')) < 3 || !(name2 = ft_strsub(*line, pos1 +
 		1, pos2 -1)))
 		return (0);
 	if ((ft_strchr_pos(name2, '-')) > -1)
@@ -49,7 +49,7 @@ int		parse_tube(t_lem *lem, char *line, int *index)
 	if (add_links(lem, name1, name2))
 		return (0);
 	printf("%s %d\n", __func__, __LINE__);
-	if (!ft_strjoin_free(&(lem->anthill), &line, 3))
+	if (!ft_strjoin_free(&(lem->anthill), line, 3))
 		return (0);
 	return (1);
 }

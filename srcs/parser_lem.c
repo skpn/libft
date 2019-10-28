@@ -14,7 +14,7 @@
 #include "lem_in.h"
 #include <stdlib.h>
 
-static void	init_tab(int (*tab[3])(t_lem *, char *, int *))
+static void	init_tab(int (*tab[3])(t_lem *, char **, int *))
 {
 	tab[0] = parse_ants;
 	tab[1] = parse_room;
@@ -35,7 +35,7 @@ int		get_anthill(t_lem *lem)
 	{
 			printf("%s %d, joining \n--\n%s--\n to \n--\n%s--\n", __func__, __LINE__, line, lem->anthill);
 			fflush(0);
-			if (!(tab[index](lem, line, &index)))
+			if (!(tab[index](lem, &line, &index)))
 				return (-1);
 	}
 	return (ret ? 0 : 1);

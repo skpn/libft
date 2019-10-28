@@ -36,9 +36,9 @@ typedef struct 		s_lem
 	t_lst			*paths;
 }					t_lem;
 
-int					parse_ants(t_lem *lem, char *line, int *index);
-int					parse_room(t_lem *lem, char *line, int *index);
-int					parse_tube(t_lem *lem, char *line, int *index);
+int					parse_ants(t_lem *lem, char **line, int *index);
+int					parse_room(t_lem *lem, char **line, int *index);
+int					parse_tube(t_lem *lem, char **line, int *index);
 
 void				print_anthill(t_lem *lem);
 void				print_lem(t_lem *lem, char *args);
