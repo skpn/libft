@@ -17,6 +17,11 @@ void	print_room(t_room *room)
 {
 	t_lst	*elem;
 
+	if (!room)
+	{
+		printf("no room\n");
+		return ;
+	}
 	printf("\tname: %s\n", room->name);
 	printf("\tdist: %ld\n", room->dist);
 	printf("\tlvl : %ld\n", room->lvl);
@@ -63,6 +68,8 @@ void	print_paths(t_lst *paths)
 
 void	print_lem(t_lem *lem, char *args)
 {
+	if (!args)
+		args = "";
 	printf("nb ants  : %lu\n", lem->nb_ants);
 	printf("nb rooms : %lu\n", lem->nb_rooms);
 	if (ft_strchr_pos(args, 'a'))

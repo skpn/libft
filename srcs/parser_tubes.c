@@ -44,9 +44,9 @@ int		parse_tube(t_lem *lem, char *line, int *index)
 		return (0);
 	if ((ft_strchr_pos(name2, '-')) > -1)
 		return (0);
-	if (!add_links(lem, name1, name2))
+	if (add_links(lem, name1, name2))
 		return (0);
-	if (!(lem->anthill = ft_strjoin_free(lem->anthill, line, 3)))
+	if (!ft_strjoin_free(lem->anthill, line, 3))
 		return (0);
 	return (1);
 }

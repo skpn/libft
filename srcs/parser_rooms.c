@@ -51,25 +51,38 @@ int		parse_room(t_lem *lem, char *line, int *index)
 	t_lst	*lst;
 
 	printf("%s %d\n", __func__, __LINE__);	
-	if (ft_strstr(line, "-") && !ft_strstr(line, " ") && (*index)++)
+	if (ft_strchr_pos(line, '-') > -1 && ft_strchr_pos(line, ' ') == -1
+		&& (*index)++)
+	{
+	printf("%s %d\n", __func__, __LINE__);	
 		return (parse_tube(lem, line, index));
+	}
+	printf("%s %d\n", __func__, __LINE__);	
 	start_end = 0;
+	printf("%s %d\n", __func__, __LINE__);	
 	if (!(manage_start_end(lem, line, &start_end)))
 		return (0);
 	i = -1;
+	printf("%s %d\n", __func__, __LINE__);	
 	if (!(room = (t_room *)easymalloc(sizeof(t_room))))
 		return (0);
+	printf("%s %d\n", __func__, __LINE__);	
 	while (line[++i] && line[i] != ' ')
 		;
+	printf("%s %d\n", __func__, __LINE__);	
 	if (!(room->name = ft_strsub(line, 0, i)) || !line[i] || !parse_coord(line, &i))
 		return (0);
+	printf("%s %d\n", __func__, __LINE__);	
 	if (!(lst = ft_lstadd_new(&lem->rooms, room, sizeof(t_room))))
 		return (0);
+	printf("%s %d\n", __func__, __LINE__);	
 	if (start_end == START)
 		lem->start = room;
 	else if (start_end == END)
 		lem->end = room;
+	printf("%s %d\n", __func__, __LINE__);	
 	lem->nb_rooms++;
 	lem->anthill = ft_strjoin_free(lem->anthill, line, 3);
+	printf("%s %d\n", __func__, __LINE__);	
 	return (1);
 }
