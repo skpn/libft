@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 00:17:35 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/18 00:17:36 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/29 14:30:04 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
@@ -27,5 +27,6 @@ char	*ft_strcpy(char *dst, char *src)
 	src = (char *)long_src;
 	while (*src)
 		*end++ = *src++;
+	*end = *src;
 	return (dst);
 }

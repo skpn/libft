@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_find.c                                      :+:      :+:    :+:   */
+/*   ft_lstfind.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 14:42:17 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/08 14:42:18 by sikpenou         ###   ########.fr       */
+/*   Created: 2019/10/30 16:07:51 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/10/30 16:17:23 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_lst		*ft_lst_find(t_lst *begin_list, void *content_ref
-			, int (*cmp)(void *, void *), int *c)
+t_lst		*ft_lstfind(t_lst *begin_list, void *match)
 {
 	t_lst		*elem;
 
-	if (!begin_list || !content_ref || !cmp || !c)
+	if (!begin_list || !match)
 		return (NULL);
 	elem = begin_list;
-	*c = 0;
 	while (elem)
 	{
-		*c = *c + 1;
-		if ((*cmp)(elem->content, content_ref) == 0)
+		if (elem == match || !ft_strcmp(elem->content, match))
 			return (elem);
 		elem = elem->next;
 	}
-	*c = -1;
 	return (NULL);
 }

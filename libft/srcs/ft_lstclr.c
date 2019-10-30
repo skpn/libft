@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:03:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/24 15:48:43 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/30 15:22:44 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,5 @@ void	ft_lstclr(t_lst **begin_list)
 		easyfree((void **)begin_list);
 		*begin_list = tmp;
 	}
+	*begin_list = NULL;
 }

@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/10/23 17:47:59 by sikpenou         ###   ########.fr        #
+#    Updated: 2019/10/30 15:46:48 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCFILES = \
 			ft_check_base.c \
 			ft_convert_base.c \
 			ft_fili.c \
+			ft_find_next_prime.c \
 			ft_free.c \
 			ft_free_tab.c \
 			ft_isalnum.c \
@@ -39,7 +40,7 @@ SRCFILES = \
 			ft_itoa.c \
 			ft_itoa_base.c \
 			ft_lst_at.c \
-			ft_lst_find.c \
+			ft_lstfind.c \
 			ft_lst_last.c \
 			ft_lst_merge.c \
 			ft_lst_size.c \

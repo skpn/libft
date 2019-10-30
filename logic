@@ -1,0 +1,46 @@
+
+
+GNL
+lire en une fois
+
+STRUCTURES DE SALLES
+hash table / red trees
+
+PARSING ELEMS
+2-1 and 1-2 are the same link
+
+PARSING ERRORS
+room points to itself
+room has same name
+room has same coords
+no start
+no end
+isolated room
+
+PARTICULAR CASES
+start points to end: 1 turn
+same link twice (check if room already in children before adding)
+
+MAX PATHS
+min number of rooms at any given distance from start (counting end as a room)
+
+MAX LEN
+given L the length of long path, S the length of short path, A the number of
+ants, the longest acceptable path is
+F + C - 2
+rooms long
+
+on arrive apres le bfs avec max len
+on applique ces principes pour trouver les chemins en marchant:
+ - on ne depasse pas max len
+ - on marche en priorite vers les salles ou on est le moins passe
+ - entre deux salles ou on est autant passes, on marche vers la plus proche de
+ 	start
+ - si on essaye de trouver n chemins (tour n) de l'algo, on peut passer sur une
+ 	salle ou on a deja marche au plus n-1 fois
+ - on s'arrete quand on ne peut plus sortir de end en respectant la regle de n-1
+
+qu'est ce qui arrive si je pars sur un chemin qui ne mene nulle part ou est
+bloque ? comment je fais pour ne pas repasser dedans au tour d'apres ?
+--> si on le fait en semi backtracking les walk s'enregistrent (ou non) tout
+	seuls

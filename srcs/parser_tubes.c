@@ -8,6 +8,7 @@ int		add_links(t_lem *lem, char *name1, char *name2)
 	t_room	*room1;
 	t_room	*room2;
 	int		ctr;
+	t_lst	*ret;
 
 	elem = lem->rooms;
 	ctr = 0;
@@ -22,6 +23,14 @@ int		add_links(t_lem *lem, char *name1, char *name2)
 	}
 	if (ctr != 2)
 		return (0);
+	if ((ret = ft_lstfind(room1->children, elem->content)))
+	{
+		printf("found double link\n");
+		print_room((t_room *)ret->content, "n", 2);
+		print_room((t_room *)elem->content, "n", 2);
+		return (1);
+	}
+	printf("did not find double link\n");
 	ft_lstadd_new(&(room1->children), room2, sizeof(*room1));
 	ft_lstadd_new(&(room2->children), room1, sizeof(*room2));
 	return (1);
@@ -40,14 +49,14 @@ int		parse_tube(t_lem *lem, char **line, int *index)
 	if ((pos1 = ft_strchr_pos(*line, '-')) < 1 || !(name1 = ft_strsub(*line, 0,
 		pos1)))
 		return (0);
-	if ((pos2 = ft_strchr_pos(*line, '\n')) < 3 || !(name2 = ft_strsub(*line, pos1 +
-		1, pos2 - pos1 - 1)))
+	if ((pos2 = ft_strchr_pos(*line, '\n')) < 3
+		|| !(name2 = ft_strsub(*line, pos1 + 1, pos2 - pos1 - 1)))
 		return (0);
 	if ((ft_strchr_pos(name2, '-')) > -1)
 		return (0);
 	if (!add_links(lem, name1, name2))
 		return (0);
-	if (!(lem->anthill = ft_strjoin_free(&(lem->anthill), line, 3)))
+	if (!(lem->anthill = ft_strjoin_free(&(lem->anthill), line, BOTH)))
 		return (0);
 	return (1);
 }

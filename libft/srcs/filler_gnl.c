@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:04:12 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/24 15:31:56 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/29 10:58:16 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		read_loop(char buf[4000], int fd, int *pos, char **line)
 			return (0);
 		}
 		buf[ret] = 0;
-		if (ret && !(*line = ft_strjoin_free(line, &buf, 1)))
+		if (ret && !(*line = ft_strjoin_free(line, &buf, LEFT)))
 		{
 			return (0);
 		}

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/24 15:48:11 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/30 15:51:39 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # define EXIT 1
 # define EASY 0
+# define LEFT 1
+# define RIGHT 2
+# define BOTH 3
 # define BUFF_SIZE 100
 # define BLOCK 5000
 # define ALL "-+ 0#hlL.123456789*"
@@ -42,11 +45,32 @@
 # define XMAJTYPE 8u
 # define BTYPE 9u
 # define ULLCHAIN "61615590737044764481"
+# define HASH_ELEMS_LIMIT 2
+# define HASH_COLLISIONS_LIMIT 3
 # include <stdarg.h>
 # include <stddef.h>
 #include <stdio.h>
 #define PRINTPOS printf("%s %d", __func__, __LINE__)
 #define PRINTPOSN printf("%s %d\n", __func__, __LINE__)
+typedef int					(*t_hashfunc)(char *, long);
+
+typedef struct				s_hash_elem
+{
+	void					*content;
+	char					*key;
+}							t_hash_elem;
+
+typedef struct				s_hash_tab
+{
+	long					size;
+	long					elems;
+	long					collisions;
+	long					elems_limit;
+	long					collisions_limit;
+	t_hashfunc				func;
+	void					*array;
+}							t_hash_tab;
+
 typedef struct				s_lst
 {
 	void					*content;
@@ -153,8 +177,7 @@ void						ft_lstdelone(t_lst **alst, void (*del) (void *
 	, size_t));
 void						ft_lstiter(t_lst *lst, void (*f_i) (t_lst *elem));
 t_lst						*ft_lstmap(t_lst *lst, t_lst *(*f_m) (t_lst *elem));
-t_lst						*ft_lst_find(t_lst *begin_list, void *content_ref
-	, int (*f_cmp)(void *, void *), int *c);
+t_lst						*ft_lstfind(t_lst *begin_list, void *match);
 int							ft_lst_size(t_lst *begin_list);
 void						ft_lst_sort(t_lst **begin_list, int (*f_cmp)());
 void						ft_lstclr(t_lst **begin_list);

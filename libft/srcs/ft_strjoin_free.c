@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:05:10 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/08 14:25:50 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/29 14:30:11 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strjoin_free(char **s1, char **s2, int opt)
 	}
 	else if (*s1 || *s2)
 		new = ft_strdup(*s1 ? *s1 : *s2);
-	opt == 3 || opt == 1 ? ft_free((void **)s1) : 0;
-	opt == 3 || opt == 2 ? ft_free((void **)s2) : 0;
+	opt == BOTH || opt == LEFT ? ft_free((void **)s1) : 0;
+	opt == BOTH || opt == RIGHT ? ft_free((void **)s2) : 0;
 	return (new);
 }

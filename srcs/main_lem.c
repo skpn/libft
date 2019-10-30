@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:05:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/24 15:56:51 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/29 14:33:56 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ int		main(void)
 	if (!(init_lem_struct(&lem)))
 		return (exit_lem(lem, "init failed\n", 1));
 	if (!parse_input(lem))
-		return (exit_lem(lem, "bad input\n", 2));
+		return (exit_lem(lem, "ERROR", 2));
 	return (0);
 }

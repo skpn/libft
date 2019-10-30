@@ -29,7 +29,7 @@ int		manage_start_end(t_lem *lem, char **line, int *start_end)
 	if (!ft_strcmp(*line, "##start\n") || !ft_strcmp(*line, "##end\n"))
 	{
 		*start_end = ((!ft_strcmp(*line, "##start\n") ? START : END));
-		lem->anthill = ft_strjoin_free(&(lem->anthill), line, 3);
+		lem->anthill = ft_strjoin_free(&(lem->anthill), line, BOTH);
 		if ((ret = filler_gnl(0, line)) <= 0)
 			return (0);
 	}
@@ -70,7 +70,7 @@ int		parse_room(t_lem *lem, char **line, int *index)
 	else if (start_end == END)
 		lem->end = room;
 	lem->nb_rooms++;
-	if (!(lem->anthill = ft_strjoin_free(&(lem->anthill), line, 3)))
+	if (!(lem->anthill = ft_strjoin_free(&(lem->anthill), line, BOTH)))
 		return (0);
 	return (1);
 }

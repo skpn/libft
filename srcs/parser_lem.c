@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 15:28:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/24 15:51:17 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/29 14:16:05 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		get_anthill(t_lem *lem)
 
 int		parse_input(t_lem *lem)
 {
-	if (!(get_anthill(lem)))
+	if (get_anthill(lem) < 1)
 		return (0);
 	print_lem(lem, "aser");
 	return (1);
