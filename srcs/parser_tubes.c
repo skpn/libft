@@ -8,7 +8,6 @@ int		add_links(t_lem *lem, char *name1, char *name2)
 	t_room	*room1;
 	t_room	*room2;
 	int		ctr;
-	t_lst	*ret;
 
 	elem = lem->rooms;
 	ctr = 0;
@@ -23,14 +22,14 @@ int		add_links(t_lem *lem, char *name1, char *name2)
 	}
 	if (ctr != 2)
 		return (0);
-	if ((ret = ft_lstfind(room1->children, elem->content)))
+	t_lst *beg = room1->children;
+	while (beg)
 	{
-		printf("found double link\n");
-		print_room((t_room *)ret->content, "n", 2);
-		print_room((t_room *)elem->content, "n", 2);
-		return (1);
+		room = (t_room *)beg->content;
+		beg = beg->next;
 	}
-	printf("did not find double link\n");
+	if (ft_lstfind(room1->children, room2))
+		return (1);
 	ft_lstadd_new(&(room1->children), room2, sizeof(*room1));
 	ft_lstadd_new(&(room2->children), room1, sizeof(*room2));
 	return (1);

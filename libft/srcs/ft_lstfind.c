@@ -6,12 +6,12 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 16:07:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/30 16:17:23 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/30 17:29:51 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
+#include <stdio.h>
 t_lst		*ft_lstfind(t_lst *begin_list, void *match)
 {
 	t_lst		*elem;
@@ -21,7 +21,7 @@ t_lst		*ft_lstfind(t_lst *begin_list, void *match)
 	elem = begin_list;
 	while (elem)
 	{
-		if (elem == match || !ft_strcmp(elem->content, match))
+		if (elem->content == match)
 			return (elem);
 		elem = elem->next;
 	}
