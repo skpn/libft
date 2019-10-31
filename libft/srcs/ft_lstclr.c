@@ -6,13 +6,13 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:03:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/30 15:22:44 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/31 12:32:36 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstclr(t_lst **begin_list)
+void	ft_lstclr(t_lst **begin_list, int opt)
 {
 	t_lst *tmp;
 
@@ -21,7 +21,7 @@ void	ft_lstclr(t_lst **begin_list)
 	while (*begin_list)
 	{
 		tmp = (*begin_list)->next;
-		easyfree((void **)(*begin_list)->content);
+		opt ? easyfree((void **)(*begin_list)->content) : 0;
 		easyfree((void **)begin_list);
 		*begin_list = tmp;
 	}

@@ -6,13 +6,13 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 14:43:09 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/08 14:43:10 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/31 13:01:22 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_lst_size(t_lst *begin_list)
+int		ft_lstsize(t_lst *begin_list)
 {
 	int			len;
 

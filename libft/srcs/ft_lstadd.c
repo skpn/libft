@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:03:41 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/08 18:03:42 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/31 11:23:20 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,5 @@ void	ft_lstadd(t_lst **alst, t_lst *new)
 {
 	new->next = *alst;
 	*alst = new;
+	new->last = new->next->last;
 }

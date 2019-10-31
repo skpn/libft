@@ -22,12 +22,6 @@ int		add_links(t_lem *lem, char *name1, char *name2)
 	}
 	if (ctr != 2)
 		return (0);
-	t_lst *beg = room1->children;
-	while (beg)
-	{
-		room = (t_room *)beg->content;
-		beg = beg->next;
-	}
 	if (ft_lstfind(room1->children, room2))
 		return (1);
 	ft_lstadd_new(&(room1->children), room2, sizeof(*room1));

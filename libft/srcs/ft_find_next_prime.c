@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 09:37:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/29 19:47:39 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/30 23:05:03 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,15 @@ int		ft_is_prime(int nb)
 
 int		ft_find_next_prime(int nb)
 {
+	if (nb == 2)
+		return (2);
+	if (!(nb % 2))
+	{
+		if (ft_is_prime(nb))
+			return (nb);
+		++nb;
+	}
 	while (ft_is_prime(nb) == 0)
-		nb++;
+		nb += 2;
 	return (nb);
 }

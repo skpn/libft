@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/30 15:51:39 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/31 14:15:23 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ int							ft_isspace(int c);
 char						*ft_itoa(int n);
 char						*ft_itoa_base(long int nb, char *base_to);
 int							ft_lstcycle(t_lst *begin);
+void						ft_lstjoin(t_lst **lst_a, t_lst *lst_b);
 t_lst						*ft_lstnew(void const *content
 	, size_t content_size);
 void						ft_lstadd(t_lst **alst, t_lst *newl);
@@ -178,9 +179,9 @@ void						ft_lstdelone(t_lst **alst, void (*del) (void *
 void						ft_lstiter(t_lst *lst, void (*f_i) (t_lst *elem));
 t_lst						*ft_lstmap(t_lst *lst, t_lst *(*f_m) (t_lst *elem));
 t_lst						*ft_lstfind(t_lst *begin_list, void *match);
-int							ft_lst_size(t_lst *begin_list);
+int							ft_lstsize(t_lst *begin_list);
 void						ft_lst_sort(t_lst **begin_list, int (*f_cmp)());
-void						ft_lstclr(t_lst **begin_list);
+void						ft_lstclr(t_lst **begin_list, int opt);
 int							ft_max(int a, int b);
 void						*ft_memchr(const void *s, int c, size_t n);
 int							ft_memchr_pos(const void *s, int c, size_t n);

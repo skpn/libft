@@ -1,0 +1,78 @@
+➜  lem_in git:(master) ✗ gcc main_gnl.c srcs/gnl_lem_in.c
+main_gnl.c:31:3: error: expected ')'
+                printf("%s\n", line);
+                ^
+main_gnl.c:30:8: note: to match this '('
+        while ((ret = gnl_lem_in(fd, &pos, &line) == 1)
+              ^
+1 error generated.
+srcs/gnl_lem_in.c:13:10: fatal error: 'libft.h' file not found
+#include "libft.h"
+         ^~~~~~~~~
+1 error generated.
+➜  lem_in git:(master) ✗ gcc -Ilibft/includes main_gnl.c srcs/gnl_lem_in.c
+srcs/gnl_lem_in.c:47:17: warning: implicit declaration of function 'read' is invalid in C99
+      [-Wimplicit-function-declaration]
+                while ((ret = read(fd, buf + *pos, 40000)) == 40000)
+                              ^
+srcs/gnl_lem_in.c:49:38: warning: incompatible pointer types passing 'char *' to parameter of type 'void **'
+      [-Wincompatible-pointer-types]
+                        if (size > 500000 || !(ft_realloc(buf, size, 40000)))
+                                                          ^~~
+libft/includes/libft.h:122:29: note: passing argument to parameter 'zone' here
+int                                                     ft_realloc(void **zone, long curr_size
+                                                                          ^
+srcs/gnl_lem_in.c:54:6: error: array subscript is not an integer
+                buf[pos + ret] = 0;
+                   ^~~~~~~~~~
+2 warnings and 1 error generated.
+➜  lem_in git:(master) ✗ gcc -Ilibft/includes main_gnl.c srcs/gnl_lem_in.c
+Undefined symbols for architecture x86_64:
+  "_easymalloc", referenced from:
+      _gnl_lem_in in gnl_lem_in-efd463.o
+  "_ft_free", referenced from:
+      _get_line in gnl_lem_in-efd463.o
+  "_ft_realloc", referenced from:
+      _gnl_lem_in in gnl_lem_in-efd463.o
+  "_ft_strchr_pos", referenced from:
+      _get_line in gnl_lem_in-efd463.o
+  "_ft_strdup", referenced from:
+      _get_line in gnl_lem_in-efd463.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+➜  lem_in git:(master) ✗ gcc -Ilibft/includes main_gnl.c srcs/gnl_lem_in.c libft/libft.a
+➜  lem_in git:(master) ✗ ./a.out main_gnl.c
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_gnl.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/31 19:33:23 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/10/31 19:41:10 by sikpenou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+//#include "/Users/sikpenou/my_libft/includes/libft.h"
+
+int		gnl_lem_in(int fd, int *pos, char **line);
+
+int		main(int ac, char **av)
+{
+	if(!ac || !av)
+		return(0);
+	int		fd = open(av[1], O_RDONLY);
+	int		pos;
+	char	*line;
+	int		ret;
+
+	pos = 0;
+	while ((ret = gnl_lem_in(fd, &pos, &line) == 1))
+		printf("%s\n", line);
+	printf("final ret: %d\n", ret);
+}
+final ret: 0

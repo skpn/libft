@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 19:49:11 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/30 15:27:01 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/10/31 09:52:13 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ t_htab			*hash_init_table(long size, t_func func)
 int				hash_resize_table(t_hash_tab **htab)
 {
 	int				index;
-	t_lst			lst_elem;
+	t_lst			*lst_elem;
+	t_lst			*lst_tmp;
 	t_hash_elem		hash_elem;
 	t_hash_tab		*new_htab;
 
@@ -78,10 +79,14 @@ int				hash_resize_table(t_hash_tab **htab)
 			{
 				hash_elem = lst_elem->content;
 				hash_insert_elem(new_htab, hash_elem->content, hash_elem->key);
-				lst_elem = lst_elem->next;
+				lst_tmp = lst_elem->next;
+				ft_free((void **)&lst_elem);
+				lst_elem = lst_tmp;
 			}
 		}
 	}
+	ft_free((void **)&htab->array);
+	ft_free((void **)htab);
 	*htab = new_htab;
 	return (1);
 }
@@ -95,7 +100,7 @@ int				hash_handle_collisions(t_hash_tab *htab, long index
 	if (htab->size / htab->elems >= htab->elems_limit
 		|| htab->size / htab->collisions >= htab->collisions_limit)
 		return (hash_resize_table(htab));
-	return (0);
+	return (1);
 }
 
 int				hash_insert_elem(t_hash_tab *htab, t_hash_elem *hash_elem)
@@ -126,4 +131,8 @@ t_hash_elem		*hash_new_elem(void *content, void *key)
 	elem->content = content;
 	elem->key = key;
 	return (elem);
+}
+
+int				hash_create_elem(content, key)
+{
 }

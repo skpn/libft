@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/10/24 15:57:14 by sikpenou         ###   ########.fr        #
+#    Updated: 2019/10/31 14:27:40 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC_FILES =	main_lem.c				\
 			parser_ants.c			\
 			parser_rooms.c			\
 			parser_tubes.c			\
+			set_graph.c				\
 			display_lem.c
 
 SRC_DIR = ./srcs/
@@ -80,3 +81,5 @@ re: FORCE
 	@make -j --no-print-directory all
 
 FORCE:
+
+#.SILENT:

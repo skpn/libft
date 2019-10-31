@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/10/30 15:46:48 by sikpenou         ###   ########.fr        #
+#    Updated: 2019/10/31 13:02:13 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,9 +41,10 @@ SRCFILES = \
 			ft_itoa_base.c \
 			ft_lst_at.c \
 			ft_lstfind.c \
+			ft_lstjoin.c \
 			ft_lst_last.c \
 			ft_lst_merge.c \
-			ft_lst_size.c \
+			ft_lstsize.c \
 			ft_lst_sort.c \
 			ft_lstadd.c \
 			ft_lstadd_back.c \
@@ -167,3 +168,5 @@ re: FORCE
 	@make -j --no-print-directory all
 
 FORCE:
+
+#.SILENT:

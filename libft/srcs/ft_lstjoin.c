@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/02 16:28:56 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/31 11:26:52 by sikpenou         ###   ########.fr       */
+/*   Created: 2019/10/31 11:31:04 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/10/31 11:33:14 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_lst **alst, t_lst *new)
+void	ft_lstjoin(t_lst **lst_a, t_lst *lst_b)
 {
-	new->next = NULL;
-	new->last = new;
-	if (*alst)
-	{
-		(*alst)->last->next = new;
-		(*alst)->last = new;
-	}
+	if (*lst_a)
+		(*lst_a)->last = lst_b;
 	else
-	{
-		*alst = new;
-	}
+		*lst_a = lst_b;
 }

@@ -16,6 +16,7 @@ room has same coords
 no start
 no end
 isolated room
+more than int max rooms
 
 PARTICULAR CASES
 start points to end: 1 turn
@@ -24,12 +25,43 @@ same link twice (check if room already in children before adding)
 MAX PATHS
 min number of rooms at any given distance from start (counting end as a room)
 
-MAX LEN
-given L the length of long path, S the length of short path, A the number of
-ants, the longest acceptable path is
-F + C - 2
-rooms long
+ABSOLUTE MAX LEN
+the absolute max len is the len accepted with the shortest path alone, as any valid
+	added path will improve the number of turns and thus reduce max len, so it
+	is logical that the max len for the worst scenario (nb path = 1) is absolute
+given S the length of short path, A the number of ants:
+the fist ant takes S turns to get to end. then, all other ants (A - 1) need 1
+	turn to step in (because there is one path)
+maxlen = S + (A / 1) - 2
 
+ACTUALIZED MAX LEN
+
+SET DISTS
+on a deux listes, current lvl et next lvl. au debut current lvl est egal a
+start. puis on lance une fct set_dist_n qui:
+	prend la liste des salles de l'etage actuel et un lvl n
+	l'envoie a get next lvl, qui fait un listjoin des enfants de toutes les
+		salles de l'etage actuel, et ca nous donne l'etage d'apres
+	si la next_lvl est null, on a plus d'enfants et qu'on a pas atteint end le
+		graph est invalide
+	set les distances de l'etage d'apres en comptant pour connaitre le nombre de
+		salles et mettre a jour les goulets
+	puis d'apres ces distances on divise les listes enfants en liste parents et
+		liste enfants
+	puis la liste next_lvl devient la liste current_lvl
+	si dans la liste actualisee il y a maintenant end on calcule absolute_max_len
+		qui est pourl'instant set a long max
+	si n < maxlen on rappelle la fonction
+	sinon on return
+
+pour set les dists:
+on set la distance d'une salle enfant si sa distance actuelle est superieure a
+	celle qu'on essaye de set
+
+pour repartir parents enfants
+si la child_dist <= room_dist, child devient parent
+
+TROUVER LES CHEMINS
 on arrive apres le bfs avec max len
 on applique ces principes pour trouver les chemins en marchant:
  - on ne depasse pas max len
@@ -44,3 +76,4 @@ qu'est ce qui arrive si je pars sur un chemin qui ne mene nulle part ou est
 bloque ? comment je fais pour ne pas repasser dedans au tour d'apres ?
 --> si on le fait en semi backtracking les walk s'enregistrent (ou non) tout
 	seuls
+
