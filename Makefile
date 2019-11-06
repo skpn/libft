@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/11/02 22:14:05 by sikpenou         ###   ########.fr        #
+#    Updated: 2019/11/06 12:48:07 by hehlinge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ $(NAME): $(INCLS) $(LIB_INCLS) $(SRCS) $(LIB)
 	@echo hehlinge >> auteur
 	@mkdir -p objs
 	@make -j --no-print-directory objects
-	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ $(OBJS) $(LIB)
+	@echo "compiling with -g fsanitize"
+	@$(CC) $(CFLAGS) -g -fsanitize=address -I $(INC_DIR) -o $@ $(OBJS) $(LIB)
 
 $(LIB): FORCE
 	@make -j --no-print-directory -C $(LIB_DIR)

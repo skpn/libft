@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/05 23:06:32 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/11/06 13:12:19 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define EXIT 1
 # define EASY 0
 # define ADDR 0
+# define NONE 0
 # define LEFT 1
 # define RIGHT 2
 # define BOTH 3

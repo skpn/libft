@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:52:16 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/05 23:44:43 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:31:37 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,44 +16,31 @@
 
 void	free_room(t_head *rooms, t_room **room)
 {
-	t_lst	*elem;
-
-	printf("freeing room:\n");
 	print_room(*room);
-	elem = ft_lstpop(rooms, *room);
-	ft_lstfree_elem(&elem, FREE_LINKS);
-	g_addr = *room;
-	printf("line %d, *room: %p, *room name: %p\n", __LINE__, *room, (*room)->name);
+	ft_lstpop(rooms, *room);
 	ft_free((void **)&(*room)->name);
-	printf("line %d, *room: %p\n", __LINE__, *room);
-	PRINTPOSN;
-	ft_lstprint((*room)->parents, "parents", 0);
 	ft_lstfree_head(&(*room)->parents);
-	PRINTPOSN;
-	ft_lstprint((*room)->children, "children", 0);
 	ft_lstfree_head(&(*room)->children);
-	PRINTPOSN;
 	ft_free((void **)room);
-	printf("freed ok\n");
 }
 
 void	free_rooms(t_head **rooms)
 {
 	t_lst	*elem;
+	t_lst	*tmp;
 
 	printf("freeing head %p, first: %p, last: %p, size: %u\n"
 		, *rooms, (*rooms)->first, (*rooms)->last, (*rooms)->size);
 	elem = (*rooms)->first;
 	while (elem)
 	{
-		printf("elem: %p, elem content: %p\n", elem, elem->content);
+		tmp = elem->next;
 		free_room(*rooms, (t_room **)&elem->content);
-		elem = elem->next;
-		ft_free((void **)&elem->prev);
+		ft_lstfree_elem(&elem, FREE_LINKS);
+		elem = tmp;
 	}
-	printf("rooms freed\n");
 	ft_lstfree_head(rooms);
-	printf("freed ok\n");
+	printf("rooms freed ok\n");
 }
 
 void	free_path(t_path **path)

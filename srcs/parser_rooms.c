@@ -49,7 +49,6 @@ int		parse_room(t_lem *lem, char **line, int *index)
 	int		start_end;
 	t_room	*room;
 
-	PRINTPOSN;
 	if (ft_strchr_pos(*line, '-') > -1 && ft_strchr_pos(*line, ' ') == -1
 		&& (*index)++)
 		return (parse_tube(lem, line, index));
@@ -70,6 +69,5 @@ int		parse_room(t_lem *lem, char **line, int *index)
 	if (start_end)
 		start_end == START ? (lem->start = room) : (lem->end = room);
 	lem->nb_rooms++;
-	PRINTPOSN;
 	return (1);
 }

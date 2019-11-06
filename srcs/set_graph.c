@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 21:05:19 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/03 22:42:32 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/11/06 15:22:09 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,24 @@ void	update_lem_info(t_lem *lem, t_lvl *lvl)
 		lem->max_paths = size;
 }
 
+void	add_children_to_next_lvl(t_head *rooms, t_head *children)
+{
+	t_lst	*elem;
+	t_room	*child;
+
+	elem = children->first;
+	while (elem)
+	{
+		child = elem->content;
+		if (!child->has_lvl)
+		{
+			child->has_lvl = 1;
+			ft_lstadd_new(rooms, child);
+		}
+		elem = elem->next;
+	}
+}
+
 void	get_next_lvl_rooms(t_lvl *lvl)
 {
 	t_lst	*current_rooms;
@@ -60,7 +78,11 @@ void	get_next_lvl_rooms(t_lvl *lvl)
 	while (current_rooms)
 	{
 		parent = current_rooms->content;
-		ft_lstjoin(lvl->rooms, parent->children);
+		printf("joining children of:\n");
+		print_room(parent);
+		printf("to list:\n");
+		ft_lstprint(lvl->rooms, "next lvl rooms", NONE);
+		add_children_to_next_lvl(lvl->rooms, parent->children);
 		current_rooms = current_rooms->next;
 	}
 }
@@ -75,31 +97,30 @@ int		set_graph(t_lem *lem)
 	lem->start->dist = 0;
 	printf("START OF SET GRAPH\n");
 	print_lvl(lvl);
-	while (lvl->dist < lem->max_dist && lvl->rooms)
+	while (lvl->dist < lem->max_dist && lvl->rooms->first)
 	{
 		printf("----SETTING LVL %u----\n\n", lvl->dist);
 		set_next_lvl_dists(lvl);
 		printf("AFTER SETTING DISTS\n");
 		print_lvl(lvl);
-		set_next_lvl_families(lvl);
+		set_next_lvl_families(lvl, lem->end);
 		printf("AFTER SETTING FAMILIES\n");
 		print_lvl(lvl);
 		update_lem_info(lem, lvl);
 		printf("AFTER UPDATING LEM:\ncurrent dist: %u\nend->dist: %u\n"
 				"lvl->rooms: %p\nmax_dist: %u\nmax_paths: %u\n\n"
 			, lvl->dist, lem->end->dist, lvl->rooms, lem->max_dist, lem->max_paths);
-		print_rooms(lem->rooms);
+		//print_rooms(lem->rooms);
 		get_next_lvl_rooms(lvl);
+		lvl->dist++;
 		printf("AFTER GETTING NEXT LVL\n");
 		print_lvl(lvl);
-		print_rooms(lem->rooms);
-		lvl->dist++;
-		return (0);
 	}
-	ft_lstprint(lem->rooms, "lem->rooms", 0);
 	if (!(check_graph(lem)))
 		return (0);
 	ft_lstfree_head(&lvl->rooms);
-	ft_free((void **)lvl);
+	lvl->rooms = NULL;
+	ft_free((void **)&lvl);
+	print_rooms(lem->rooms);
 	return (1);
 }

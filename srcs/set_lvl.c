@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 22:11:27 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/03 22:14:34 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/11/06 15:32:21 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,47 @@ void	set_parent_as(int opt, t_room *parent, t_room *child)
 	}
 }
 
-void	set_children_families(t_room *parent)
+void	set_children_families(t_room *parent, t_room *end)
 {
 	t_lst	*room_children;
+	t_lst	*tmp;
 	t_room	*child;
 
+	printf("SETTING FAMILY OF:\n");
+	print_room(parent);
+	ft_lstprint(parent->children, "children", 0);
 	room_children = parent->children->first;
 	while (room_children)
 	{
+		tmp = room_children->next;
+		printf("SETTING PAIR:\n");
 		child = room_children->content;
+		print_room(parent);
+		print_room(child);
+		printf("room_children: %p, next: %p\n", room_children, room_children->next);
 		if (child->dist > parent->dist)
+		{
+			printf("setting as parent\n");
 			set_parent_as(PARENT, parent, child);
-		else if (child->dist == parent->dist)
+		printf("room_children: %p, next: %p\n", room_children, room_children->next);
+		}
+		else if (child->dist == parent->dist && child != end)
+		{
+			printf("setting as brother\n");
+			g_addr = room_children->next;
 			set_parent_as(BROTHER, parent, child);
+		}
 		else
-			set_parent_as(CHILD, parent, child);
-		room_children = room_children->next;
+		{
+			printf("setting as child\n");
+			if (child != end)
+				set_parent_as(CHILD, parent, child);
+		}
+		room_children = tmp;
 	}
 }
 
-void	set_next_lvl_families(t_lvl *lvl)
+void	set_next_lvl_families(t_lvl *lvl, t_room *end)
 {
 	t_lst		*lvl_parents;
 	t_room		*parent;
@@ -57,7 +78,8 @@ void	set_next_lvl_families(t_lvl *lvl)
 	while (lvl_parents)
 	{
 		parent = lvl_parents->content;
-		set_children_families(parent);
+		if (parent != end)
+			set_children_families(parent, end);
 		lvl_parents = lvl_parents->next;
 	}
 }

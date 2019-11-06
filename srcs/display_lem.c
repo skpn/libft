@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:50:50 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/03 22:47:20 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/11/06 14:59:50 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	print_room(t_room *room)
 
 	printf("room '%s': %p\n", room->name, room);
 	printf("\tdist %u\n", room->dist);
+	printf("\thas_lvl %u\n", room->has_lvl);
 	printf("\twalk %u\n", room->walk);
 	elem = room->parents->first;
 	printf("\tparents: ");
