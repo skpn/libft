@@ -9,7 +9,7 @@ int		add_links(t_lem *lem, char *name1, char *name2)
 	t_room	*room2;
 	int		ctr;
 
-	elem = lem->rooms;
+	elem = lem->rooms->first;
 	ctr = 0;
 	while (elem && ctr < 2)
 	{
@@ -24,8 +24,8 @@ int		add_links(t_lem *lem, char *name1, char *name2)
 		return (0);
 	if (ft_lstfind(room1->children, room2))
 		return (1);
-	ft_lstadd_new(&(room1->children), room2, sizeof(*room1));
-	ft_lstadd_new(&(room2->children), room1, sizeof(*room2));
+	ft_lstadd_new(room1->children, room2);
+	ft_lstadd_new(room2->children, room1);
 	return (1);
 }
 
@@ -42,14 +42,12 @@ int		parse_tube(t_lem *lem, char **line, int *index)
 	if ((pos1 = ft_strchr_pos(*line, '-')) < 1 || !(name1 = ft_strsub(*line, 0,
 		pos1)))
 		return (0);
-	if ((pos2 = ft_strchr_pos(*line, '\n')) < 3
+	if ((pos2 = ft_strlen(*line)) < 3
 		|| !(name2 = ft_strsub(*line, pos1 + 1, pos2 - pos1 - 1)))
 		return (0);
 	if ((ft_strchr_pos(name2, '-')) > -1)
 		return (0);
 	if (!add_links(lem, name1, name2))
-		return (0);
-	if (!(lem->anthill = ft_strjoin_free(&(lem->anthill), line, BOTH)))
 		return (0);
 	return (1);
 }

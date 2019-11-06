@@ -6,22 +6,22 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 23:04:53 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/24 15:42:54 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/11/03 18:53:32 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-t_gc_list	*get_gc_list(int opt)
+t_head		*get_gc_list(int opt)
 {
-	static t_gc_list	*gc_list = NULL;
+	static t_head	*gc_list = NULL;
 
 	if (!gc_list && opt == 1)
 	{
-		if (!(gc_list = (t_gc_list *)malloc(sizeof(*gc_list))))
+		if (!(gc_list = (t_head *)malloc(sizeof(*gc_list))))
 			return (0);
-		gc_list->len = 0;
+		gc_list->size = 0;
 		gc_list->first = NULL;
 		gc_list->last = NULL;
 	}
@@ -32,8 +32,8 @@ t_gc_list	*get_gc_list(int opt)
 
 int			get_gc_data(int opt)
 {
-	t_lst		*elem;
-	t_gc_list	*gc_list;
+	t_lst	*elem;
+	t_head	*gc_list;
 
 	if (!(gc_list = get_gc_list(0)))
 		return (0);
@@ -55,14 +55,14 @@ int			get_gc_data(int opt)
 			ft_printf("list end\n---\n\n");
 		}
 	}
-	return (gc_list->len);
+	return (gc_list->size);
 }
 
 void		easyfree_gc(void)
 {
-	t_lst			*elem;
-	t_lst			*tmp;
-	t_gc_list		*gc_list;
+	t_lst	*elem;
+	t_lst	*tmp;
+	t_head	*gc_list;
 
 	if (!(gc_list = get_gc_list(0)))
 	{
@@ -71,7 +71,7 @@ void		easyfree_gc(void)
 	elem = (gc_list)->first;
 	while (elem)
 	{
-		(gc_list)->len--;
+		gc_list->size--;
 		tmp = elem;
 		elem = elem->next;
 		if (tmp->content)
@@ -88,8 +88,8 @@ void		easyfree_gc(void)
 
 void		easyfree(void **match)
 {
-	t_lst		*elem;
-	t_gc_list	*gc_list;
+	t_lst	*elem;
+	t_head	*gc_list;
 
 	if (!EASY)
 	{
@@ -102,7 +102,7 @@ void		easyfree(void **match)
 	}
 	if (!*match || !(gc_list = get_gc_list(0)))
 		return ;
-	if (!(elem = ft_lstpop(&(gc_list->first), *match)))
+	if (!(elem = ft_lstpop(gc_list, *match)))
 	{
 		return ;
 	}
@@ -110,13 +110,13 @@ void		easyfree(void **match)
 	*match = NULL;
 	free(elem);
 	elem = NULL;
-	gc_list->len--;
+	gc_list->size--;
 }
 
 void		*easymalloc(size_t size)
 {
-	t_lst			*new_free;
-	t_gc_list		*gc_list;
+	t_lst	*new_free;
+	t_head	*gc_list;
 
 	if (!EASY)
 		return (ft_memalloc(size));
@@ -132,8 +132,7 @@ void		*easymalloc(size_t size)
 		gc_list->last->next = new_free;
 	else
 		gc_list->first = new_free;
-	gc_list->first->last = new_free;
 	gc_list->last = new_free;
-	gc_list->len++;
+	gc_list->size++;
 	return (new_free->content);
 }

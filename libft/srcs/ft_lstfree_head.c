@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_sort.c                                      :+:      :+:    :+:   */
+/*   ft_lsthead_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 14:42:25 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/08 14:42:37 by sikpenou         ###   ########.fr       */
+/*   Created: 2019/11/03 11:55:15 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/11/05 23:31:41 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lst_sort(t_lst **begin_list, int (*cmp)())
+void	ft_lstfree_head(t_head **head)
 {
-	void		*tmp;
-	t_lst		*elem;
-
-	if (!begin_list || !*begin_list || !cmp)
-		return ;
-	elem = *begin_list;
-	while (elem->next)
-	{
-		if ((*cmp)(elem->content, (elem->next)->content) > 0)
-		{
-			tmp = elem->content;
-			elem->content = (elem->next)->content;
-			(elem->next)->content = tmp;
-			elem = *begin_list;
-		}
-		else
-			elem = elem->next;
-	}
+	printf("in free head, freeing: *head: %p\n", *head);
+	ft_free((void **)head);
+	return ;
 }

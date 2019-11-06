@@ -59,13 +59,13 @@ void	add_path(t_lst **path_list, t_path *path)
 	*path_list = new_elem;
 }
 
-void	get_max_len(t_lem *lem)
+void	get_max_dist(t_lem *lem)
 {
 	size_t			ants;
 	long unsigned	n;
 
 	ants = lem->nb_ants;
-	lem->max_len = lem->shortest;
+	lem->max_dist = lem->shortest;
 	n = lem->nb_paths;
 	while (n
 }

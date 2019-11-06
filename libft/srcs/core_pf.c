@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 20:26:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/01 18:41:59 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/11/03 20:08:54 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			get_field(t_arg *arg, const char *str, int pos, int check)
 }
 
 int			get_size(va_list arg_list, const char *str, int *pos
-	, unsigned long long int *prec)
+	, unsigned long *prec)
 {
 	unsigned long long int		ret;
 

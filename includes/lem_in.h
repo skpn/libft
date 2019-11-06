@@ -6,65 +6,93 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/31 18:22:06 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/11/06 09:27:38 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-#include <unistd.h>
+# include <unistd.h>
 # include "libft.h"
-
+# define PARENT 1
+# define BROTHER 2
+# define CHILD 3
+void	*g_ptr;
 typedef struct		s_room
 {
-	long			dist;
-	long			walk;
+	unsigned		dist;
+	unsigned		has_lvl;
+	unsigned		walk;
 	char			*name;
-	t_lst			*parents;
-	t_lst			*children;
+	t_head			*parents;
+	t_head			*children;
 }					t_room;
+
+typedef struct		s_lvl
+{
+	unsigned		dist;
+	t_head			*rooms;
+}					t_lvl;
 
 typedef struct		s_path
 {
-	long			len;
-	long unsigned	config;
+	unsigned		len;
+	int				completed;
+	unsigned		walk_limit;
 	int				open;
-	t_lst			*rooms;
+	t_head			*rooms;
 }					t_path;
+
+typedef struct		s_config
+{
+	unsigned		turns;
+	unsigned		nb_paths;
+	t_head			*valid_paths;
+	t_head			*test_paths;
+}					t_config;
 
 typedef struct 		s_lem
 {
 	size_t			nb_ants;
-	long unsigned	nb_rooms;
-	long unsigned	max_paths;
-	long unsigned	nb_paths;
-	long unsigned	shortest;
-	long unsigned	config;
-	long unsigned	turns;
-	long unsigned	longest;
-	long unsigned	max_len;
+	unsigned		nb_rooms;
+	unsigned		max_paths;
+	unsigned		shortest;
+	unsigned		turns;
+	unsigned		max_dist;
 	char			*anthill;
-	t_lst			*rooms;
+	t_head			*rooms;
 	t_room			*start;
 	t_room			*end;
-	t_lst			*paths;
+	t_config		*config;
 }					t_lem;
 
+int					gnl_lem_in(int fd, unsigned *pos, unsigned *done
+	, char **line);
+char				*ft_strjoin_anthill(char **s1, char **s2, int opt);
 int					parse_ants(t_lem *lem, char **line, int *index);
 int					parse_room(t_lem *lem, char **line, int *index);
 int					parse_tube(t_lem *lem, char **line, int *index);
 
 int					set_graph(t_lem *lem);
 
-t_room				*new_room(t_lst *parents, t_lst *children);
-void				free_room(t_room **room);
-t_path				*new_path(t_lst *rooms);
+t_room				*new_room(void);
+void				free_room(t_head *rooms, t_room **room);
+t_path				*new_path(void);
 void				free_path(t_path **path);
-int					exit_lem(t_lem **lem, char *msg, int ret);
+int					exit_lem(t_lem *lem, char *msg, int ret);
 int					parse_input(t_lem *lem);
+void				set_next_lvl_dists(t_lvl *lvl);
+void				set_next_lvl_families(t_lvl *lvl);
+void				get_next_lvl_rooms(t_lvl *lvl);
 
-void				print_anthill(t_lem *lem);
+
+void				print_anthill(char *lem);
 void				print_lem(t_lem *lem, char *args);
-void				print_room(t_room *room, char *args, int opt);
+void				print_room(t_room *room);
+void				print_rooms(t_head *rooms);
+//void				print_room(t_room *room, char *args, int opt);
+//void				print_rooms(t_head *rooms, char *args, int opt);
+//void				print_rooms_addr(t_head *rooms);
+void				print_lvl(t_lvl *lvl);
 #endif

@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/10/31 13:02:13 by sikpenou         ###   ########.fr        #
+#    Updated: 2019/11/03 17:26:53 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,24 +39,22 @@ SRCFILES = \
 			ft_isspace.c \
 			ft_itoa.c \
 			ft_itoa_base.c \
-			ft_lst_at.c \
-			ft_lstfind.c \
-			ft_lstjoin.c \
 			ft_lst_last.c \
-			ft_lst_merge.c \
 			ft_lstsize.c \
-			ft_lst_sort.c \
+			ft_lstsort.c \
+			ft_lstcycle.c \
 			ft_lstadd.c \
 			ft_lstadd_back.c \
 			ft_lstadd_new.c \
-			ft_lstclr.c \
-			ft_lstcycle.c \
-			ft_lstdel.c \
-			ft_lstdelone.c \
-			ft_lstiter.c \
-			ft_lstmap.c \
 			ft_lstnew.c \
+			ft_lstnew_elem.c \
+			ft_lstnew_head.c \
+			ft_lstfree.c \
+			ft_lstfree_elem.c \
+			ft_lstfree_head.c \
+			ft_lstjoin.c \
 			ft_lstpop.c \
+			ft_lstfind.c \
 			ft_lstprint.c \
 			ft_malloc.c \
 			ft_max.c \

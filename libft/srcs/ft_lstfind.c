@@ -6,24 +6,28 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 16:07:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/30 21:38:00 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/11/03 22:40:56 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_lst		*ft_lstfind(t_lst *begin_list, void *match)
+t_lst	*ft_lstfind(t_head *head, void *match)
 {
-	t_lst		*elem;
+	t_lst	*elem;
 
-	if (!begin_list || !match)
-		return (NULL);
-	elem = begin_list;
-	while (elem)
+	if (match && head->first)
 	{
-		if (elem->content == match)
-			return (elem);
-		elem = elem->next;
+		if (head->last == match || head->last->content == match)
+			elem = head->last;
+		else
+			elem = head->first;
+		while (elem)
+		{
+			if (elem == match || elem->content == match)
+				return (elem);
+			elem = elem->next;
+		}
 	}
 	return (NULL);
 }

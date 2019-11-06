@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_lsttransfer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 18:05:15 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/08 18:05:16 by sikpenou         ###   ########.fr       */
+/*   Created: 2019/11/03 13:06:27 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/11/03 13:19:10 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_lst *lst, void (*f)(t_lst *elem))
+void	ft_lsttransfer(t_head *head_from, t_head *head_to, t_lst *elem)
 {
-	while (lst)
-	{
-		f(lst);
-		lst = lst->next;
-	}
+	t_lst	*transfer;
+
+	if (!(transfer = ft_lstpop(head_from, elem)))
+		return ;
+	ft_lstadd(head_to, transfer);
 }

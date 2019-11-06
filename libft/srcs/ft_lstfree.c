@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   easyfree_ptr.c                                      :+:      :+:    :+:   */
+/*   ft_lstclr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 15:04:30 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/05 23:41:03 by sikpenou         ###   ########.fr       */
+/*   Created: 2019/10/08 18:03:51 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/11/03 20:07:55 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-void	ft_free(void **ptr)
+void	ft_lstfree(t_head **head, int opt_elems, int opt_head)
 {
-	printf("in ft_free freeing *ptr: %p\n", *ptr);
-	if (!*ptr)
-		return ;
-	if (EASY)
-		easyfree((void **)ptr);
-	else
-		free(*ptr);
-	*ptr = NULL;
+	t_lst	*elem;
+
+	if (*head && (elem = (*head)->first))
+	{
+		while (elem->next)
+		{
+			elem = elem->next;
+			ft_lstfree_elem(&(elem->prev), opt_elems);
+		}
+		ft_lstfree_elem(&(elem), opt_elems);
+	}
+	if (opt_head)
+		ft_lstfree_head(head);
+	return ;
 }

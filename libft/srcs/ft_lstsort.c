@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_lstsort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 18:04:37 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/08 18:04:46 by sikpenou         ###   ########.fr       */
+/*   Created: 2019/11/03 13:01:46 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/11/03 17:08:27 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdelone(t_lst **alst, void (*del)(void*, size_t))
+void	ft_lstsort(t_head *head, int (*cmp)())
 {
-	del((*alst)->content, (*alst)->content_size);
-	ft_memdel((void **)alst);
+	t_lst		*elem;
+
+	if (!head || !head->first || !cmp)
+		return ;
+	elem = head->first;
+	while (elem->next)
+	{
+		if ((*cmp)(elem->content, (elem->next)->content) > 0)
+		{
+			ft_lstswap_elems(head, elem, elem->next);
+		}
+		else
+			elem = elem->next;
+	}
 }

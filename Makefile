@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/10/31 14:27:40 by sikpenou         ###   ########.fr        #
+#    Updated: 2019/11/02 22:14:05 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,12 @@ SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 SRC_FILES =	main_lem.c				\
 			exit_lem.c				\
 			parser_lem.c			\
+			gnl_lem_in.c			\
 			parser_ants.c			\
 			parser_rooms.c			\
 			parser_tubes.c			\
 			set_graph.c				\
+			set_lvl.c				\
 			display_lem.c
 
 SRC_DIR = ./srcs/

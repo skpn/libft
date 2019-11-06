@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclr.c                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 18:03:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/31 12:32:36 by sikpenou         ###   ########.fr       */
+/*   Created: 2019/11/02 16:07:59 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/11/02 16:08:46 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_lstclr(t_lst **begin_list, int opt)
+pop()
 {
-	t_lst *tmp;
-
-	if (!(*begin_list))
-		return ;
-	while (*begin_list)
+	if (lst->next)
 	{
-		tmp = (*begin_list)->next;
-		opt ? easyfree((void **)(*begin_list)->content) : 0;
-		easyfree((void **)begin_list);
-		*begin_list = tmp;
+		lst->next->prev = lst->prev;
 	}
-	*begin_list = NULL;
+	if (lst->prev)
+	{
+		lst->prev->next = lst->next;
+	}
 }
