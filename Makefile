@@ -49,7 +49,7 @@ LIB_DIR = libft/
 
 all: $(NAME)
 
-$(NAME): $(INCLS) $(LIB_INCLS) $(SRCS) $(LIB)
+$(NAME): $(INCLS) $(LIB_INCLS) $(SRCS) $(LIB) Makefile
 	@/bin/echo "make $(notdir $(NAME))"
 	@rm -f auteur
 	@echo sikpenou > auteur

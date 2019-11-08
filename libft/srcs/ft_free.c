@@ -15,11 +15,5 @@
 
 void	ft_free(void **ptr)
 {
-	if (!*ptr)
-		return ;
-	if (EASY)
-		easyfree((void **)ptr);
-	else
-		free(*ptr);
-	*ptr = NULL;
+	easyfree((void **)ptr);
 }

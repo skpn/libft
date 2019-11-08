@@ -27,7 +27,8 @@ char	*ft_strjoin_anthill(char **s1, char **s2, int opt)
 	{
 		len1 = ft_strlen(*s1);
 		len2 = ft_strlen(*s2);
-		if (!(new = (char *)malloc(len1 + len2 + 2)))
+		dprintf(g_fd, "malloc for joinanthill\n");
+		if (!(new = (char *)easymalloc(len1 + len2 + 2)))
 			return (NULL);
 		ft_strcpy(new, *s1);
 		ft_strcpy(new + len1, *s2);
@@ -36,7 +37,9 @@ char	*ft_strjoin_anthill(char **s1, char **s2, int opt)
 	else if (*s1 || *s2)
 		new = *s1 ? ft_strjoin_anthill(s1, &backn, LEFT)
 			: ft_strjoin_anthill(s2, &backn, 0);
+	opt == BOTH || opt == LEFT ? dprintf(g_fd, "join anthill free s1\n") : 0;
 	opt == BOTH || opt == LEFT ? ft_free((void **)s1) : 0;
+	opt == BOTH || opt == RIGHT ? dprintf(g_fd, "join anthill free s2\n") : 0;
 	opt == BOTH || opt == RIGHT ? ft_free((void **)s2) : 0;
 	return (new);
 }
@@ -66,6 +69,7 @@ int		parse_input(t_lem *lem)
 		PRINTPOSN;
 	}
 		PRINTPOSN;
+	dprintf(g_fd, "freeing line after read\n");
 	ft_free((void **)&line);
 		PRINTPOSN;
 	lem->shortest = 0xFFFFFFFF;

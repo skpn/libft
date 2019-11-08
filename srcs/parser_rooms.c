@@ -62,8 +62,10 @@ int		parse_room(t_lem *lem, char **line, int *index)
 	if (!(*line)[i])
 		return (0);
 	(*line)[i] = 0;
+	dprintf(g_fd, "line dup for room name\n");
 	if (!(room->name = ft_strdup(*line)) || !parse_coord(*line + i))
 		return (0);
+	dprintf(g_fd, "new list elem for room\n");
 	if (!(ft_lstadd_new(lem->rooms, room)))
 		return (0);
 	if (start_end)

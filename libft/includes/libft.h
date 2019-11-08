@@ -59,7 +59,9 @@
 #include <stdio.h>
 #define PRINTPOS printf("%s %d", __func__, __LINE__); fflush(0)
 #define PRINTPOSN printf("%s %d\n", __func__, __LINE__); fflush(0)
+#define DPRINTPOSN dprintf(g_fd, "%s %d\n", __func__, __LINE__); fflush(0)
 void	*g_addr;
+int		g_fd;
 typedef struct			s_lst
 {
 	void				*content;

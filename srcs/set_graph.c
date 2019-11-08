@@ -70,6 +70,7 @@ void	add_children_to_next_lvl(t_head *rooms, t_head *children)
 void	get_next_lvl_rooms(t_lvl *lvl)
 {
 	t_lst	*current_rooms;
+	t_lst	*tmp;
 	t_room	*parent;
 
 	current_rooms = lvl->rooms->first;
@@ -83,7 +84,9 @@ void	get_next_lvl_rooms(t_lvl *lvl)
 		printf("to list:\n");
 		ft_lstprint(lvl->rooms, "next lvl rooms", NONE);
 		add_children_to_next_lvl(lvl->rooms, parent->children);
+		tmp = current_rooms;
 		current_rooms = current_rooms->next;
+		ft_lstfree_elem(&tmp, FREE_LINKS);
 	}
 }
 
@@ -116,11 +119,10 @@ int		set_graph(t_lem *lem)
 		printf("AFTER GETTING NEXT LVL\n");
 		print_lvl(lvl);
 	}
+	ft_lstfree(&lvl->rooms, FREE_LINKS, FREE_HEAD);
+	ft_free((void **)&lvl);
 	if (!(check_graph(lem)))
 		return (0);
-	ft_lstfree_head(&lvl->rooms);
-	lvl->rooms = NULL;
-	ft_free((void **)&lvl);
 	print_rooms(lem->rooms);
 	return (1);
 }

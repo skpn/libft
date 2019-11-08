@@ -30,34 +30,40 @@ t_room	*new_room(void)
 {
 	t_room			*room;
 
+	dprintf(g_fd, "allocating room\n");
 	if (!(room = (t_room *)easymalloc(sizeof(*room))))
 		return (0);
 	ft_memset(room, 0, sizeof(*room));
 	room->dist = 0xFFFFFFFF;
+	dprintf(g_fd, "allocating room parents head\n");
 	if (!(room->parents = ft_lstnew_head(NULL, NULL)))
 		return (0);
+	dprintf(g_fd, "allocating room children head\n");
 	if (!(room->children = ft_lstnew_head(NULL, NULL)))
 		return (0);
-	printf("room malloc at address: %p\n", room);
 	return (room);
 }
 
 int		init_lem_struct(t_lem **lem)
 {
+	dprintf(g_fd, "allocating lem struct\n");
 	if (!(*lem = (t_lem *)easymalloc(sizeof(**lem))))
 		return (0);
 	ft_memset(*lem, 0, sizeof(**lem));
+	dprintf(g_fd, "allocating lem rooms head\n");
 	if (!((*lem)->rooms = ft_lstnew_head(NULL, NULL)))
 		return (0);
 	(*lem)->max_dist = 0xFFFFFFFF;
 	(*lem)->max_paths = 0xFFFFFFFF;
 	return (1);
 }
-
+#include <fcntl.h>
 int		main(void)
 {
 	t_lem	*lem;
 
+	g_fd = open("debug", O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	dprintf(g_fd, "%s %d\n", __func__, __LINE__);
 	if (!(init_lem_struct(&lem)))
 		return (exit_lem(lem, "init failed\n", 1));
 	PRINTPOSN;
