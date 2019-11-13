@@ -19,12 +19,20 @@
 # define BROTHER 2
 # define CHILD 3
 void	*g_ptr;
+typedef struct		s_path
+{
+	unsigned		load;
+	unsigned		len;
+	t_head			*rooms;
+}					t_path;
+
 typedef struct		s_room
 {
 	unsigned		dist;
 	unsigned		has_lvl;
 	unsigned		walk;
 	char			*name;
+	t_path			*current_path;
 	t_head			*parents;
 	t_head			*children;
 }					t_room;
@@ -35,21 +43,11 @@ typedef struct		s_lvl
 	t_head			*rooms;
 }					t_lvl;
 
-typedef struct		s_path
-{
-	unsigned		len;
-	int				completed;
-	unsigned		walk_limit;
-	int				open;
-	t_head			*rooms;
-}					t_path;
-
 typedef struct		s_config
 {
 	unsigned		turns;
 	unsigned		nb_paths;
-	t_head			*valid_paths;
-	t_head			*test_paths;
+	t_head			*paths;
 }					t_config;
 
 typedef struct 		s_lem
@@ -58,7 +56,6 @@ typedef struct 		s_lem
 	unsigned		nb_rooms;
 	unsigned		max_paths;
 	unsigned		shortest;
-	unsigned		turns;
 	unsigned		max_dist;
 	char			*anthill;
 	t_head			*rooms;
@@ -85,6 +82,9 @@ int					parse_input(t_lem *lem);
 void				set_next_lvl_dists(t_lvl *lvl);
 void				set_next_lvl_families(t_lvl *lvl, t_room *end);
 void				get_next_lvl_rooms(t_lvl *lvl);
+int					seek_paths(t_lem *lem);
+int					update_config(t_lem *lem, t_config *config
+	, t_path *new_path);
 
 
 void				print_anthill(char *lem);

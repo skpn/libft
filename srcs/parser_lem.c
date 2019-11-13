@@ -56,25 +56,16 @@ int		parse_input(t_lem *lem)
 	tab[1] = parse_room;
 	tab[2] = parse_tube;
 	index = 0;
-	while ((ret = gnl_lem_in(0, &(lem->shortest), &(lem->turns), &line) > 0))
+	while ((ret = gnl_lem_in(0, &(lem->shortest), &(lem->max_dist), &line) > 0))
 	{
-		PRINTPOSN;
 		if (!(tab[index](lem, &line, &index)))
 			return (-1);
-		PRINTPOSN;
-		printf("before join anthill line: %p, '%s'\n", line, line);
 		if (!(lem->anthill = ft_strjoin_anthill(&(lem->anthill), &line, LEFT)))
 			return (-1);
-		printf("after join anthill line: %p, '%s'\n", line, line);
-		PRINTPOSN;
 	}
-		PRINTPOSN;
 	dprintf(g_fd, "freeing line after read\n");
 	ft_free((void **)&line);
-		PRINTPOSN;
 	lem->shortest = 0xFFFFFFFF;
-		PRINTPOSN;
-	lem->turns = 0;
-		PRINTPOSN;
+	lem->max_dist = 0;
 	return (ret ? 0 : 1);
 }

@@ -70,8 +70,7 @@ void	free_paths(t_head **paths)
 
 void	free_config(t_config **config)
 {
-	ft_lstfree(&(*config)->valid_paths, FREE_LINKS, FREE_HEAD);
-	ft_lstfree(&(*config)->test_paths, FREE_LINKS, FREE_HEAD);
+	ft_lstfree(&(*config)->paths, FREE_LINKS, FREE_HEAD);
 	ft_free((void **)config);
 }
 

@@ -1,8 +1,4 @@
 
-
-GNL
-lire en une fois
-
 STRUCTURES DE SALLES
 hash table / red trees
 
@@ -23,57 +19,46 @@ start points to end: 1 turn
 same link twice (check if room already in children before adding)
 
 MAX PATHS
-min number of rooms at any given distance from start (counting end as a room)
+min number of rooms at any given level between start and end
 
 ABSOLUTE MAX LEN
 the absolute max len is the len accepted with the shortest path alone, as any valid
 	added path will improve the number of turns and thus reduce max len, so it
 	is logical that the max len for the worst scenario (nb path = 1) is absolute
 given S the length of short path, A the number of ants:
-the fist ant takes S turns to get to end. then, all other ants (A - 1) need 1
+the first ant takes S turns to get to end. then, all other ants (A - 1) need 1
 	turn to step in (because there is one path)
-maxlen = S + (A / 1) - 2
+maxlen = S + A - 1
 
-ACTUALIZED MAX LEN
+LOAD BALANCING
+we start with a number of turns = 0, remaining ants = max ants, and a load = 0,
+	on the longest path
+we know that to not be late we have to limit the numnber of ants on the path and
+	keep at least the difference between the current path and the shortest path
+	of ants in reserve
+so we take out these, and we divide the rest between the live paths
+when we do that we have the number of turns that this path (and all the shorter
+ones) have to live
+thus we know that for this number of turns this path and the
+shorter ones all take one ant per turn
+thus we know how many ants are gone when we "kill" this path, and that it has
+taken the max number of ants to not be late
+====
+ants = max ants, live paths = max paths, turns = 0
+while (live_paths)
+	added_turns = (ants - (len_path - shortest)) / live_paths
+	ants = ants - live_paths * added_turns
+	turns = turns + added_turns
+	path_turns = turns
+	live_paths = live_paths - 1
 
-SET DISTS
-on a deux listes, current lvl et next lvl. au debut current lvl est egal a
-start. puis on lance une fct set_dist_n qui:
-	prend la liste des salles de l'etage actuel et un lvl n
-	l'envoie a get next lvl, qui fait un listjoin des enfants de toutes les
-		salles de l'etage actuel, et ca nous donne l'etage d'apres
-	si la next_lvl est null, on a plus d'enfants et qu'on a pas atteint end le
-		graph est invalide
-	set les distances de l'etage d'apres en comptant pour connaitre le nombre de
-		salles et mettre a jour les goulets
-	puis d'apres ces distances on divise les listes enfants en liste parents et
-		liste enfants
-	puis la liste next_lvl devient la liste current_lvl
-	si dans la liste actualisee il y a maintenant end on calcule absolute_max_len
-		qui est pourl'instant set a long max
-	si n < maxlen on rappelle la fonction
-	sinon on return
+PATH SEEKING
+possible paths will be explored iteratively, starting from end
+when a branch is closed, we double back on it and mark the 
 
-pour set les dists:
-on set la distance d'une salle enfant si sa distance actuelle est superieure a
-	celle qu'on essaye de set
-
-pour repartir parents enfants
-si la child_dist <= room_dist, child devient parent
-
-TROUVER LES CHEMINS
-on arrive apres le bfs avec max len
-on applique ces principes pour trouver les chemins en marchant:
+PRIORITE DE SALLES
  - on ne depasse pas max len
  - on marche en priorite vers les salles ou on est le moins passe
  - entre deux salles ou on est autant passes, on marche vers la plus proche de
  	start
- - si on essaye de trouver n chemins (tour n) de l'algo, on peut passer sur une
- 	salle ou on a deja marche au plus n-1 fois
- - on s'arrete quand on ne peut plus sortir de end en respectant la regle de n-1
-
-qu'est ce qui arrive si je pars sur un chemin qui ne mene nulle part ou est
-bloque ? comment je fais pour ne pas repasser dedans au tour d'apres ?
---> si on le fait en semi backtracking les walk s'enregistrent (ou non) tout
-	seuls
-
+ - si on a atteint max paths on s'arrete

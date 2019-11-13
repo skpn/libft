@@ -76,6 +76,10 @@ int		main(void)
 		print_rooms(lem->rooms);
 		return (exit_lem(lem, "ERROR", 2));
 	}
+	if (!seek_paths(lem))
+	{
+		return (exit_lem(lem, "ERROR", 2));
+	}
 	PRINTPOSN;
 //	print_lem(lem, "ar");
 	return (0);

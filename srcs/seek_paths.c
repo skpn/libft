@@ -1,71 +1,68 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   seek_paths.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/06 12:31:54 by hehlinge         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include "lem_in"
+#include "lem_in.h"
+#include "libft.h"
 
-void	update_paths(t_lst **pathlist, long unsigned config)
+t_room	*get_next_room(t_path *current_path, t_lst *room_list)
 {
-	t_lst			*elem;
-	t_lst			*tmp;
-	t_path			*path;
+	t_room	*next;
+	t_room	*test;
 
-	elem = *pathlist;
-	lem->nb_paths; = 0;
-	while (elem && (path = elem->content))
+	next = NULL;
+	while (room_list)
 	{
-		if (path->config != config)
+		test = room_list->content;
+		if (!next || next->walk > test->walk || next->dist > test->dist)
+			if (test->current_path != current_path)
+				next = test;
+		room_list = room_list->next;
+	}
+	return (next);
+}
+
+int		try_path(t_lem *lem, t_path *path, t_room *current)
+{
+	t_room	*next;
+
+	while (1)
+	{
+		current->walk++;
+		current->current_path = path;
+		next = get_next_room(path, current->children->first);
+		if (next == NULL)
+			return (0);
+		else if (next->dist == 0)
+			return (1);
+		if (path->rooms->size == lem->max_dist)
+			return (0);
+		if (!(ft_lstadd_new(path->rooms, current)))
+			return (0);
+		current = next;
+	}
+}
+
+int		seek_paths(t_lem *lem)
+{
+	t_path	*test_path;
+	t_room	*start_room;
+
+	if (!(test_path = new_path()))
+		return (0);
+	while (lem->config->nb_paths < lem->max_paths)
+	{
+		start_room = get_next_room(NULL, lem->start->children->first);
+		if (!start_room)
+			return (0);
+		if (try_path(lem, test_path, start_room) == 1)
 		{
-			tmp = ft_lstpop(pathlist, elem);
-			free_path(&path);
-			ft_free(tmp);
+			if (update_config(lem, lem->config, test_path) == 0)
+				return (0);
+			if (!(test_path = new_path()))
+				return (0);
 		}
 		else
-			lem->nb_paths++;
-	}
-}
-
-void	add_path(t_lst **path_list, t_path *path)
-{
-	t_lst	*elem;
-	t_lst	*new_elem;
-	t_path	*comp;
-
-	elem = *path_list;
-	new_elem = ft_lstnew(NULL, 0);
-	new_elem->content = path;
-	if (elem->next)
-	{
-		while (elem->next && (comp = elem->next->content))
 		{
-			if (comp->len < path->len)
-			{
-				new_elem->next = elem->next;
-				elem->next = new_elem;
-				return ;
-			}
-			elem = elem->next;
+			ft_lstfree(&test_path->rooms, FREE_LINKS, KEEP_HEAD);
 		}
 	}
-	new_elem->next = *path_list;
-	*path_list = new_elem;
-}
-
-void	get_max_dist(t_lem *lem)
-{
-	size_t			ants;
-	long unsigned	n;
-
-	ants = lem->nb_ants;
-	lem->max_dist = lem->shortest;
-	n = lem->nb_paths;
-	while (n
+	return (1);
 }

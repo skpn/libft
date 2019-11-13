@@ -14,19 +14,21 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-NAME = lem_in
+NAME = lem-in
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-SRC_FILES =	main_lem.c				\
-			exit_lem.c				\
-			parser_lem.c			\
-			gnl_lem_in.c			\
-			parser_ants.c			\
-			parser_rooms.c			\
-			parser_tubes.c			\
-			set_graph.c				\
-			set_lvl.c				\
+SRC_FILES =	main_lem.c \
+			exit_lem.c \
+			parser_lem.c \
+			gnl_lem_in.c \
+			parser_ants.c \
+			parser_rooms.c \
+			parser_tubes.c \
+			set_graph.c \
+			set_lvl.c \
+			set_config.c \
+			seek_paths.c \
 			display_lem.c
 
 SRC_DIR = ./srcs/
