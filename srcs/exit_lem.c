@@ -18,9 +18,13 @@ void	free_room(t_head *rooms, t_room **room)
 {
 	print_room(*room);
 	ft_lstpop(rooms, *room);
+	dprintf(g_fd, "freeing room name\n");
 	ft_free((void **)&(*room)->name);
-	ft_lstfree_head(&(*room)->parents);
-	ft_lstfree_head(&(*room)->children);
+	dprintf(g_fd, "freeing room parents head\n");
+	ft_lstfree(&(*room)->parents, FREE_LINKS, FREE_HEAD);
+	dprintf(g_fd, "freeing room children head\n");
+	ft_lstfree(&(*room)->children, FREE_LINKS, FREE_HEAD);
+	dprintf(g_fd, "freeing room itself\n");
 	ft_free((void **)room);
 }
 
@@ -36,9 +40,11 @@ void	free_rooms(t_head **rooms)
 	{
 		tmp = elem->next;
 		free_room(*rooms, (t_room **)&elem->content);
+		dprintf(g_fd, "freeing room link\n");
 		ft_lstfree_elem(&elem, FREE_LINKS);
 		elem = tmp;
 	}
+	dprintf(g_fd, "freeing room head\n");
 	ft_lstfree_head(rooms);
 	printf("rooms freed ok\n");
 }
@@ -92,7 +98,9 @@ int		exit_lem(t_lem *lem, char *msg, int ret)
 		free_rooms(&lem->rooms);
 	}
 	msg ? write(1, msg, ft_strlen(msg)) : 0;
+	dprintf(g_fd, "freeing anthill\n");
 	ft_free((void **)&lem->anthill);
+	dprintf(g_fd, "freeing lem\n");
 	ft_free((void **)&lem);
 	return (ret);
 }

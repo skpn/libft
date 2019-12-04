@@ -14,10 +14,11 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-NAME = lem_in
+NAME = lem-in
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
+<<<<<<< HEAD
 SRC_FILES =	main_lem.c				\
 			init_structs_lem.c		\
 			exit_lem.c				\
@@ -29,6 +30,19 @@ SRC_FILES =	main_lem.c				\
 			set_graph.c				\
 			set_lvl.c				\
 			clean_graph.c			\
+=======
+SRC_FILES =	main_lem.c \
+			exit_lem.c \
+			parser_lem.c \
+			gnl_lem_in.c \
+			parser_ants.c \
+			parser_rooms.c \
+			parser_tubes.c \
+			set_graph.c \
+			set_lvl.c \
+			set_config.c \
+			seek_paths.c \
+>>>>>>> 96f7d4e307ecb34585e26d44e0e5cfae627b55ba
 			display_lem.c
 
 SRC_DIR = ./srcs/
@@ -51,7 +65,7 @@ LIB_DIR = libft/
 
 all: $(NAME)
 
-$(NAME): $(INCLS) $(LIB_INCLS) $(SRCS) $(LIB)
+$(NAME): $(INCLS) $(LIB_INCLS) $(SRCS) $(LIB) Makefile
 	@/bin/echo "make $(notdir $(NAME))"
 	@rm -f auteur
 	@echo sikpenou > auteur

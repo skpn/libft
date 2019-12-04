@@ -59,7 +59,9 @@
 #include <stdio.h>
 #define PRINTPOS printf("%s %d", __func__, __LINE__); fflush(0)
 #define PRINTPOSN printf("%s %d\n", __func__, __LINE__); fflush(0)
+#define DPRINTPOSN dprintf(g_fd, "%s %d\n", __func__, __LINE__); fflush(0)
 void	*g_addr;
+int		g_fd;
 typedef struct			s_lst
 {
 	void				*content;
@@ -176,6 +178,8 @@ t_head					*ft_lstnew(void *content);
 t_lst					*ft_lstnew_elem(void *content);
 t_head					*ft_lstnew_head(t_lst *first, t_lst *last);
 void					ft_lstadd(t_head *head, t_lst *newl);
+void					ft_lstadd_sorted(t_head *head, t_lst *newl
+	, int (*cmp)(t_lst *, t_lst *));
 void					ft_lstadd_back(t_head *head, t_lst *newl);
 t_lst					*ft_lstadd_new(t_head *head, void *content);
 t_lst					*ft_lstpop(t_head *head, void *match);
@@ -185,7 +189,7 @@ t_lst					*ft_lstfind(t_head *head, void *match);
 void					ft_lstfree(t_head **head, int opt_elems, int opt_head);
 void					ft_lstfree_elem(t_lst **elem, int opt);
 void					ft_lstfree_head(t_head **head);
-void					ft_lstsort(t_head *head, int (*f_cmp)());
+void					ft_lstsort(t_head *head, int (*f_cmp)(t_lst *, t_lst *));
 void					ft_lstswap_elems(t_head *head, t_lst *elem_1
 	, t_lst *elem_2);
 int						ft_max(int a, int b);

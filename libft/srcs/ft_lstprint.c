@@ -15,17 +15,17 @@
 void	print_content(void *content, unsigned opt)
 {
 	if (opt == CTYPE)
-		printf("content: '%c'\n", (char)content);
+		printf("content: '%c'\n", *(char *)content);
 	else if(opt == STYPE)
 		printf("content: '%s'\n", (char *)content);
 	else if(opt == DTYPE)
-		printf("content: %d\n", (int)content);
+		printf("content: %d\n", *(int *)content);
 	else if(opt == UTYPE)
-		printf("content: %u\n", (unsigned)content);
+		printf("content: %u\n", *(unsigned *)content);
 	else if(opt == OTYPE)
-		printf("content: %o\n", (unsigned)content);
+		printf("content: %o\n", *(unsigned *)content);
 	else if(opt == XTYPE)
-		printf("content: %x\n", (unsigned)content);
+		printf("content: %x\n", *(unsigned *)content);
 }
 
 void	ft_lstprint(t_head *head, char *name, unsigned opt)

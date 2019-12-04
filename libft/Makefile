@@ -44,6 +44,7 @@ SRCFILES = \
 			ft_lstsort.c \
 			ft_lstcycle.c \
 			ft_lstadd.c \
+			ft_lstadd_sorted.c \
 			ft_lstadd_back.c \
 			ft_lstadd_new.c \
 			ft_lstnew.c \

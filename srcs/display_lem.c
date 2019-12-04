@@ -69,22 +69,46 @@ void	print_lvl(t_lvl *lvl)
 	print_rooms(lvl->rooms);
 }
 
-void	print_paths(t_head *paths)
-{
-	(void)paths;
-	printf("paths: paths... paths! haha no paths for you\n");
-}
-
 void	print_anthill(char *anthill)
 {
 	printf("anthill:\n---\n'%s'\n---\n", anthill);
 }
 
+void	print_paths(t_head *paths)
+{
+	t_lst		*path_list;
+	t_path		*path_content;
+	t_lst		*path_rooms;
+	unsigned	nb_paths;
+
+	printf("paths? paths !\n");
+	nb_paths = paths->size;
+	path_list = paths->first;
+	while (path_list)
+	{
+		path_content = path_list->content;
+		path_rooms = path_content->rooms->first;
+		printf("path %u\n", --nb_paths);
+		while (path_rooms)
+		{
+			printf("%s -- ", ((t_room *)path_rooms->content)->name);
+			path_rooms = path_rooms->next;
+		}
+		printf("\n");
+		path_list = path_list->next;
+	}
+}
+
 void	print_config(t_config *config)
 {
 	printf("config turns   : %u\n", config->turns);
+<<<<<<< HEAD
 	printf("config paths size: %u\n", config->paths->size);
 	printf("paths:\n");
+=======
+	printf("config nb_paths: %u\n", config->nb_paths);
+	printf("valid paths:\n");
+>>>>>>> 96f7d4e307ecb34585e26d44e0e5cfae627b55ba
 	print_paths(config->paths);
 }
 
@@ -97,7 +121,6 @@ void	print_lem(t_lem *lem, char *args)
 	printf("nb_rooms  : %u\n", lem->nb_rooms);
 	printf("max_paths : %u\n", lem->max_paths);
 	printf("shortest  : %u\n", lem->shortest);
-	printf("turns     : %u\n", lem->turns);
 	printf("max_dist  : %u\n", lem->max_dist);
 	if (ft_strchr_pos(args, 'a'))
 		print_anthill(lem->anthill);

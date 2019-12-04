@@ -17,32 +17,34 @@
 #include <limits.h>
 #include "libft.h"
 
+int		ft_cmp(t_lst *a, t_lst *b)
+{
+	if (ft_strcmp((char *)a->content, (char *)b->content) < 0)
+		return (0);
+	return (1);
+}
+
 int		main(int ac, char **av)
 {
 	if(!ac || !av)
 		return(0);
 	t_head	*head_a;
-	t_head	*head_b;
+//	t_head	*head_b;
 	t_lst	*elem_a_1;
-	t_lst	*elem_a_2;
-	t_lst	*elem_a_3;
+//	t_lst	*elem_a_2;
+//	t_lst	*elem_a_3;
+	int		pos;
 
 	head_a = ft_lstnew_head(NULL, NULL);
-	head_b = ft_lstnew_head(NULL, NULL);
-	elem_a_1 = ft_lstnew_elem(NULL);
-	elem_a_2 = ft_lstnew_elem(NULL);
-	elem_a_3 = ft_lstnew_elem(NULL);
-	ft_lstadd(head_a, elem_a_1);
-	ft_lstadd(head_a, elem_a_2);
-	ft_lstadd(head_a, elem_a_3);
-	elem_a_1->content = ft_strdup(av[1]);
-	elem_a_2->content = ft_strdup(av[2]);
-	elem_a_3->content = ft_strdup(av[3]);
+//	head_b = ft_lstnew_head(NULL, NULL);
+	pos = 0;
+	while (av[++pos])
+	{
+		elem_a_1 = ft_lstnew_elem(ft_strdup(av[pos]));
+		ft_lstadd_sorted(head_a, elem_a_1, &ft_cmp);
+	}
 	ft_lstprint(head_a, "head_a", STYPE);
-	ft_lstprint(head_b, "head_b", STYPE);
-	ft_lstjoin(head_a, head_b);
-	ft_lstprint(head_b, "head_b", STYPE);
-	ft_lstfree(&head_b, BOTH, BOTH);
+	ft_lstfree(&head_a, BOTH, BOTH);
 }
 
 //__attribute__((destructor))void gdfgdfg(){while (1) ;}

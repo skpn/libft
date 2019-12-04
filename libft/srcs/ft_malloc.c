@@ -95,6 +95,7 @@ void		easyfree(void **match)
 	{
 		if (*match)
 		{
+			dprintf(g_fd, "freed %p\n", *match);
 			free(*match);
 			*match = NULL;
 		}
@@ -117,9 +118,15 @@ void		*easymalloc(size_t size)
 {
 	t_lst	*new_free;
 	t_head	*gc_list;
+	void	*zone;
 
 	if (!EASY)
-		return (ft_memalloc(size));
+	{
+		zone = ft_memalloc(size);
+		dprintf(g_fd, "alloc'd %p\n", zone);
+		return (zone);
+//		return (ft_memalloc(size));
+	}
 	if (size < 1 || !(gc_list = get_gc_list(1)))
 		return (0);
 	if (!(new_free = (t_lst *)malloc(sizeof(t_lst))))
@@ -128,11 +135,6 @@ void		*easymalloc(size_t size)
 	if ((new_free->content = malloc(size)))
 		ft_memset(new_free->content, 0, size);
 	new_free->next = NULL;
-	if (gc_list->last)
-		gc_list->last->next = new_free;
-	else
-		gc_list->first = new_free;
-	gc_list->last = new_free;
-	gc_list->size++;
+	ft_lstadd(gc_list, new_free);
 	return (new_free->content);
 }
