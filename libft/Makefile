@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/11/03 17:26:53 by sikpenou         ###   ########.fr        #
+#    Updated: 2019/11/06 23:02:41 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -144,7 +144,7 @@ $(NAME): $(INCLS) $(SRCS)
 	@rm -f auteur
 	@mkdir -p $(OBJDIR)
 	@make -j --no-print-directory objects
-	@ar src $(NAME) $(OBJS)
+	@ar sr $(NAME) $(OBJS)
 
 objects: $(OBJS)
 

@@ -54,7 +54,7 @@ int		parse_room(t_lem *lem, char **line, int *index)
 		return (parse_tube(lem, line, index));
 	start_end = 0;
 	if (!(manage_start_end(lem, line, &start_end))
-		|| !(room = new_room()))
+		|| !(room = alloc_new_room()))
 		return (0);
 	i = 0;
 	while ((*line)[i] && (*line)[i] != ' ')

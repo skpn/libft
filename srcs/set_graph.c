@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 21:05:19 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/06 15:22:09 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/04 15:51:27 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	update_lem_info(t_lem *lem, t_lvl *lvl)
 		lem->max_dist = lem->shortest + lem->nb_ants - 1;
 	}
 	size = lvl->rooms->size;
-	if (size < lem->max_paths && lvl->dist > 0 && lvl->dist < lem->end->dist)
+	if (size < lem->max_paths && lvl->dist > 0 && (lvl->dist < lem->end->dist
+		|| lvl->dist == 1))
 		lem->max_paths = size;
 }
 
@@ -67,7 +68,7 @@ void	add_children_to_next_lvl(t_head *rooms, t_head *children)
 	}
 }
 
-void	get_next_lvl_rooms(t_lvl *lvl)
+void	get_next_lvl_rooms(t_lem *lem, t_lvl *lvl)
 {
 	t_lst	*current_rooms;
 	t_room	*parent;
@@ -82,7 +83,10 @@ void	get_next_lvl_rooms(t_lvl *lvl)
 		print_room(parent);
 		printf("to list:\n");
 		ft_lstprint(lvl->rooms, "next lvl rooms", NONE);
-		add_children_to_next_lvl(lvl->rooms, parent->children);
+		if (parent->children->first != NULL)
+			add_children_to_next_lvl(lvl->rooms, parent->children);
+		else if (parent != lem->end)
+			kill_dead_rooms(lem, parent);
 		current_rooms = current_rooms->next;
 	}
 }
@@ -111,13 +115,15 @@ int		set_graph(t_lem *lem)
 				"lvl->rooms: %p\nmax_dist: %u\nmax_paths: %u\n\n"
 			, lvl->dist, lem->end->dist, lvl->rooms, lem->max_dist, lem->max_paths);
 		//print_rooms(lem->rooms);
-		get_next_lvl_rooms(lvl);
+		get_next_lvl_rooms(lem, lvl);
 		lvl->dist++;
 		printf("AFTER GETTING NEXT LVL\n");
 		print_lvl(lvl);
 	}
+	PRINTPOSN;
 	if (!(check_graph(lem)))
 		return (0);
+	PRINTPOSN;
 	ft_lstfree_head(&lvl->rooms);
 	lvl->rooms = NULL;
 	ft_free((void **)&lvl);

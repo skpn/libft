@@ -6,66 +6,53 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/06 12:31:54 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/04 22:33:19 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in"
 
-void	update_paths(t_lst **pathlist, long unsigned config)
-{
-	t_lst			*elem;
-	t_lst			*tmp;
-	t_path			*path;
+/*
+5 parties principales:
+	- trouver les chemins
+		- partir de start, lancer get next room, ajouter la room au chemin
+		- si on arrive a end on ajoute le chemin
+		- si on croise un chemin on l'enleve de la config
+	- ajouter un chemin a une config
+		- on ajoute le chemin a la liste de chemins de la config via une
+			fonction de tri par insertion
+	- enlever un chemin a une config
+		- on poppe le chemin de la liste de chemins de la config
+	- ajouter une config
+		- on realise une copie de la derniere config validee et on l'ajoute
+			a la liste de configs de lem
+	- remplacer une config (si on obtient une config avec le meme nombre de
+		chemins, mais un nombre de tours inferieur, on remplace la config
+		la plus lente par la nouvelle)
+		- on poppe l'ancienne config de la liste de configs de lem, on la
+			free, et on ajoute la nouvelle config a la liste de configs
+*/
 
-	elem = *pathlist;
-	lem->nb_paths; = 0;
-	while (elem && (path = elem->content))
-	{
-		if (path->config != config)
-		{
-			tmp = ft_lstpop(pathlist, elem);
-			free_path(&path);
-			ft_free(tmp);
-		}
-		else
-			lem->nb_paths++;
-	}
+int		copy_config(t_lem *lem, t_config *config)
+{
+	
 }
 
-void	add_path(t_lst **path_list, t_path *path)
+int		config_do(int opt, t_lem *lem, t_lem *config, t_path *path)
 {
-	t_lst	*elem;
-	t_lst	*new_elem;
-	t_path	*comp;
-
-	elem = *path_list;
-	new_elem = ft_lstnew(NULL, 0);
-	new_elem->content = path;
-	if (elem->next)
+	if (opt == ADD_PATH)
+		ft_lstadd_new(config->paths, path);
+	else if (opt == POP_PATH)
 	{
-		while (elem->next && (comp = elem->next->content))
-		{
-			if (comp->len < path->len)
-			{
-				new_elem->next = elem->next;
-				elem->next = new_elem;
-				return ;
-			}
-			elem = elem->next;
-		}
+		ft_lstpop(config->paths, path);
+		free_path(&path);
 	}
-	new_elem->next = *path_list;
-	*path_list = new_elem;
-}
-
-void	get_max_dist(t_lem *lem)
-{
-	size_t			ants;
-	long unsigned	n;
-
-	ants = lem->nb_ants;
-	lem->max_dist = lem->shortest;
-	n = lem->nb_paths;
-	while (n
+	else if (opt == ADD_CONFIG)
+		return (copy_config(lem, config));
+	else if (opt == DELETE_CONFIG)
+	{
+		ft_lstpop(lem->config_lst, config);
+		free_config(&config);
+	}
+	return (1);
 }

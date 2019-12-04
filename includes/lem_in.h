@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/06 15:12:49 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/04 22:25:03 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # define PARENT 1
 # define BROTHER 2
 # define CHILD 3
+# define ADD_PATH 0
+# define ADD_PATH 0
+# define ADD_PATH 0
 void	*g_ptr;
 typedef struct		s_room
 {
@@ -37,19 +40,15 @@ typedef struct		s_lvl
 
 typedef struct		s_path
 {
-	unsigned		len;
-	int				completed;
+	unsigned		turns;
 	unsigned		walk_limit;
-	int				open;
 	t_head			*rooms;
 }					t_path;
 
 typedef struct		s_config
 {
 	unsigned		turns;
-	unsigned		nb_paths;
-	t_head			*valid_paths;
-	t_head			*test_paths;
+	t_head			*paths;
 }					t_config;
 
 typedef struct 		s_lem
@@ -64,7 +63,7 @@ typedef struct 		s_lem
 	t_head			*rooms;
 	t_room			*start;
 	t_room			*end;
-	t_config		*config;
+	t_head			*config_lst;
 }					t_lem;
 
 int					gnl_lem_in(int fd, unsigned *pos, unsigned *done
@@ -75,17 +74,18 @@ int					parse_room(t_lem *lem, char **line, int *index);
 int					parse_tube(t_lem *lem, char **line, int *index);
 
 int					set_graph(t_lem *lem);
-
-t_room				*new_room(void);
+int					init_lem(t_lem **lem);
+t_room				*alloc_new_room(void);
 void				free_room(t_head *rooms, t_room **room);
-t_path				*new_path(void);
+t_config			*alloc_new_config(void);
+void				free_config(t_config **config);
+t_path				*alloc_new_path(void);
 void				free_path(t_path **path);
 int					exit_lem(t_lem *lem, char *msg, int ret);
 int					parse_input(t_lem *lem);
 void				set_next_lvl_dists(t_lvl *lvl);
 void				set_next_lvl_families(t_lvl *lvl, t_room *end);
-void				get_next_lvl_rooms(t_lvl *lvl);
-
+void				kill_dead_rooms(t_lem *lem, t_room *dead_room);
 
 void				print_anthill(char *lem);
 void				print_lem(t_lem *lem, char *args);

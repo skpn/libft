@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 14:24:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/04/11 19:12:45 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/11/06 10:22:24 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,10 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	void	*cpy_s;
-	int		len;
+	char	*end;
 
-	if (!(len = n))
-		return ;
-	cpy_s = s;
-	while (cpy_s - s < len)
-	{
-		*(char *)cpy_s = '\0';
-		cpy_s++;
-	}
+	end = (char *)s + n;
+	while (--end >= (char *)s)
+		*end = 0;
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:52:16 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/06 14:31:37 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/04 18:20:35 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,27 @@ void	free_paths(t_head **paths)
 
 void	free_config(t_config **config)
 {
-	ft_lstfree(&(*config)->valid_paths, FREE_LINKS, FREE_HEAD);
-	ft_lstfree(&(*config)->test_paths, FREE_LINKS, FREE_HEAD);
+	ft_lstfree(&(*config)->paths, FREE_LINKS, FREE_HEAD);
 	ft_free((void **)config);
+}
+
+void	free_config_lst(t_head *config_lst)
+{
+	t_lst	*config_elem;
+
+	config_elem = config_lst->first;
+	while (config_elem)
+	{
+		free_config((t_config **)&(config_elem->content));
+		config_elem = config_elem->next;
+	}
+	ft_lstfree(&config_lst, FREE_LINKS, FREE_HEAD);
 }
 
 int		exit_lem(t_lem *lem, char *msg, int ret)
 {
-	if (lem->config)
-		free_config(&lem->config);
+	if (lem->config_lst->first)
+		free_config_lst(lem->config_lst);
 	if (lem->rooms)
 	{
 		PRINTPOSN;

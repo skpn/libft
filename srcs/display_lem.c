@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:50:50 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/06 14:59:50 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/04 18:21:17 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,9 @@ void	print_anthill(char *anthill)
 void	print_config(t_config *config)
 {
 	printf("config turns   : %u\n", config->turns);
-	printf("config nb_paths: %u\n", config->nb_paths);
-	printf("valid paths:\n");
-	print_paths(config->valid_paths);
-	printf("test paths:\n");
-	print_paths(config->test_paths);
+	printf("config paths size: %u\n", config->paths->size);
+	printf("paths:\n");
+	print_paths(config->paths);
 }
 
 void	print_lem(t_lem *lem, char *args)
