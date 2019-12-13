@@ -91,6 +91,24 @@ int			sorted_cmp(t_lst *ref, t_lst *insert)
 	return (ref_len < insert_len);
 }
 
+void		add_path(t_config *config, t_path *new_path)
+{
+	t_lst	*config_path_elem;
+	t_lst	*config_path;
+	t_lst	*new_path_elem;
+
+	config_paths->size++;
+	if (config->paths->first)
+	{
+		config_path_elem = config->paths->first;
+		while (config_path_elem->content->rooms->size)
+		{
+			config_path = config_path_elem->content;
+			if (config_path->rooms->size < new_path->rooms->size)
+		}
+	}
+}
+
 int			manage_valid_path(t_lem *lem, t_path *path)
 {
 	unsigned	current_nb_paths;
@@ -100,16 +118,22 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 
 	PRINTPOSN;
 	print_path(path);
+	PRINTPOSN;
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);
 	if (!(new_elem = ft_lstnew_elem(path)))
 		return (0);
+	PRINTPOSN;
 	ft_lstadd_sorted(lem->current_config->paths, new_elem, &sorted_cmp);
+	PRINTPOSN;
 	current_nb_paths = lem->current_config->paths->size;
+	PRINTPOSN;
 	most_paths = ((t_config *)lem->config_lst->first->content)->paths->size;
+	PRINTPOSN;
 	if (current_nb_paths > most_paths)
 		check_alloc = add_new_config(lem, lem->current_config);
 	else
 		check_alloc = compare_configs(lem->config_lst, lem->current_config);
+	PRINTPOSN;
 	return (check_alloc);
 }
