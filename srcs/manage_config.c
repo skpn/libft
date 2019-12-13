@@ -29,6 +29,7 @@ int			get_max_walk(t_lem *lem)
 			walk = ((t_room *)parent->content)->walk;
 		parent = parent->next;
 	}
+	printf("walk = %u, lem->walk_limit = %u\n", walk, lem->walk_limit);
 	return (walk);
 }
 
@@ -85,8 +86,8 @@ int			sorted_cmp(t_lst *ref, t_lst *insert)
 	unsigned	ref_len;
 	unsigned	insert_len;
 
-	ref_len = ((t_path *)ref->content)->len;
-	insert_len = ((t_path *)insert->content)->len;
+	ref_len = ((t_path *)ref->content)->rooms->size;
+	insert_len = ((t_path *)insert->content)->rooms->size;
 	return (ref_len < insert_len);
 }
 
@@ -97,6 +98,8 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 	unsigned	check_alloc;
 	t_lst		*new_elem;
 
+	PRINTPOSN;
+	print_path(path);
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);
 	if (!(new_elem = ft_lstnew_elem(path)))

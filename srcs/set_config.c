@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 14:50:19 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:51:48 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	balance_loads(t_lem *lem, t_config *config)
 	while (path_list)
 	{
 		active_path = path_list->content;
-		added_turns = (ants - active_path->len - lem->shortest) / live_paths;
+		added_turns = (ants - active_path->rooms->size - lem->shortest) / live_paths;
 		ants -= (live_paths * added_turns);
 		config->turns += added_turns;
 		active_path->turns = config->turns;
@@ -65,7 +65,7 @@ int		compare_paths_len(t_lst *current_elem, t_lst *new_elem)
 
 	current_path = current_elem->content;
 	new_path = new_elem->content;
-	if (current_path->len <= new_path->len)
+	if (current_path->rooms->size <= new_path->rooms->size)
 		return (1);
 	return (0);
 }
@@ -74,7 +74,7 @@ int		update_config(t_lem *lem, t_config *config, t_path *new_path)
 {
 	t_lst	*elem;
 
-	new_path->len = new_path->rooms->size;
+	new_path->rooms->size = new_path->rooms->size;
 	if (!(elem = ft_lstnew_elem(new_path)))
 		return (0);
 	ft_lstadd_sorted(config->paths, elem, &compare_paths_len);

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 17:04:20 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:48:18 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	*g_ptr;
 typedef struct		s_path
 {
 	unsigned		turns;
-	unsigned		len;
 	t_head			*rooms;
 }					t_path;
 
@@ -103,6 +102,7 @@ void				print_anthill(char *lem);
 void				print_lem(t_lem *lem, char *args);
 void				print_room(t_room *room);
 void				print_rooms(t_head *rooms);
+void				print_path(t_path *path);
 //void				print_room(t_room *room, char *args, int opt);
 //void				print_rooms(t_head *rooms, char *args, int opt);
 //void				print_rooms_addr(t_head *rooms);

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:50:50 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 15:58:40 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:48:55 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,24 @@ void	print_anthill(char *anthill)
 	printf("anthill:\n---\n'%s'\n---\n", anthill);
 }
 
+void	print_path(t_path *path)
+{
+	t_lst	*path_rooms;
+
+	printf("path address = %p\n", path);
+	path_rooms = path->rooms->first;
+	printf("path->turn = %u, path->room->size = %u\n", path->turns, path->rooms->size);
+	while (path_rooms)
+	{
+		printf("%s -- ", ((t_room *)path_rooms->content)->name);
+		path_rooms = path_rooms->next;
+	}
+	printf("\n");
+}
+
 void	print_paths(t_head *paths)
 {
 	t_lst		*path_list;
-	t_path		*path_content;
-	t_lst		*path_rooms;
 	unsigned	nb_paths;
 
 	printf("paths? paths !\n");
@@ -86,15 +99,8 @@ void	print_paths(t_head *paths)
 	path_list = paths->first;
 	while (path_list)
 	{
-		path_content = path_list->content;
-		path_rooms = path_content->rooms->first;
 		printf("path %u\n", --nb_paths);
-		while (path_rooms)
-		{
-			printf("%s -- ", ((t_room *)path_rooms->content)->name);
-			path_rooms = path_rooms->next;
-		}
-		printf("\n");
+		print_path(path_list->content);
 		path_list = path_list->next;
 	}
 }
