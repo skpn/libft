@@ -6,12 +6,31 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:45:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 14:40:57 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:09:47 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
+
+void	kill_end_children(t_room *end, unsigned max_dist)
+{
+	t_lst	*child_elem;
+	t_lst	*transfer;
+	t_room	*child;
+
+	child_elem = end->children->first;
+	while (child_elem)
+	{
+		child = child_elem->content;
+		child_elem = child_elem->next;
+//		printf("END CHILD:\n");
+//		print_room(child);
+		transfer = ft_lstpop(end->children, child);
+		if (child->dist <= max_dist)
+			ft_lstadd(end->parents, transfer);
+	}
+}
 
 void	kill_dead_rooms(t_lem *lem, t_room *dead_room)
 {

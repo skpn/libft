@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:05:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/12 15:03:32 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:08:31 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		main(void)
 	if (!set_graph(lem))
 	{
 		printf("BEFORE EXIT, ROOMS:\n");
-		print_rooms(lem->rooms);
+		//print_rooms(lem->rooms);
 		return (exit_lem(lem, "ERROR", 2));
 	}
 	if (!seek_paths(lem))

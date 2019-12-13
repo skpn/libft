@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 15:00:08 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:04:20 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int					parse_input(t_lem *lem);
 void				set_next_lvl_dists(t_lvl *lvl);
 void				set_next_lvl_families(t_lvl *lvl, t_room *end);
 void				kill_dead_rooms(t_lem *lem, t_room *dead_room);
+void				kill_end_children(t_room *end, unsigned max_dist);
 void				get_next_lvl_rooms(t_lem *lem, t_lvl *lvl);
 int					seek_paths(t_lem *lem);
 int					update_config(t_lem *lem, t_config *config

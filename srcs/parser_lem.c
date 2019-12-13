@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 15:28:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/06 13:04:02 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 15:48:27 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ int		parse_input(t_lem *lem)
 	dprintf(g_fd, "freeing line after read\n");
 	ft_free((void **)&line);
 	lem->shortest = 0xFFFFFFFF;
-	lem->max_dist = 0;
+	lem->max_dist = 0xFFFFFFFF;
 	return (ret ? 0 : 1);
 }

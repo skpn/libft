@@ -6,7 +6,7 @@ int		parse_ants(t_lem *lem, char **line, int *index)
 	long unsigned	nb_ants;
 	int				i;
 
-	PRINTPOSN;
+//	PRINTPOSN;
 	if (**line == '#')
 		return (1);
 	nb_ants = 0;
@@ -17,6 +17,6 @@ int		parse_ants(t_lem *lem, char **line, int *index)
 		return (0);
 	lem->nb_ants = nb_ants;
 	(*index)++;
-	PRINTPOSN;
+//	PRINTPOSN;
 	return (1);
 }

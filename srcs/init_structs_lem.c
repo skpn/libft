@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 22:15:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 12:15:27 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:12:45 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_room		*alloc_new_room(void)
 		return (0);
 	if (!(room->children = ft_lstnew_head(NULL, NULL)))
 		return (0);
-	printf("room malloc at address: %p\n", room);
+//	printf("room malloc at address: %p\n", room);
 	return (room);
 }
 

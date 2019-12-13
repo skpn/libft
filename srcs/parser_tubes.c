@@ -24,9 +24,9 @@ int		add_links(t_lem *lem, char *name1, char *name2)
 		return (0);
 	if (ft_lstfind(room1->children, room2))
 		return (1);
-	printf("adding:\n");
-	print_room(room1);
-	print_room(room2);
+//	printf("adding:\n");
+//	print_room(room1);
+//	print_room(room2);
 	dprintf(g_fd, "adding child to room1\n");
 	ft_lstadd_new(room1->children, room2);
 	dprintf(g_fd, "adding child to room2\n");
@@ -42,7 +42,7 @@ int		parse_tube(t_lem *lem, char **line, int *index)
 	char	*name2;
 
 	(void)index;
-	printf("in parser tube with line: '%s'\n", *line);
+//	printf("in parser tube with line: '%s'\n", *line);
 	if (**line == '#')
 		return ((*line)[1] == '#' ? 0 : 1);
 	if ((pos1 = ft_strchr_pos(*line, '-')) < 1 || !(name1 = ft_strsub(*line, 0,
