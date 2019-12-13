@@ -91,22 +91,39 @@ int			sorted_cmp(t_lst *ref, t_lst *insert)
 	return (ref_len < insert_len);
 }
 
-void		add_path(t_config *config, t_path *new_path)
+// UNTESTED FUNCTION
+int			add_path(t_config *config, t_path *new_path)
 {
 	t_lst	*config_path_elem;
 	t_lst	*config_path;
 	t_lst	*new_path_elem;
 
-	config_paths->size++;
-	if (config->paths->first)
+	PRINTPOSN;
+	if (!(new_path_elem = ft_lstnew_elem(new_path)))
+		return (0);
+	PRINTPOSN;
+	printf("config = %p\n", config);
+	// CURRENT CONFIG IS NULL
+	if ((config_path_elem = config->paths->first))
 	{
-		config_path_elem = config->paths->first;
-		while (config_path_elem->content->rooms->size)
+		PRINTPOSN;
+		// WHILE LOOP UNTESTED;
+		while (((t_path *)config_path_elem->next->content)->rooms->size > new_path->rooms->size)
 		{
+			config_path_elem = config_path_elem->next;
 			config_path = config_path_elem->content;
-			if (config_path->rooms->size < new_path->rooms->size)
 		}
+		new_path_elem->prev = config_path_elem;
+		new_path_elem->next = config_path_elem->next;
+		config_path_elem->next->prev = new_path_elem;
+		config_path_elem->next = new_path_elem;
 	}
+	else
+	{
+		PRINTPOSN;
+		ft_lstadd(config->paths,new_path_elem);
+	}
+	return (1);
 }
 
 int			manage_valid_path(t_lem *lem, t_path *path)
@@ -124,7 +141,8 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 	if (!(new_elem = ft_lstnew_elem(path)))
 		return (0);
 	PRINTPOSN;
-	ft_lstadd_sorted(lem->current_config->paths, new_elem, &sorted_cmp);
+	if (!add_path(lem->current_config, path))
+		return (0);
 	PRINTPOSN;
 	current_nb_paths = lem->current_config->paths->size;
 	PRINTPOSN;
