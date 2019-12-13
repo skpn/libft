@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 11:46:04 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 15:00:08 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct		s_lvl
 typedef struct		s_config
 {
 	unsigned		turns;
-	unsigned		nb_paths;
 	t_head			*paths;
 }					t_config;
 
@@ -62,13 +61,14 @@ typedef struct 		s_lem
 	unsigned		shortest;
 	unsigned		max_dist;
 	unsigned		algo_turn;
-	unsigned		max_walk;
+	unsigned		walk_limit;
 	char			*anthill;
 	t_room			*start;
 	t_room			*end;
 	t_head			*rooms;
 	t_head			*paths;
 	t_head			*config_lst;
+	t_config		*current_config;
 }					t_lem;
 
 int					gnl_lem_in(int fd, unsigned *pos, unsigned *done
@@ -91,10 +91,12 @@ int					parse_input(t_lem *lem);
 void				set_next_lvl_dists(t_lvl *lvl);
 void				set_next_lvl_families(t_lvl *lvl, t_room *end);
 void				kill_dead_rooms(t_lem *lem, t_room *dead_room);
+void				get_next_lvl_rooms(t_lem *lem, t_lvl *lvl);
 int					seek_paths(t_lem *lem);
 int					update_config(t_lem *lem, t_config *config
 	, t_path *new_path);
-
+int					manage_valid_path(t_lem *lem, t_path *path);
+int					get_max_walk(t_lem *lem);
 
 void				print_anthill(char *lem);
 void				print_lem(t_lem *lem, char *args);

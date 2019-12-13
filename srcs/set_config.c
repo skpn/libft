@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/12 14:47:13 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 14:50:19 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	erase_path(t_config *config, t_path *path)
 	}
 	*/
 	ft_lstpop(config->paths, path);
-	config->nb_paths--;
+	config->paths->size--;
 	free_path(&path);
 }
 
@@ -78,7 +78,7 @@ int		update_config(t_lem *lem, t_config *config, t_path *new_path)
 	if (!(elem = ft_lstnew_elem(new_path)))
 		return (0);
 	ft_lstadd_sorted(config->paths, elem, &compare_paths_len);
-	config->nb_paths++;
+	config->paths->size++;
 	balance_loads(lem, config);
 	return (1);
 }

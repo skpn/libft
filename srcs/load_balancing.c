@@ -20,12 +20,14 @@ void	calculate_turns(t_lst *path_elem, unsigned ants, unsigned shortest
 	}
 }
 
-void	balance_load(t_lem *lem, t_config *new_config, t_head *new_paths)
+void	balance_load(t_lem *lem, t_config *new_config)
 {
 	unsigned	ants;
 	unsigned	added_turns;
 	unsigned	shortest;
+	t_head		*new_paths;
 
+	new_paths = new_config->paths;
 	ants = lem->nb_ants;
 	nb_paths = new_paths->size;
 	shortest = new_paths->last->content->rooms->size;

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 13:01:46 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/03 17:08:27 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/13 15:16:30 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_lstsort(t_head *head, int (*cmp)())
 	{
 		if ((*cmp)(elem->content, (elem->next)->content) > 0)
 		{
-			ft_lstswap_elems(head, elem, elem->next);
+			ft_lstswap_contents(elem, elem->next);
 		}
 		else
 			elem = elem->next;

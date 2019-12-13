@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/12/12 18:41:45 by hehlinge         ###   ########.fr        #
+#    Updated: 2019/12/13 15:14:06 by hehlinge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SRCFILES = \
 			ft_isspace.c \
 			ft_itoa.c \
 			ft_itoa_base.c \
-			ft_lst_last.c \
+			ft_lstlast.c \
 			ft_lstsize.c \
 			ft_lstsort.c \
 			ft_lstcycle.c \
@@ -58,6 +58,8 @@ SRCFILES = \
 			ft_lstpop.c \
 			ft_lstfind.c \
 			ft_lstprint.c \
+			ft_lstswap_heads.c \
+			ft_lstswap_contents.c \
 			ft_malloc.c \
 			ft_max.c \
 			ft_memalloc.c \
@@ -126,6 +128,7 @@ SRCFILES = \
 			str_calc_pf.c \
 			support_pf.c \
 			text_funcs_pf.c \
+			ft_lst_replace_elem.c
 
 SRCDIR = srcs/
 

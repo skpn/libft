@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/12 18:41:31 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 15:16:02 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,8 +190,10 @@ t_lst					*ft_lstfind(t_head *head, void *match);
 void					ft_lstfree(t_head **head, int opt_elems, int opt_head);
 void					ft_lstfree_elem(t_lst **elem, int opt);
 void					ft_lstfree_head(t_head **head);
-void					ft_lstsort(t_head *head, int (*f_cmp)(t_lst *, t_lst *));
-void					ft_lstswap_elems(t_head *head, t_lst *elem_1
+void					ft_lstsort(t_head *head
+	, int (*f_cmp)(t_lst *, t_lst *));
+void					ft_lstswap_contents(t_lst *upstream, t_lst *downstream);
+void					ft_lstswap_heads(t_head *head, t_lst *elem_1
 	, t_lst *elem_2);
 int						ft_max(int a, int b);
 void					*ft_memchr(const void *s, int c, size_t n);
@@ -258,5 +260,7 @@ void						ft_lstprint(t_head *head, char *name, unsigned opt);
 int							get_gc_data(int opt);
 t_head						*get_gc_list(int opt);
 int							filler_gnl(int fd, char **line);
+void						ft_lst_replace_elem(t_head *head, t_lst *original,
+	t_lst *replacement);
 
 #endif

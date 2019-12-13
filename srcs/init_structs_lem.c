@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 22:15:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/12 17:44:31 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 12:15:27 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int			init_lem(t_lem **lem)
 	if (!((*lem)->rooms = ft_lstnew_head(NULL, NULL)))
 		return (0);
 	if (!((*lem)->config_lst = ft_lstnew_head(NULL, NULL)))
+		return (0);
+	if (!((*lem)->paths = ft_lstnew_head(NULL, NULL)))
 		return (0);
 	(*lem)->max_dist = 0xFFFFFFFF;
 	(*lem)->max_paths = 0xFFFFFFFF;

@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/12/12 14:49:19 by hehlinge         ###   ########.fr        #
+#    Updated: 2019/12/13 15:05:22 by hehlinge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,20 +18,21 @@ NAME = lem-in
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-SRC_FILES =	main_lem.c \
-			exit_lem.c \
-			parser_lem.c \
-			gnl_lem_in.c \
-			parser_ants.c \
-			parser_rooms.c \
-			parser_tubes.c \
-			set_graph.c \
-			set_lvl.c \
-			set_config.c \
-			seek_paths.c \
-			display_lem.c \
-			clean_graph.c \
-			init_structs_lem.c
+SRC_FILES =	main_lem.c				\
+			init_structs_lem.c		\
+			exit_lem.c				\
+			parser_lem.c			\
+			gnl_lem_in.c			\
+			parser_ants.c			\
+			parser_rooms.c			\
+			parser_tubes.c			\
+			set_graph.c				\
+			set_lvl.c				\
+			clean_graph.c			\
+			set_config.c			\
+			seek_paths.c 			\
+			display_lem.c			\
+			manage_config.c
 
 SRC_DIR = ./srcs/
 

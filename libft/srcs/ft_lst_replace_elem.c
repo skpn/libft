@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_last.c                                      :+:      :+:    :+:   */
+/*   ft_lstpop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/08 14:42:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/08 14:42:45 by sikpenou         ###   ########.fr       */
+/*   Created: 2019/09/24 15:06:05 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/12/13 14:23:33 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_lst		*ft_lst_last(t_lst *begin_list)
+void	ft_lst_replace_elem(t_head *head, t_lst *original, t_lst *replacement)
 {
-	if (!begin_list)
-		return (NULL);
-	while (begin_list->next)
-		begin_list = begin_list->next;
-	return (begin_list);
+	replacement->prev = original->prev;
+	replacement->next = original->next;
+	if (original != head->first)
+		original->prev->next = replacement;
+	if (original != head->last)
+		original->next->prev = replacement;
+	original->prev = NULL;
+	original->next = NULL;
 }
