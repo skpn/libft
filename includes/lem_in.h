@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/04 22:25:03 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/13 11:46:04 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,14 @@
 # define PARENT 1
 # define BROTHER 2
 # define CHILD 3
-# define ADD_PATH 0
-# define ADD_PATH 0
-# define ADD_PATH 0
+# define DELETE_CONFIG 0
+# define ADD_CONFIG 1
+# define POP_PATH 2
+# define ADD_PATH 3
 void	*g_ptr;
 typedef struct		s_path
 {
-	unsigned		load;
+	unsigned		turns;
 	unsigned		len;
 	t_head			*rooms;
 }					t_path;
@@ -46,23 +47,10 @@ typedef struct		s_lvl
 	t_head			*rooms;
 }					t_lvl;
 
-<<<<<<< HEAD
-typedef struct		s_path
-{
-	unsigned		turns;
-	unsigned		walk_limit;
-	t_head			*rooms;
-}					t_path;
-
-typedef struct		s_config
-{
-	unsigned		turns;
-=======
 typedef struct		s_config
 {
 	unsigned		turns;
 	unsigned		nb_paths;
->>>>>>> 96f7d4e307ecb34585e26d44e0e5cfae627b55ba
 	t_head			*paths;
 }					t_config;
 
@@ -73,10 +61,13 @@ typedef struct 		s_lem
 	unsigned		max_paths;
 	unsigned		shortest;
 	unsigned		max_dist;
+	unsigned		algo_turn;
+	unsigned		max_walk;
 	char			*anthill;
-	t_head			*rooms;
 	t_room			*start;
 	t_room			*end;
+	t_head			*rooms;
+	t_head			*paths;
 	t_head			*config_lst;
 }					t_lem;
 
@@ -99,15 +90,11 @@ int					exit_lem(t_lem *lem, char *msg, int ret);
 int					parse_input(t_lem *lem);
 void				set_next_lvl_dists(t_lvl *lvl);
 void				set_next_lvl_families(t_lvl *lvl, t_room *end);
-<<<<<<< HEAD
 void				kill_dead_rooms(t_lem *lem, t_room *dead_room);
-=======
-void				get_next_lvl_rooms(t_lvl *lvl);
 int					seek_paths(t_lem *lem);
 int					update_config(t_lem *lem, t_config *config
 	, t_path *new_path);
 
->>>>>>> 96f7d4e307ecb34585e26d44e0e5cfae627b55ba
 
 void				print_anthill(char *lem);
 void				print_lem(t_lem *lem, char *args);

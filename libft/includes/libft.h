@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/06 13:12:19 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/12 18:41:31 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ char					*ft_itoa_base(long int nb, char *base_to);
 int						ft_lstcycle(t_lst *begin);
 void					ft_lstjoin(t_head *head_dest, t_head *head_src);
 t_head					*ft_lstnew(void *content);
+t_head					*ft_lstcpy(t_head *original_head);
 t_lst					*ft_lstnew_elem(void *content);
 t_head					*ft_lstnew_head(t_lst *first, t_lst *last);
 void					ft_lstadd(t_head *head, t_lst *newl);

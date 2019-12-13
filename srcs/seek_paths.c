@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,16 +6,13 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/04 22:33:19 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/13 11:46:01 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-=======
->>>>>>> 96f7d4e307ecb34585e26d44e0e5cfae627b55ba
 
 #include "lem_in.h"
 #include "libft.h"
 
-<<<<<<< HEAD
 /*
 5 parties principales:
 	- trouver les chemins
@@ -38,89 +34,141 @@
 			free, et on ajoute la nouvelle config a la liste de configs
 */
 
-int		copy_config(t_lem *lem, t_config *config)
+t_config	*copy_config(t_config *original)
 {
-	
+	t_config	*new_configi;
+	t_lst		*
+
+	if (!(new_config = alloc_new_config()))
+		return (0);
+	if (!(new_config->paths
 }
 
-int		config_do(int opt, t_lem *lem, t_lem *config, t_path *path)
+int		sort_cmp(t_lst *to_insert, t_lst *to_compare)
 {
+	return (((t_path *)to_insert->content)->len
+		> ((t_path *)to_compare->content)->len);
+}
+
+// ATTENTION LSTADD_SORTED NOT TESTED
+int		config_do(int opt, t_lem *lem, t_config *config, t_path *path)
+{
+	t_lst	*path_elem;
+
 	if (opt == ADD_PATH)
-		ft_lstadd_new(config->paths, path);
+	{
+		if (!(path_elem = ft_lstnew_elem(path)))
+			return (0);
+		ft_lstadd_sorted(config->paths, path_elem, &sort_cmp);
+	}
 	else if (opt == POP_PATH)
 	{
 		ft_lstpop(config->paths, path);
 		free_path(&path);
 	}
 	else if (opt == ADD_CONFIG)
+	{
 		return (copy_config(lem, config));
+	}
 	else if (opt == DELETE_CONFIG)
 	{
 		ft_lstpop(lem->config_lst, config);
 		free_config(&config);
-=======
-t_room	*get_next_room(t_path *current_path, t_lst *room_list)
-{
-	t_room	*next;
-	t_room	*test;
-
-	next = NULL;
-	while (room_list)
-	{
-		test = room_list->content;
-		if (!next || next->walk > test->walk || next->dist > test->dist)
-			if (test->current_path != current_path)
-				next = test;
-		room_list = room_list->next;
 	}
-	return (next);
+	return (1);
 }
 
-int		try_path(t_lem *lem, t_path *path, t_room *current)
+void	check_room(t_room *child, t_room *next_room)
 {
-	t_room	*next;
-
-	while (1)
+	if (!next_room)
+		next_room = child;
+	else if (child->walk < next_room->walk
+		|| (child->walk == next_room->walk && child->dist < next_room->dist))
 	{
-		current->walk++;
-		current->current_path = path;
-		next = get_next_room(path, current->children->first);
-		if (next == NULL)
-			return (0);
-		else if (next->dist == 0)
-			return (1);
-		if (path->rooms->size == lem->max_dist)
-			return (0);
-		if (!(ft_lstadd_new(path->rooms, current)))
-			return (0);
-		current = next;
+		next_room = child;
 	}
+}
+
+t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room, int opt)
+{
+	t_room	*next_room;
+	t_room	*child;
+
+	next_room = NULL;
+	child = opt == CHILD ? room->children->first : room->parents->first;
+	while (child)
+	{
+		if (child->dist <= lem->max_len && child->current_path != path)
+		{
+			check_room(child, next_room);
+		}
+		child = child->next;
+	}
+	if (opt == PARENT && !next_room)
+		return (get_next_room(lem, path, room, CHILD));
+	return (next_room);
+}
+
+int		try_path(t_lem *lem, t_room *room, t_path *path)
+{
+	if (!(path = alloc_new_path()))
+		return (0);
+	if (!ft_lstadd_new(path->rooms, lem->end))
+		return (0);
+	end->current_path = path;
+	while (room = get_next_room(lem, room, PARENT))
+	{
+		if (!ft_lstadd_new(path->rooms, room))
+			return (0);
+		room->current_path = path;
+		if (room == lem->start)
+			return (1);
+	}
+	free_path(&path);
+	return (-1);
+}
+
+int			get_max_walk(t_lem *lem)
+{
+	int		walk;
+	t_lst	*parent;
+
+	walk = 0;
+	parent = lem->end->parents->first;
+	while (parent)
+	{
+		if (parent->content->walk > walk)
+			walk = parent->content->walk;
+		parent = parent->next;
+	}
+	return (walk);
+}
+
+int			manage_valid_path(t_lem *lem, t_path *path)
+{
+	int	walk;
+
+	walk = get_max_walk(lem);
+	lem->max_walk = walk + 2;
 }
 
 int		seek_paths(t_lem *lem)
 {
-	t_path	*test_path;
-	t_room	*start_room;
-
-	if (!(test_path = new_path()))
-		return (0);
-	while (lem->config->nb_paths < lem->max_paths)
+	t_config	*current_config;
+	t_config	*biggest_config;
+	t_lst		*parent;
+	t_path		*path;
+	int			ret;
+	
+	parent = lem->end->parents->first;
+	while (get_max_walk(lem) < lem->max_walk)
 	{
-		start_room = get_next_room(NULL, lem->start->children->first);
-		if (!start_room)
+		if (!(ret = try_path(lem, parent->content, path)))
 			return (0);
-		if (try_path(lem, test_path, start_room) == 1)
-		{
-			if (update_config(lem, lem->config, test_path) == 0)
-				return (0);
-			if (!(test_path = new_path()))
-				return (0);
-		}
-		else
-		{
-			ft_lstfree(&test_path->rooms, FREE_LINKS, KEEP_HEAD);
-		}
->>>>>>> 96f7d4e307ecb34585e26d44e0e5cfae627b55ba
+		else if (ret == 1)
+			manage_valid_path(lem, path);
+		parent = parent->next;
+		if (!parent)
+			parent = lem->end->parents->first;
 	}
-	return (1);
 }

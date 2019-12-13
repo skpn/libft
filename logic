@@ -56,6 +56,14 @@ PATH SEEKING
 possible paths will be explored iteratively, starting from end
 when a branch is closed, we double back on it and mark the 
 
+on ecrase a l'infini
+
+quand on toruve un chemin, on note la salle parent de end sur laquelle on a le plus marché ;  si a un oment donne toutes les salles parents de end on atteint ce niveau + 2 on arrete l'algo
+
+on travaille sur une config appelee current_config, et on modifie la chaine lem->config_lst via cette config
+
+quand on trouve un chemin, on regarde le nombre de chemins actifs de current_config ; si il est plus grand que celui de lem->config_lst->first->content on lstadd_new(lem->config_lst, current_config), sinon on regarde dans lem->config_lst si la config valide avec le meme nombre de chemin a plus de tours et si oui free son content et on le remplace par current config
+
 PRIORITE DE SALLES
  - on ne depasse pas max len
  - on marche en priorite vers les salles ou on est le moins passe

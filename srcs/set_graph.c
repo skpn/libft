@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 21:05:19 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/04 15:51:27 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/12 14:51:18 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,10 @@ void	get_next_lvl_rooms(t_lem *lem, t_lvl *lvl)
 		print_room(parent);
 		printf("to list:\n");
 		ft_lstprint(lvl->rooms, "next lvl rooms", NONE);
-<<<<<<< HEAD
 		if (parent->children->first != NULL)
 			add_children_to_next_lvl(lvl->rooms, parent->children);
 		else if (parent != lem->end)
 			kill_dead_rooms(lem, parent);
-=======
-		add_children_to_next_lvl(lvl->rooms, parent->children);
-		tmp = current_rooms;
->>>>>>> 96f7d4e307ecb34585e26d44e0e5cfae627b55ba
 		current_rooms = current_rooms->next;
 		ft_lstfree_elem(&tmp, FREE_LINKS);
 	}
@@ -127,7 +122,6 @@ int		set_graph(t_lem *lem)
 		printf("AFTER GETTING NEXT LVL\n");
 		print_lvl(lvl);
 	}
-<<<<<<< HEAD
 	PRINTPOSN;
 	if (!(check_graph(lem)))
 		return (0);
@@ -135,12 +129,6 @@ int		set_graph(t_lem *lem)
 	ft_lstfree_head(&lvl->rooms);
 	lvl->rooms = NULL;
 	ft_free((void **)&lvl);
-=======
-	ft_lstfree(&lvl->rooms, FREE_LINKS, FREE_HEAD);
-	ft_free((void **)&lvl);
-	if (!(check_graph(lem)))
-		return (0);
->>>>>>> 96f7d4e307ecb34585e26d44e0e5cfae627b55ba
 	print_rooms(lem->rooms);
 	return (1);
 }

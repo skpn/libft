@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/06 12:31:54 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/12 14:47:13 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	balance_loads(t_lem *lem, t_config *config)
 		added_turns = (ants - active_path->len - lem->shortest) / live_paths;
 		ants -= (live_paths * added_turns);
 		config->turns += added_turns;
-		active_path->load = config->turns;
+		active_path->turns = config->turns;
 		live_paths--;
 		path_list = path_list->next;
 	}

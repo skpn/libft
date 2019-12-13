@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/11/06 23:02:41 by sikpenou         ###   ########.fr        #
+#    Updated: 2019/12/12 18:41:45 by hehlinge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SRCFILES = \
 			ft_lstadd_back.c \
 			ft_lstadd_new.c \
 			ft_lstnew.c \
+			ft_lstcpy.c \
 			ft_lstnew_elem.c \
 			ft_lstnew_head.c \
 			ft_lstfree.c \

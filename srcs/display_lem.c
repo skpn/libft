@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:50:50 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/04 18:21:17 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/12 14:46:37 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,8 @@ void	print_paths(t_head *paths)
 void	print_config(t_config *config)
 {
 	printf("config turns   : %u\n", config->turns);
-<<<<<<< HEAD
-	printf("config paths size: %u\n", config->paths->size);
-	printf("paths:\n");
-=======
 	printf("config nb_paths: %u\n", config->nb_paths);
 	printf("valid paths:\n");
->>>>>>> 96f7d4e307ecb34585e26d44e0e5cfae627b55ba
 	print_paths(config->paths);
 }
 
