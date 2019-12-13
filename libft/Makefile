@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/11/06 23:02:41 by sikpenou         ###   ########.fr        #
+#    Updated: 2019/12/13 11:27:52 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ SRCFILES = \
 			ft_isspace.c \
 			ft_itoa.c \
 			ft_itoa_base.c \
-			ft_lst_last.c \
+			ft_lstlast.c \
 			ft_lstsize.c \
 			ft_lstsort.c \
 			ft_lstcycle.c \

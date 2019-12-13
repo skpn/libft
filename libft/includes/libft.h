@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/06 13:12:19 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/13 11:25:33 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ void					ft_lstfree(t_head **head, int opt_elems, int opt_head);
 void					ft_lstfree_elem(t_lst **elem, int opt);
 void					ft_lstfree_head(t_head **head);
 void					ft_lstsort(t_head *head, int (*f_cmp)(t_lst *, t_lst *));
-void					ft_lstswap_elems(t_head *head, t_lst *elem_1
+void					ft_lstswap_heads(t_head *head, t_lst *elem_1
 	, t_lst *elem_2);
 int						ft_max(int a, int b);
 void					*ft_memchr(const void *s, int c, size_t n);

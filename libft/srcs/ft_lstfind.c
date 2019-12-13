@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/30 16:07:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/03 22:40:56 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/13 11:40:20 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,16 @@ t_lst	*ft_lstfind(t_head *head, void *match)
 {
 	t_lst	*elem;
 
-	if (match && head->first)
+	if (!head || !head->first)
+		return (NULL);
+	if (head->last->content == match)
+		return (head->last);
+	elem = head->first;
+	while (elem)
 	{
-		if (head->last == match || head->last->content == match)
-			elem = head->last;
-		else
-			elem = head->first;
-		while (elem)
-		{
-			if (elem == match || elem->content == match)
-				return (elem);
-			elem = elem->next;
-		}
+		if (elem->content == match)
+			return (elem);
+		elem = elem->next;
 	}
 	return (NULL);
 }

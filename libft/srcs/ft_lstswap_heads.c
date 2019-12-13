@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstswap_elems.c                                 :+:      :+:    :+:   */
+/*   ft_lstswap_heads.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/03 12:26:10 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/03 12:57:24 by sikpenou         ###   ########.fr       */
+/*   Created: 2019/12/13 11:24:59 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/12/13 11:25:07 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	swap_next(t_lst *elem_1, t_lst *elem_2)
 	elem_2->next = temp_next;
 }
 
-void	ft_lstswap_elems(t_head *head, t_lst *elem_1, t_lst *elem_2)
+void	ft_lstswap_heads(t_head *head, t_lst *elem_1, t_lst *elem_2)
 {
 	t_lst	*tmp_next;
 
