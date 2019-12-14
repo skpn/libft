@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:05:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 17:08:31 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/14 16:58:43 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,7 @@ int		main(void)
 		return (exit_lem(lem, "ERROR", 2));
 	}
 	PRINTPOSN;
+	printf("\nSORTIE DE L'ALGO, config->first =\n");
+	print_config(lem->config_lst->first->content);
 	return (0);
 }

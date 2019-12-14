@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:52:16 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 14:23:47 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/14 14:04:17 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int		exit_lem(t_lem *lem, char *msg, int ret)
 	if (lem->rooms)
 	{
 		PRINTPOSN;
-		print_rooms(lem->rooms);
+		//print_rooms(lem->rooms);
 		free_rooms(&lem->rooms);
 	}
 	msg ? write(1, msg, ft_strlen(msg)) : 0;

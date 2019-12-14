@@ -52,6 +52,11 @@ while (live_paths)
 	path_turns = turns
 	live_paths = live_paths - 1
 
+DE LA LONGUEUR DES CHEMINS
+kill dead rooms doit se lancer quand on trouve un chemin trop long
+il faut balance load de current config a chaque ajout de chemin
+il faut s'assurer que la longueur du chemin est bien prise en compte avant de valider une next room
+
 PATH SEEKING
 possible paths will be explored iteratively, starting from end
 when a branch is closed, we double back on it and mark the 
@@ -70,3 +75,11 @@ PRIORITE DE SALLES
  - entre deux salles ou on est autant passes, on marche vers la plus proche de
  	start
  - si on a atteint max paths on s'arrete
+
+DISPATCHING:
+quand on utilise une config, on desactive des chemins au fur et a mesure
+quand on arrive au meme nombre de chemins que la config d'en dessous il faut
+	comparer le nimbre de tours restants de la config active au nombre de tours
+	total de la config d'apres
+si la config d'apres est plus efficace, il faut peut etre passer dessus
+	MAIS: attention aux bouchons si on se rattrape sur des chemins qui se coupent

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 15:16:02 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/14 13:05:19 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # define EASY 0
 # define ADDR 0
 # define NONE 0
+# define BEFORE 0
+# define AFTER 1
 # define LEFT 1
 # define RIGHT 2
 # define BOTH 3
@@ -58,7 +60,7 @@
 # include <stddef.h>
 #include <stdio.h>
 #define PRINTPOS printf("%s %d", __func__, __LINE__); fflush(0)
-#define PRINTPOSN printf("%s %d\n", __func__, __LINE__); fflush(0)
+#define PRINTPOSN printf("%s - %s - %d\n", __FILE__, __func__, __LINE__); fflush(0)
 #define DPRINTPOSN dprintf(g_fd, "%s %d\n", __func__, __LINE__); fflush(0)
 void	*g_addr;
 int		g_fd;
@@ -190,6 +192,8 @@ t_lst					*ft_lstfind(t_head *head, void *match);
 void					ft_lstfree(t_head **head, int opt_elems, int opt_head);
 void					ft_lstfree_elem(t_lst **elem, int opt);
 void					ft_lstfree_head(t_head **head);
+void					ft_lstinsert(t_head *head, t_lst *ref, t_lst *insert
+	, int bef_or_aft);
 void					ft_lstsort(t_head *head
 	, int (*f_cmp)(t_lst *, t_lst *));
 void					ft_lstswap_contents(t_lst *upstream, t_lst *downstream);

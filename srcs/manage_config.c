@@ -1,72 +1,72 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   manage_config.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/12/14 17:01:31 by sikpenou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
 
-t_config	*copy_config(t_config *original)
+t_config	*copy_config(t_lem *lem)
 {
+	t_config	*original;
 	t_config	*new_config;
 	t_head		*new_head;
-
+	
+	original = lem->current_config;
 	if (!(new_config = alloc_new_config()))
 		return (NULL);
 	if (!(new_head = ft_lstcpy(original->paths)))
 		return (NULL);
 	new_config->paths = new_head;
 	new_config->turns = original->turns;
+	print_config(new_config);
+	lem->lives = lem->end->parents->size;
 	return (new_config);
 }
 
-int			get_max_walk(t_lem *lem)
-{
-	unsigned	walk;
-	t_lst		*parent;
-
-	walk = 0;
-	parent = lem->end->parents->first;
-	while (parent)
-	{
-		if (((t_room *)parent->content)->walk > walk)
-			walk = ((t_room *)parent->content)->walk;
-		parent = parent->next;
-	}
-	printf("walk = %u, lem->walk_limit = %u\n", walk, lem->walk_limit);
-	return (walk);
-}
-
-int		replace_config(t_head *config_lst, t_config *current_config,
-	t_config *old_config)
+int		replace_config(t_lem *lem, t_config *old_config)
 {
 	t_config	*copy;
 	t_lst		*old_config_elem;
 
-	if (!(copy = copy_config(current_config)))
+	if (!(copy = copy_config(lem)))
 		return (0);
-	old_config_elem = ft_lstfind(config_lst, old_config);
-	old_config_elem->content = current_config;
+	old_config_elem = ft_lstfind(lem->config_lst, old_config);
+	old_config_elem->content = lem->current_config;
 	free_config(&old_config);
 	return (1);
 }
 
-int		compare_configs(t_head *config_lst, t_config *current_config)
+int		compare_configs(t_lem *lem)
 {
 	t_lst		*elem;
 	t_config	*config;
 
-	elem = config_lst->first;
+	elem = lem->config_lst->first;
 	while (elem)
 	{
 		config = (t_config *)elem->content;
-		if (config->paths->size == current_config->paths->size)
-		{
-			if (current_config->turns < config->turns)
-			{
-				if (!(replace_config(config_lst, current_config, config)))
-					return (0);
-				return (1);
-			}
-		}
 		elem = elem->next;
+		if (config->paths->size == lem->current_config->paths->size)
+		{
+			if (lem->current_config->turns < config->turns)
+			{
+				printf("\nREPLACING CONFIG:\n");
+				print_config(config);
+				if (!(replace_config(lem, config)))
+					return (0);
+			}
+			return (1);
+		}
 	}
+	PRINTPOSN;
 	return (0);
 }
 
@@ -74,84 +74,82 @@ int			add_new_config(t_lem *lem, t_config *current_config)
 {
 	t_config	*copy;
 
-	if (!(copy = copy_config(current_config)))
+	printf("\nADDING CONFIG\n");
+	lem->most_paths++;
+	lem->turns = current_config->turns;
+	if (!(copy = copy_config(lem)))
 		return (0);
 	if (!(ft_lstadd_new(lem->config_lst, copy)))
 		return (0);
 	return (1);
 }
 
-int			sorted_cmp(t_lst *ref, t_lst *insert)
+void		pop_dead_paths(t_config *config)
 {
-	unsigned	ref_len;
-	unsigned	insert_len;
+	t_lst	*path_lst;
+	t_path	*path;
 
-	ref_len = ((t_path *)ref->content)->rooms->size;
-	insert_len = ((t_path *)insert->content)->rooms->size;
-	return (ref_len < insert_len);
+	path_lst = config->paths->first;
+	while(path_lst)
+	{
+		path = path_lst->content;
+		path_lst = path_lst->next;
+		if (path->is_dead)
+			ft_lstpop(config->paths, path);
+	}
 }
 
 // UNTESTED FUNCTION
-int			add_path(t_config *config, t_path *new_path)
+int			add_path(t_lem *lem, t_config *config, t_path *new_path)
 {
 	t_lst	*config_path_elem;
 	t_lst	*config_path;
 	t_lst	*new_path_elem;
 
-	PRINTPOSN;
+	lem->lives--;
 	if (!(new_path_elem = ft_lstnew_elem(new_path)))
 		return (0);
-	PRINTPOSN;
-	printf("config = %p\n", config);
-	// CURRENT CONFIG IS NULL
+	printf("\nBEFORE ADDING PATH, CONFIG:\n");
+	print_config(config);
 	if ((config_path_elem = config->paths->first))
 	{
-		PRINTPOSN;
-		// WHILE LOOP UNTESTED;
-		while (((t_path *)config_path_elem->next->content)->rooms->size > new_path->rooms->size)
+		while (((t_path *)config_path_elem->content)->rooms->size > new_path->rooms->size)
 		{
 			config_path_elem = config_path_elem->next;
 			config_path = config_path_elem->content;
 		}
-		new_path_elem->prev = config_path_elem;
-		new_path_elem->next = config_path_elem->next;
-		config_path_elem->next->prev = new_path_elem;
-		config_path_elem->next = new_path_elem;
+		ft_lstinsert(config->paths, config_path_elem, new_path_elem, BEFORE);
 	}
 	else
 	{
 		PRINTPOSN;
 		ft_lstadd(config->paths,new_path_elem);
 	}
+	pop_dead_paths(config);
+	balance_load(lem);
+	printf("\nUPDATED CONFIG:\n");
+	print_config(config);
 	return (1);
 }
 
 int			manage_valid_path(t_lem *lem, t_path *path)
 {
 	unsigned	current_nb_paths;
-	unsigned	most_paths;
 	unsigned	check_alloc;
 	t_lst		*new_elem;
 
-	PRINTPOSN;
-	print_path(path);
 	PRINTPOSN;
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);
 	if (!(new_elem = ft_lstnew_elem(path)))
 		return (0);
-	PRINTPOSN;
-	if (!add_path(lem->current_config, path))
+	if (!add_path(lem, lem->current_config, path))
 		return (0);
-	PRINTPOSN;
 	current_nb_paths = lem->current_config->paths->size;
-	PRINTPOSN;
-	most_paths = ((t_config *)lem->config_lst->first->content)->paths->size;
-	PRINTPOSN;
-	if (current_nb_paths > most_paths)
+	if (current_nb_paths > lem->most_paths
+		&& lem->current_config->turns < lem->turns)
 		check_alloc = add_new_config(lem, lem->current_config);
 	else
-		check_alloc = compare_configs(lem->config_lst, lem->current_config);
-	PRINTPOSN;
+		check_alloc = compare_configs(lem);
 	return (check_alloc);
 }

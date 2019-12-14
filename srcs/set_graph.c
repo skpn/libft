@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 21:05:19 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 17:10:26 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/14 17:32:21 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		check_graph(t_lem *lem)
 		return (0);
 //	PRINTPOSN;
 //	printf("lem->shortest = %u, lem->end->dist = %u\n", lem->shortest, lem->end->dist);
-	if (lem->shortest != lem->end->dist)
+	if (lem->shortest != lem->end->dist + 2)
 		return (0);
 	return (1);
 }
@@ -97,7 +97,7 @@ void	manage_end(t_lem *lem, t_lvl *lvl)
 //			printf("popping end\n");
 //			print_room(lem->end);
 			ft_lstpop(lvl->rooms, lem->end);
-		lem->shortest = lvl->dist;
+		lem->shortest = lvl->dist + 2;
 		lem->end->dist = lvl->dist;
 		lem->max_dist = lem->shortest + lem->nb_ants - 1;
 }

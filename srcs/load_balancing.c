@@ -1,35 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   load_balancing.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/14 11:00:06 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/12/14 17:34:21 by sikpenou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
 
-void	calculate_turns(t_lst *path_elem, unsigned ants, unsigned shortest
-	, t_config *config)
-{
-	t_path		*current_path;
-
-	config->turns = 0;
-	while (path_elem)
-	{
-		current_path = path_elem->content;
-		added_turns = (ants - current_path->rooms->size + shortest) / nb_paths;
-		ants -= nb_paths * added_turns;
-		config->turns += added_turns;
-		current_path->turns = turns;
-		nb_paths--;
-		path_elem = path_elem->next;
-	}
-}
-
-void	balance_load(t_lem *lem, t_config *new_config)
+void	balance_load(t_lem *lem)
 {
 	unsigned	ants;
 	unsigned	added_turns;
-	unsigned	shortest;
-	t_head		*new_paths;
+	unsigned	nb_paths;
+	t_lst		*config_path_lst;
+	t_path		*current_path;
 
-	new_paths = new_config->paths;
+	lem->current_config->turns = lem->shortest;
+	config_path_lst = lem->current_config->paths->first;
+	nb_paths = lem->current_config->paths->size;
 	ants = lem->nb_ants;
-	nb_paths = new_paths->size;
-	shortest = new_paths->last->content->rooms->size;
-	calculate_turns(new_paths->first, ants, shortest, config);
+	printf("\nBEFORE LOAD BALANCING:\n");
+	printf("ants: %u\n", ants);
+	printf("shortest: %u\n", lem->shortest);
+	printf("nb_paths: %u\n", nb_paths);
+	while (config_path_lst)
+	{
+		current_path = config_path_lst->content;
+		config_path_lst = config_path_lst->next;
+		added_turns = (ants - current_path->rooms->size + lem->shortest) / nb_paths;
+		ants -= nb_paths * added_turns;
+		lem->current_config->turns += added_turns;
+		current_path->turns = lem->current_config->turns;
+		nb_paths--;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 22:15:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 17:12:45 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/14 13:27:51 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_room		*alloc_new_room(void)
 		return (0);
 	if (!(room->children = ft_lstnew_head(NULL, NULL)))
 		return (0);
-//	printf("room malloc at address: %p\n", room);
 	return (room);
 }
 
@@ -50,6 +49,7 @@ t_config	*alloc_new_config(void)
 	ft_memset(config, 0, sizeof(*config));
 	if (!(config->paths = ft_lstnew_head(NULL, NULL)))
 		return (0);
+	config->turns = 0xFFFFFFFF;
 	return (config);
 }
 
@@ -66,5 +66,6 @@ int			init_lem(t_lem **lem)
 		return (0);
 	(*lem)->max_dist = 0xFFFFFFFF;
 	(*lem)->max_paths = 0xFFFFFFFF;
+	(*lem)->turns = 0xFFFFFFFF;
 	return (1);
 }

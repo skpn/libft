@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 17:48:18 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/14 16:29:06 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@
 # define ADD_CONFIG 1
 # define POP_PATH 2
 # define ADD_PATH 3
+# define DEBUG 1
 void	*g_ptr;
 typedef struct		s_path
 {
 	unsigned		turns;
+	unsigned		is_dead;
 	t_head			*rooms;
 }					t_path;
 
@@ -59,8 +61,9 @@ typedef struct 		s_lem
 	unsigned		max_paths;
 	unsigned		shortest;
 	unsigned		max_dist;
-	unsigned		algo_turn;
-	unsigned		walk_limit;
+	unsigned		turns;
+	unsigned		lives;
+	unsigned		most_paths;
 	char			*anthill;
 	t_room			*start;
 	t_room			*end;
@@ -97,11 +100,13 @@ int					update_config(t_lem *lem, t_config *config
 	, t_path *new_path);
 int					manage_valid_path(t_lem *lem, t_path *path);
 int					get_max_walk(t_lem *lem);
+void				balance_load(t_lem *lem);
 
 void				print_anthill(char *lem);
 void				print_lem(t_lem *lem, char *args);
 void				print_room(t_room *room);
 void				print_rooms(t_head *rooms);
+void				print_config(t_config *config);
 void				print_path(t_path *path);
 //void				print_room(t_room *room, char *args, int opt);
 //void				print_rooms(t_head *rooms, char *args, int opt);

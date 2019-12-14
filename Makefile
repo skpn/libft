@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/12/13 15:05:22 by hehlinge         ###   ########.fr        #
+#    Updated: 2019/12/14 10:49:53 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,9 @@ SRC_FILES =	main_lem.c				\
 			clean_graph.c			\
 			set_config.c			\
 			seek_paths.c 			\
-			display_lem.c			\
-			manage_config.c
+			manage_config.c			\
+			load_balancing.c		\
+			display_lem.c
 
 SRC_DIR = ./srcs/
 
