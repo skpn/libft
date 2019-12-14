@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 21:05:19 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 17:32:21 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/14 17:56:15 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,42 +107,45 @@ int		set_graph(t_lem *lem)
 	t_lvl	*lvl;
 
 //	printf("AT START, SHORTEST: %u\n", 
+//	PRINTPOSN;
+//	printf("lem: %p\n", lem);
+//	printf("lem->start: %p\n", lem->start);
 	if (!(lvl = init_start_lvl(lem->start)))
 		return (0);
 //	g_ptr = lem;
 	lem->start->dist = 0;
-//	printf("START OF SET GRAPH\n");
-//	print_lvl(lvl);
+	printf("START OF SET GRAPH\n");
+	print_lvl(lvl);
 	while (lvl->dist < lem->max_dist && lvl->rooms->first)
 	{
-//		printf("----SETTING LVL %u----\n\n", lvl->dist);
+		printf("----SETTING LVL %u----\n\n", lvl->dist);
 		set_next_lvl_dists(lvl);
-//		printf("AFTER SETTING DISTS\n");
-//		print_lvl(lvl);
+		printf("AFTER SETTING DISTS\n");
+		print_lvl(lvl);
 		set_next_lvl_families(lvl, lem->end);
-//		printf("AFTER SETTING FAMILIES\n");
-//		print_lvl(lvl);
+		printf("AFTER SETTING FAMILIES\n");
+		print_lvl(lvl);
 		update_lem_info(lem, lvl);
-//		printf("AFTER UPDATING LEM:\ncurrent dist: %u\nend->dist: %u\n"
-//				"lvl->rooms: %p\nmax_dist: %u\nmax_paths: %u\n\n"
-//			, lvl->dist, lem->end->dist, lvl->rooms, lem->max_dist, lem->max_paths);
-		//print_rooms(lem->rooms);
+		printf("AFTER UPDATING LEM:\ncurrent dist: %u\nend->dist: %u\n"
+				"lvl->rooms: %p\nmax_dist: %u\nmax_paths: %u\n\n"
+			, lvl->dist, lem->end->dist, lvl->rooms, lem->max_dist, lem->max_paths);
+		print_rooms(lem->rooms);
 		get_next_lvl_rooms(lem, lvl);
 		if (lvl->dist + 1 == lem->end->dist)
 		{
 			manage_end(lem, lvl);
 		}
 		lvl->dist++;
-//		printf("AFTER GETTING NEXT LVL\n");
-//		print_lvl(lvl);
+		printf("AFTER GETTING NEXT LVL\n");
+		print_lvl(lvl);
 	}
-//	PRINTPOSN;
+	PRINTPOSN;
 	if (!(check_graph(lem)))
 	{
 		printf("CHECK GRAPH RETURNS 0\n");
 		return (0);
 	}
-//	PRINTPOSN;
+	PRINTPOSN;
 	kill_end_children(lem->end, lem->max_dist);
 	ft_lstfree_head(&lvl->rooms);
 	lvl->rooms = NULL;

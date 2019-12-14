@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 16:29:06 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/14 20:05:31 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,24 @@
 # define ADD_PATH 3
 # define DEBUG 1
 void	*g_ptr;
+typedef struct		s_ant
+{
+	unsigned		id;
+	unsigned		wait;
+	unsigned		max;
+	t_path			*path;
+	t_lst			*current_room;
+}					t_ant;
+
+typedef struct		s_display
+{
+	unsigned		last_id;
+	unsigned		turn;
+	t_config		*best;
+	t_lst			*last_path;
+	t_ant			*ants_tab;
+}
+
 typedef struct		s_path
 {
 	unsigned		turns;

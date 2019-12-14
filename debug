@@ -20,205 +20,482 @@ alloc'd 0x602000000150
 new list elem for room
 alloc'd 0x6030000003d0
 malloc for joinanthill
-alloc'd 0x603000000400
+alloc'd 0x602000000170
 join anthill free s1
 freed 0x602000000130
 malloc for joinanthill
-alloc'd 0x603000000430
+alloc'd 0x603000000400
 join anthill free s1
-freed 0x603000000400
+freed 0x602000000170
 alloc'd 0x604000000410
+alloc'd 0x603000000430
 alloc'd 0x603000000460
-alloc'd 0x603000000490
-line dup for room name
-alloc'd 0x602000000170
-new list elem for room
-alloc'd 0x6030000004c0
-malloc for joinanthill
-alloc'd 0x6030000004f0
-join anthill free s1
-freed 0x603000000430
-alloc'd 0x604000000450
-alloc'd 0x603000000520
-alloc'd 0x603000000550
 line dup for room name
 alloc'd 0x602000000190
 new list elem for room
-alloc'd 0x603000000580
+alloc'd 0x603000000490
 malloc for joinanthill
-alloc'd 0x6030000005b0
+alloc'd 0x6030000004c0
 join anthill free s1
-freed 0x6030000004f0
-alloc'd 0x604000000490
-alloc'd 0x6030000005e0
-alloc'd 0x603000000610
+freed 0x603000000400
+alloc'd 0x604000000450
+alloc'd 0x6030000004f0
+alloc'd 0x603000000520
 line dup for room name
 alloc'd 0x6020000001b0
 new list elem for room
-alloc'd 0x603000000640
+alloc'd 0x603000000550
 malloc for joinanthill
-alloc'd 0x6040000004d0
+alloc'd 0x603000000580
 join anthill free s1
-freed 0x6030000005b0
-alloc'd 0x604000000510
-alloc'd 0x603000000670
-alloc'd 0x6030000006a0
+freed 0x6030000004c0
+alloc'd 0x604000000490
+alloc'd 0x6030000005b0
+alloc'd 0x6030000005e0
 line dup for room name
 alloc'd 0x6020000001d0
 new list elem for room
-alloc'd 0x6030000006d0
+alloc'd 0x603000000610
 malloc for joinanthill
-alloc'd 0x604000000550
+alloc'd 0x603000000640
 join anthill free s1
-freed 0x6040000004d0
-alloc'd 0x604000000590
-alloc'd 0x603000000700
-alloc'd 0x603000000730
+freed 0x603000000580
+alloc'd 0x6040000004d0
+alloc'd 0x603000000670
+alloc'd 0x6030000006a0
 line dup for room name
 alloc'd 0x6020000001f0
 new list elem for room
-alloc'd 0x603000000760
+alloc'd 0x6030000006d0
 malloc for joinanthill
-alloc'd 0x6040000005d0
+alloc'd 0x603000000700
 join anthill free s1
-freed 0x604000000550
+freed 0x603000000640
+alloc'd 0x604000000510
+alloc'd 0x603000000730
+alloc'd 0x603000000760
+line dup for room name
 alloc'd 0x602000000210
-alloc'd 0x602000000230
-adding child to room1
+new list elem for room
 alloc'd 0x603000000790
-adding child to room2
+malloc for joinanthill
 alloc'd 0x6030000007c0
-freed 0x602000000210
-freed 0x602000000230
+join anthill free s1
+freed 0x603000000700
+alloc'd 0x604000000550
+alloc'd 0x6030000007f0
+alloc'd 0x603000000820
+line dup for room name
+alloc'd 0x602000000230
+new list elem for room
+alloc'd 0x603000000850
+malloc for joinanthill
+alloc'd 0x604000000590
+join anthill free s1
+freed 0x6030000007c0
+alloc'd 0x6040000005d0
+alloc'd 0x603000000880
+alloc'd 0x6030000008b0
+line dup for room name
+alloc'd 0x602000000250
+new list elem for room
+alloc'd 0x6030000008e0
 malloc for joinanthill
 alloc'd 0x604000000610
 join anthill free s1
-freed 0x6040000005d0
-alloc'd 0x602000000250
+freed 0x604000000590
+alloc'd 0x604000000650
+alloc'd 0x603000000910
+alloc'd 0x603000000940
+line dup for room name
 alloc'd 0x602000000270
+new list elem for room
+alloc'd 0x603000000970
+malloc for joinanthill
+alloc'd 0x604000000690
+join anthill free s1
+freed 0x604000000610
+alloc'd 0x6040000006d0
+alloc'd 0x6030000009a0
+alloc'd 0x6030000009d0
+line dup for room name
+alloc'd 0x602000000290
+new list elem for room
+alloc'd 0x603000000a00
+malloc for joinanthill
+alloc'd 0x604000000710
+join anthill free s1
+freed 0x604000000690
+alloc'd 0x604000000750
+alloc'd 0x603000000a30
+alloc'd 0x603000000a60
+line dup for room name
+alloc'd 0x6020000002b0
+new list elem for room
+alloc'd 0x603000000a90
+malloc for joinanthill
+alloc'd 0x604000000790
+join anthill free s1
+freed 0x604000000710
+alloc'd 0x6040000007d0
+alloc'd 0x603000000ac0
+alloc'd 0x603000000af0
+line dup for room name
+alloc'd 0x6020000002d0
+new list elem for room
+alloc'd 0x603000000b20
+malloc for joinanthill
+alloc'd 0x604000000810
+join anthill free s1
+freed 0x604000000790
+alloc'd 0x604000000850
+alloc'd 0x603000000b50
+alloc'd 0x603000000b80
+line dup for room name
+alloc'd 0x6020000002f0
+new list elem for room
+alloc'd 0x603000000bb0
+malloc for joinanthill
+alloc'd 0x604000000890
+join anthill free s1
+freed 0x604000000810
+alloc'd 0x602000000310
+alloc'd 0x602000000330
 adding child to room1
-alloc'd 0x6030000007f0
+alloc'd 0x603000000be0
 adding child to room2
-alloc'd 0x603000000820
-freed 0x602000000250
-freed 0x602000000270
+alloc'd 0x603000000c10
+freed 0x602000000310
+freed 0x602000000330
 malloc for joinanthill
 alloc'd 0x606000002d20
 join anthill free s1
-freed 0x604000000610
-alloc'd 0x602000000290
-alloc'd 0x6020000002b0
+freed 0x604000000890
+alloc'd 0x602000000350
+alloc'd 0x602000000370
 adding child to room1
-alloc'd 0x603000000850
+alloc'd 0x603000000c40
 adding child to room2
-alloc'd 0x603000000880
-freed 0x602000000290
-freed 0x6020000002b0
+alloc'd 0x603000000c70
+freed 0x602000000350
+freed 0x602000000370
 malloc for joinanthill
 alloc'd 0x606000002d80
 join anthill free s1
 freed 0x606000002d20
-alloc'd 0x6020000002d0
-alloc'd 0x6020000002f0
+alloc'd 0x602000000390
+alloc'd 0x6020000003b0
 adding child to room1
-alloc'd 0x6030000008b0
+alloc'd 0x603000000ca0
 adding child to room2
-alloc'd 0x6030000008e0
-freed 0x6020000002d0
-freed 0x6020000002f0
+alloc'd 0x603000000cd0
+freed 0x602000000390
+freed 0x6020000003b0
 malloc for joinanthill
 alloc'd 0x606000002de0
 join anthill free s1
 freed 0x606000002d80
-alloc'd 0x602000000310
-alloc'd 0x602000000330
+alloc'd 0x6020000003d0
+alloc'd 0x6020000003f0
 adding child to room1
-alloc'd 0x603000000910
+alloc'd 0x603000000d00
 adding child to room2
-alloc'd 0x603000000940
-freed 0x602000000310
-freed 0x602000000330
+alloc'd 0x603000000d30
+freed 0x6020000003d0
+freed 0x6020000003f0
+malloc for joinanthill
+alloc'd 0x606000002e40
+join anthill free s1
+freed 0x606000002de0
+alloc'd 0x602000000410
+alloc'd 0x602000000430
+adding child to room1
+alloc'd 0x603000000d60
+adding child to room2
+alloc'd 0x603000000d90
+freed 0x602000000410
+freed 0x602000000430
 malloc for joinanthill
 alloc'd 0x607000000090
 join anthill free s1
-freed 0x606000002de0
-alloc'd 0x602000000350
-alloc'd 0x602000000370
+freed 0x606000002e40
+alloc'd 0x602000000450
+alloc'd 0x602000000470
 adding child to room1
-alloc'd 0x603000000970
+alloc'd 0x603000000dc0
 adding child to room2
-alloc'd 0x6030000009a0
-freed 0x602000000350
-freed 0x602000000370
+alloc'd 0x603000000df0
+freed 0x602000000450
+freed 0x602000000470
 malloc for joinanthill
 alloc'd 0x607000000100
 join anthill free s1
 freed 0x607000000090
-alloc for gnl last line
-alloc'd 0x602000000390
-freeing line after read
-freed 0x602000000390
-alloc'd 0x6020000003b0
-alloc'd 0x6030000009d0
-alloc'd 0x603000000a00
-alloc'd 0x603000000a30
-alloc'd 0x603000000a60
-freed 0x6030000009d0
-alloc'd 0x603000000a90
-freed 0x603000000a60
-alloc'd 0x603000000ac0
-freed 0x603000000a30
-alloc'd 0x603000000af0
-freed 0x603000000ac0
-freed 0x603000000a90
-freed 0x603000000a00
-freed 0x6020000003b0
-alloc'd 0x6020000003d0
-alloc'd 0x603000000b20
-alloc'd 0x6020000003f0
-alloc'd 0x603000000b50
-alloc'd 0x603000000b80
-alloc'd 0x603000000bb0
-alloc'd 0x603000000be0
-alloc'd 0x603000000c10
-alloc'd 0x603000000c40
-alloc'd 0x603000000c70
-alloc'd 0x603000000ca0
-alloc'd 0x602000000410
-alloc'd 0x603000000cd0
-alloc'd 0x603000000d00
-alloc'd 0x603000000d30
-alloc'd 0x603000000d60
-alloc'd 0x602000000430
-alloc'd 0x603000000d90
-alloc'd 0x603000000dc0
-alloc'd 0x603000000df0
-alloc'd 0x603000000e20
-alloc'd 0x603000000e50
-alloc'd 0x603000000e80
-alloc'd 0x603000000eb0
-alloc'd 0x603000000ee0
-alloc'd 0x602000000450
-alloc'd 0x603000000f10
-alloc'd 0x603000000f40
-alloc'd 0x603000000f70
-alloc'd 0x603000000fa0
-alloc'd 0x603000000fd0
-alloc'd 0x602000000470
-alloc'd 0x603000001000
-alloc'd 0x603000001030
-alloc'd 0x603000001060
-alloc'd 0x603000001090
-alloc'd 0x6030000010c0
-alloc'd 0x6030000010f0
-alloc'd 0x603000001120
-alloc'd 0x603000001150
 alloc'd 0x602000000490
+alloc'd 0x6020000004b0
+adding child to room1
+alloc'd 0x603000000e20
+adding child to room2
+alloc'd 0x603000000e50
+freed 0x602000000490
+freed 0x6020000004b0
+malloc for joinanthill
+alloc'd 0x607000000170
+join anthill free s1
+freed 0x607000000100
+alloc'd 0x6020000004d0
+alloc'd 0x6020000004f0
+adding child to room1
+alloc'd 0x603000000e80
+adding child to room2
+alloc'd 0x603000000eb0
+freed 0x6020000004d0
+freed 0x6020000004f0
+malloc for joinanthill
+alloc'd 0x6070000001e0
+join anthill free s1
+freed 0x607000000170
+alloc'd 0x602000000510
+alloc'd 0x602000000530
+adding child to room1
+alloc'd 0x603000000ee0
+adding child to room2
+alloc'd 0x603000000f10
+freed 0x602000000510
+freed 0x602000000530
+malloc for joinanthill
+alloc'd 0x6080000000a0
+join anthill free s1
+freed 0x6070000001e0
+alloc'd 0x602000000550
+alloc'd 0x602000000570
+adding child to room1
+alloc'd 0x603000000f40
+adding child to room2
+alloc'd 0x603000000f70
+freed 0x602000000550
+freed 0x602000000570
+malloc for joinanthill
+alloc'd 0x608000000120
+join anthill free s1
+freed 0x6080000000a0
+alloc'd 0x602000000590
+alloc'd 0x6020000005b0
+adding child to room1
+alloc'd 0x603000000fa0
+adding child to room2
+alloc'd 0x603000000fd0
+freed 0x602000000590
+freed 0x6020000005b0
+malloc for joinanthill
+alloc'd 0x6080000001a0
+join anthill free s1
+freed 0x608000000120
+alloc'd 0x6020000005d0
+alloc'd 0x6020000005f0
+adding child to room1
+alloc'd 0x603000001000
+adding child to room2
+alloc'd 0x603000001030
+freed 0x6020000005d0
+freed 0x6020000005f0
+malloc for joinanthill
+alloc'd 0x608000000220
+join anthill free s1
+freed 0x6080000001a0
+alloc'd 0x602000000610
+alloc'd 0x602000000630
+adding child to room1
+alloc'd 0x603000001060
+adding child to room2
+alloc'd 0x603000001090
+freed 0x602000000610
+freed 0x602000000630
+malloc for joinanthill
+alloc'd 0x60b000000040
+join anthill free s1
+freed 0x608000000220
+alloc'd 0x602000000650
+alloc'd 0x602000000670
+adding child to room1
+alloc'd 0x6030000010c0
+adding child to room2
+alloc'd 0x6030000010f0
+freed 0x602000000650
+freed 0x602000000670
+malloc for joinanthill
+alloc'd 0x60b0000000f0
+join anthill free s1
+freed 0x60b000000040
+alloc'd 0x602000000690
+alloc'd 0x6020000006b0
+adding child to room1
+alloc'd 0x603000001120
+adding child to room2
+alloc'd 0x603000001150
+freed 0x602000000690
+freed 0x6020000006b0
+malloc for joinanthill
+alloc'd 0x60b0000001a0
+join anthill free s1
+freed 0x60b0000000f0
+alloc'd 0x6020000006d0
+alloc'd 0x6020000006f0
+adding child to room1
 alloc'd 0x603000001180
+adding child to room2
 alloc'd 0x6030000011b0
+freed 0x6020000006d0
+freed 0x6020000006f0
+malloc for joinanthill
+alloc'd 0x60b000000250
+join anthill free s1
+freed 0x60b0000001a0
+alloc'd 0x602000000710
+alloc'd 0x602000000730
+adding child to room1
 alloc'd 0x6030000011e0
+adding child to room2
 alloc'd 0x603000001210
+freed 0x602000000710
+freed 0x602000000730
+malloc for joinanthill
+alloc'd 0x60c000000100
+join anthill free s1
+freed 0x60b000000250
+alloc for gnl last line
+alloc'd 0x602000000750
+freeing line after read
+freed 0x602000000750
+alloc'd 0x602000000770
 alloc'd 0x603000001240
 alloc'd 0x603000001270
 alloc'd 0x6030000012a0
 alloc'd 0x6030000012d0
+alloc'd 0x603000001300
+freed 0x603000001240
+alloc'd 0x603000001330
+alloc'd 0x603000001360
+freed 0x603000001300
+alloc'd 0x603000001390
+freed 0x6030000012d0
+alloc'd 0x6030000013c0
+freed 0x6030000012a0
+alloc'd 0x6030000013f0
+freed 0x6030000013c0
+freed 0x603000001390
+alloc'd 0x603000001420
+freed 0x603000001360
+alloc'd 0x603000001450
+freed 0x603000001330
+freed 0x603000001450
+alloc'd 0x603000001480
+freed 0x6030000013f0
+alloc'd 0x6030000014b0
+freed 0x603000001480
+freed 0x6030000014b0
+freed 0x603000001270
+freed 0x602000000770
+alloc'd 0x602000000790
+alloc'd 0x6030000014e0
+alloc'd 0x6020000007b0
+alloc'd 0x603000001510
+alloc'd 0x603000001540
+alloc'd 0x603000001570
+alloc'd 0x6030000015a0
+alloc'd 0x6030000015d0
+alloc'd 0x603000001600
+alloc'd 0x603000001630
+alloc'd 0x603000001660
+alloc'd 0x6020000007d0
+alloc'd 0x603000001690
+alloc'd 0x6030000016c0
+alloc'd 0x6030000016f0
+alloc'd 0x603000001720
+alloc'd 0x6020000007f0
+alloc'd 0x603000001750
+alloc'd 0x603000001780
+alloc'd 0x6030000017b0
+alloc'd 0x6030000017e0
+alloc'd 0x603000001810
+alloc'd 0x603000001840
+alloc'd 0x603000001870
+alloc'd 0x6030000018a0
+alloc'd 0x6030000018d0
+alloc'd 0x602000000810
+alloc'd 0x603000001900
+alloc'd 0x603000001930
+alloc'd 0x603000001960
+alloc'd 0x603000001990
+alloc'd 0x6030000019c0
+alloc'd 0x602000000830
+alloc'd 0x6030000019f0
+alloc'd 0x603000001a20
+alloc'd 0x603000001a50
+alloc'd 0x603000001a80
+alloc'd 0x603000001ab0
+alloc'd 0x603000001ae0
+alloc'd 0x603000001b10
+alloc'd 0x603000001b40
+alloc'd 0x603000001b70
+alloc'd 0x603000001ba0
+alloc'd 0x603000001bd0
+alloc'd 0x602000000850
+alloc'd 0x603000001c00
+alloc'd 0x603000001c30
+alloc'd 0x603000001c60
+alloc'd 0x603000001c90
+alloc'd 0x603000001cc0
+alloc'd 0x603000001cf0
+alloc'd 0x603000001d20
+alloc'd 0x603000001d50
+alloc'd 0x603000001d80
+alloc'd 0x602000000870
+alloc'd 0x603000001db0
+alloc'd 0x603000001de0
+alloc'd 0x603000001e10
+alloc'd 0x603000001e40
+alloc'd 0x603000001e70
+alloc'd 0x603000001ea0
+alloc'd 0x603000001ed0
+alloc'd 0x603000001f00
+alloc'd 0x603000001f30
+alloc'd 0x602000000890
+alloc'd 0x603000001f60
+alloc'd 0x603000001f90
+alloc'd 0x603000001fc0
+alloc'd 0x603000001ff0
+alloc'd 0x603000002020
+alloc'd 0x603000002050
+alloc'd 0x6020000008b0
+alloc'd 0x603000002080
+alloc'd 0x6030000020b0
+alloc'd 0x6030000020e0
+alloc'd 0x603000002110
+alloc'd 0x603000002140
+alloc'd 0x603000002170
+alloc'd 0x6030000021a0
+alloc'd 0x6030000021d0
+alloc'd 0x603000002200
+alloc'd 0x603000002230
+alloc'd 0x603000002260
+alloc'd 0x6020000008d0
+alloc'd 0x603000002290
+alloc'd 0x6030000022c0
+alloc'd 0x6030000022f0
+alloc'd 0x603000002320
+alloc'd 0x603000002350
+alloc'd 0x603000002380
+alloc'd 0x6030000023b0
+alloc'd 0x6030000023e0
+alloc'd 0x603000002410
+alloc'd 0x6020000008f0
+alloc'd 0x603000002440
+alloc'd 0x603000002470
+alloc'd 0x6030000024a0
+alloc'd 0x6030000024d0
+alloc'd 0x603000002500
+alloc'd 0x603000002530
+alloc'd 0x603000002560
+alloc'd 0x603000002590
+alloc'd 0x6030000025c0

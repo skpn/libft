@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 15:28:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 15:48:27 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/14 18:40:42 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,16 @@ char	*ft_strjoin_anthill(char **s1, char **s2, int opt)
 	return (new);
 }
 
+int		check_input(t_lem *lem)
+{
+	if (lem->start == NULL || lem->end == NULL)
+	{
+		printf("CHECK INPUT RETURNS 0");
+		return (0);
+	}
+	return (1);
+}
+
 int		parse_input(t_lem *lem)
 {
 	char	*line;
@@ -67,5 +77,9 @@ int		parse_input(t_lem *lem)
 	ft_free((void **)&line);
 	lem->shortest = 0xFFFFFFFF;
 	lem->max_dist = 0xFFFFFFFF;
-	return (ret ? 0 : 1);
+	if (ret)
+		return (0);
+	if (!check_input(lem))
+		return (0);
+	return (1);
 }
