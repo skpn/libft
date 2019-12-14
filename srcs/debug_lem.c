@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 20:38:01 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 20:45:44 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/14 21:35:47 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,26 @@
 #define PARENTS 1
 #define CHILDREN 2
 #define FAMILY 3
+
+void	print_ants_tab(t_ant **tab)
+{
+	unsigned	cell;
+
+	if (DEBUG == 0)
+		return ;
+	printf("PRINTING ANTS TAB\n");
+	cell = 0;
+	while (tab[cell])
+	{
+		printf("id   : %u\n", tab[cell]->id);
+		printf("wait : %u\n", tab[cell]->wait);
+		printf("max  : %u\n", tab[cell]->max);
+		printf("path : %p\n", tab[cell]->path);
+		printf("first: %p\n", tab[cell]->path->rooms->first);
+		printf("room : %p\n\n", tab[cell]->current_room);
+		cell++;
+	}
+}
 
 void	print_room(t_room *room)
 {

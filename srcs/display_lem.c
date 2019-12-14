@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display.c                                          :+:      :+:    :+:   */
+/*   display->c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sikpenou <marvin@42->fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 19:12:41 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 21:09:42 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/14 22:35:22 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ void		path_to_tab(t_display *display, t_path *path, unsigned *set_cell)
 	{
 		PRINTPOSN;
 		printf("ants_tab = %p\n", display->ants_tab);
-		display->ants_tab[*set_cell].id = display->last_id++;
-		display->ants_tab[*set_cell].wait = wait++;
-		display->ants_tab[*set_cell].max = path->load;
-		display->ants_tab[*set_cell].path = path;
-		display->ants_tab[*set_cell].current_room = path->rooms->first;
+		display->ants_tab[*set_cell]->id = display->last_id++;
+		display->ants_tab[*set_cell]->wait = wait++;
+		display->ants_tab[*set_cell]->max = path->load;
+		display->ants_tab[*set_cell]->path = path;
+		display->ants_tab[*set_cell]->current_room = path->rooms->first;
 		(*set_cell)++;
 	}
 }
@@ -99,30 +99,46 @@ t_display		*set_display(t_lem *lem)
 	if (!(display = alloc_new_display(total_rooms)))
 		return (NULL);
 	display->best = best;
+	display->nb_ants = lem->nb_ants;
 	set_tab(display, total_rooms);
 	return (display);
 }
 
-void		print_ants_tab(t_display *display)
+void		print_ant(t_display *display, t_ant *ant)
+{
+//	printf("first: %u, prefix: '%s'\n", display->first_print, prefix);
+	if (ant->wait <= display->turn && ant->current_room)
+	{
+		//printf("ants->wait = %u, display->turn = %u\n", ant->wait, display->turn);
+		if (display->first_print == 1)
+		{
+			printf("L%u-%s", ant->id, ((t_room *)ant->current_room->content)->name);
+			display->first_print = 0;
+		}
+		else
+		{
+			printf(" L%u-%s", ant->id, ((t_room *)ant->current_room->content)->name);
+		}
+		ant->current_room = ant->current_room->next;
+		if (!ant->current_room && display->last_id < display->nb_ants)
+		{
+			ant->current_room = ant->path->rooms->first;
+			ant->id = display->last_id++;
+		}
+	}
+}
+
+void		print_ants(t_display *display)
 {
 	unsigned	print_cell;
-	t_ant		ant;
+	t_ant		*ant;
 
 	print_cell = 0;
-	ant = display->ants_tab[print_cell];
-	if (ant.wait <= display->turn)
-		printf("L%u-%s", ant.id, ((t_room *)ant.current_room->content)->name);
-	ant.current_room = ant.current_room->next;
-	while (display->ants_tab[++print_cell])
+	while (display->ants_tab[print_cell])
 	{
-		if (ant.wait <= display->turn)
-			printf("L%u-%s", ant.id, ((t_room *)ant.current_room->content)->name);
-		ant.current_room = ant.current_room->next;
-		if (!ant.current_room)
-		{
-			ant.current_room = ant.path->rooms->first;
-			ant.id = display->last_id++;
-		}
+		ant = display->ants_tab[print_cell];
+		print_ant(display, ant);
+		print_cell++;
 	}
 	printf("\n");
 }
@@ -134,10 +150,13 @@ int			display_lem(t_lem *lem)
 	if (!(display = set_display(lem)))
 		return (0);
 	clean_anthill(lem);
-	printf("%s\n", lem->anthill);
-	while (++display->turn <= lem->turns)
+//	printf("%s\n", lem->anthill);
+	print_ants_tab(display->ants_tab);
+	while (display->turn <= lem->turns)
 	{
-		print_ants_tab(display);
+		display->first_print = 1;
+		print_ants(display);
+		display->turn++;
 	}
 	return (1);
 }

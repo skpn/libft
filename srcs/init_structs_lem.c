@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 22:15:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 21:09:45 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/14 22:35:24 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ t_path		*alloc_new_path(void)
 	t_path	*path;
 
 	if (!(path = (t_path *)easymalloc(sizeof(*path))))
-		return (0);
+		return (NULL);
 	if (!(path->rooms = ft_lstnew_head(NULL, NULL)))
-		return (0);
+		return (NULL);
 	return (path);
 }
 
@@ -29,12 +29,12 @@ t_room		*alloc_new_room(void)
 	t_room	*room;
 
 	if (!(room = (t_room *)easymalloc(sizeof(*room))))
-		return (0);
+		return (NULL);
 	room->dist = 0xFFFFFFFF;
 	if (!(room->parents = ft_lstnew_head(NULL, NULL)))
-		return (0);
+		return (NULL);
 	if (!(room->children = ft_lstnew_head(NULL, NULL)))
-		return (0);
+		return (NULL);
 	return (room);
 }
 
@@ -43,9 +43,9 @@ t_config	*alloc_new_config(void)
 	t_config	*config;
 
 	if (!(config = (t_config *)easymalloc(sizeof(*config))))
-		return (0);
+		return (NULL);
 	if (!(config->paths = ft_lstnew_head(NULL, NULL)))
-		return (0);
+		return (NULL);
 	config->turns = 0xFFFFFFFF;
 	return (config);
 }
@@ -53,11 +53,20 @@ t_config	*alloc_new_config(void)
 t_display	*alloc_new_display(unsigned total_rooms)
 {
 	t_display	*display;
+	unsigned	cell;
 
 	if (!(display = (t_display *)easymalloc(sizeof(*display))))
 		return (NULL);
-	if (!(display->ants_tab = (t_ant *)easymalloc(sizeof(t_ant) * total_rooms + 1)))
+	if (!(display->ants_tab = (t_ant **)easymalloc(sizeof(t_ant *) * (total_rooms + 1))))
 		return (NULL);
+	display->last_id = 1;
+	cell = 0;
+	while (cell < total_rooms)
+	{
+		if (!(display->ants_tab[cell] = (t_ant *)easymalloc(sizeof(t_ant))))
+			return (NULL);
+		cell++;
+	}
 	return (display);
 }
 

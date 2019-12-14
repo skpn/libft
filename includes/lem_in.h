@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 21:09:47 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/14 22:35:26 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ typedef struct		s_display
 {
 	unsigned		last_id;
 	unsigned		turn;
+	unsigned		first_print;
+	size_t			nb_ants;
 	t_config		*best;
 	t_lst			*last_path;
-	t_ant			*ants_tab;
+	t_ant			**ants_tab;
 }					t_display;
 
 typedef struct 		s_lem
@@ -132,4 +134,5 @@ void				print_path(t_path *path);
 //void				print_rooms(t_head *rooms, char *args, int opt);
 //void				print_rooms_addr(t_head *rooms);
 void				print_lvl(t_lvl *lvl);
+void				print_ants_tab(t_ant **tab);
 #endif
