@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 19:12:41 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 20:34:45 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/14 21:09:42 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ unsigned	get_total_rooms(t_config *best)
 	t_path		*path;
 
 	total = 0;
-	path_elem = config->paths->first;
+	path_elem = best->paths->first;
 	while (path_elem)
 	{
 		path = path_elem->content;
@@ -61,63 +61,67 @@ void		path_to_tab(t_display *display, t_path *path, unsigned *set_cell)
 
 	wait = 0;
 	room_count = 0;
-	current_room = path->rooms->first;
 	while (++room_count <= path->rooms->size)
 	{
-		display->ants_tab[*set_cell]->id = display->last_id++;
-		display->ants_tab[*set_cell]->wait = wait++;
-		display->ants_tab[*set_cell]->max = path->turns;
-		display->ants_tab[*set_cell]->path = path;
-		display->ants_tab[*set_cell]->current_room = path->rooms->first;
+		PRINTPOSN;
+		printf("ants_tab = %p\n", display->ants_tab);
+		display->ants_tab[*set_cell].id = display->last_id++;
+		display->ants_tab[*set_cell].wait = wait++;
+		display->ants_tab[*set_cell].max = path->load;
+		display->ants_tab[*set_cell].path = path;
+		display->ants_tab[*set_cell].current_room = path->rooms->first;
 		(*set_cell)++;
 	}
 }
 
-void		set_tab(t_display *display, t_config *best, unsigned total_rooms)
+void		set_tab(t_display *display, unsigned total_rooms)
 {
 	unsigned	set_cell;
 	t_lst		*path_elem;
 
 	set_cell = 0;
-	path_elem = best->paths->first;
-	while (current_cell < total_rooms)
+	path_elem = display->best->paths->first;
+	while (set_cell < total_rooms)
 	{
-		path_to_tab(display, path_elem->content, &set_cell)
+		path_to_tab(display, path_elem->content, &set_cell);
 		path_elem = path_elem->next;
 	}
 }
 
-int			set_display(t_display *display)
+t_display		*set_display(t_lem *lem)
 {
 	unsigned	total_rooms;
+	t_display	*display;
+	t_config	*best;
 
-	display->best = get_best_config(lem->config_lst);
+	best = get_best_config(lem->config_lst);
 	total_rooms = get_total_rooms(best);
-	if (!(ants_tab = (t_ant *)easymalloc(sizeof(*ants_tab) * total_rooms + 1)))
-		return (0);
-	set_tab(display, best, total_rooms);
-	return (1);
+	if (!(display = alloc_new_display(total_rooms)))
+		return (NULL);
+	display->best = best;
+	set_tab(display, total_rooms);
+	return (display);
 }
 
 void		print_ants_tab(t_display *display)
 {
 	unsigned	print_cell;
-	t_ant		*ant;
+	t_ant		ant;
 
 	print_cell = 0;
 	ant = display->ants_tab[print_cell];
-	if (wait <= display->turn)
-		printf("L%u-%s", ant->id, ((t_room *)ant->current_room->content)->name);
-	ant->current_room = ant->current_room->next;
+	if (ant.wait <= display->turn)
+		printf("L%u-%s", ant.id, ((t_room *)ant.current_room->content)->name);
+	ant.current_room = ant.current_room->next;
 	while (display->ants_tab[++print_cell])
 	{
-		if (wait <= display->turn)
-			printf("L%u-%s", ant->id, ((t_room *)ant->current_room->content)->name);
-		ant->current_room = ant->current_room->next;
-		if (!ant->current_room)
+		if (ant.wait <= display->turn)
+			printf("L%u-%s", ant.id, ((t_room *)ant.current_room->content)->name);
+		ant.current_room = ant.current_room->next;
+		if (!ant.current_room)
 		{
-			ant->current_room = ant->path->rooms->first;
-			ant->id = display->last_id++;
+			ant.current_room = ant.path->rooms->first;
+			ant.id = display->last_id++;
 		}
 	}
 	printf("\n");
@@ -127,7 +131,7 @@ int			display_lem(t_lem *lem)
 {
 	t_display	*display;
 
-	if (!(display = alloc_new_display()) || !set_display(display))
+	if (!(display = set_display(lem)))
 		return (0);
 	clean_anthill(lem);
 	printf("%s\n", lem->anthill);
@@ -135,4 +139,5 @@ int			display_lem(t_lem *lem)
 	{
 		print_ants_tab(display);
 	}
+	return (1);
 }

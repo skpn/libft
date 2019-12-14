@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display.c                                          :+:      :+:    :+:   */
+/*   debug_lem.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/24 14:50:50 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 17:03:51 by sikpenou         ###   ########.fr       */
+/*   Created: 2019/12/14 20:38:01 by sikpenou          #+#    #+#             */
+/*   Updated: 2019/12/14 20:45:44 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	print_path(t_path *path)
 	printf("PRINTING PATH\n");
 	printf("path address = %p\n", path);
 	path_rooms = path->rooms->first;
-	printf("path->turn = %u, path->room->size = %u\n", path->turns, path->rooms->size);
+	printf("path->load = %u, path->room->size = %u\n", path->load, path->rooms->size);
 	while (path_rooms)
 	{
 		printf("%s -- ", ((t_room *)path_rooms->content)->name);

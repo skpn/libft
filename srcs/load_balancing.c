@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 11:00:06 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 20:34:43 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/14 20:43:48 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	balance_load(t_lem *lem)
 		printf("added turns = %u\n", added_turns);
 		ants -= nb_paths * added_turns;
 		lem->current_config->turns += added_turns;
-		current_path->turns = lem->current_config->turns;
+		current_path->load = lem->current_config->turns;
 		nb_paths--;
 	}
 	printf("added turns = %u\n", ((t_path *)lem->current_config->paths->last->content)->rooms->size - 2);

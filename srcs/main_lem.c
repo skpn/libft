@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:05:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 16:58:43 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/14 21:02:18 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		main(void)
 
 	g_fd = open("debug", O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	dprintf(g_fd, "%s %d\n", __func__, __LINE__);
-	if (!(init_lem(&lem)))
+	if (!(lem = alloc_new_lem()))
 		return (exit_lem(lem, "init failed\n", 1));
 	PRINTPOSN;
 	if (!parse_input(lem))
@@ -40,5 +40,7 @@ int		main(void)
 	PRINTPOSN;
 	printf("\nSORTIE DE L'ALGO, config->first =\n");
 	print_config(lem->config_lst->first->content);
+	if (!display_lem(lem))
+		return (exit_lem(lem, "ERROR", 2));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 20:05:31 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/14 21:09:47 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@
 # define ADD_PATH 3
 # define DEBUG 1
 void	*g_ptr;
+typedef struct		s_path
+{
+	unsigned		load;
+	unsigned		is_dead;
+	t_head			*rooms;
+}					t_path;
+
 typedef struct		s_ant
 {
 	unsigned		id;
@@ -32,22 +39,6 @@ typedef struct		s_ant
 	t_path			*path;
 	t_lst			*current_room;
 }					t_ant;
-
-typedef struct		s_display
-{
-	unsigned		last_id;
-	unsigned		turn;
-	t_config		*best;
-	t_lst			*last_path;
-	t_ant			*ants_tab;
-}
-
-typedef struct		s_path
-{
-	unsigned		turns;
-	unsigned		is_dead;
-	t_head			*rooms;
-}					t_path;
 
 typedef struct		s_room
 {
@@ -71,6 +62,15 @@ typedef struct		s_config
 	unsigned		turns;
 	t_head			*paths;
 }					t_config;
+
+typedef struct		s_display
+{
+	unsigned		last_id;
+	unsigned		turn;
+	t_config		*best;
+	t_lst			*last_path;
+	t_ant			*ants_tab;
+}					t_display;
 
 typedef struct 		s_lem
 {
@@ -99,7 +99,7 @@ int					parse_room(t_lem *lem, char **line, int *index);
 int					parse_tube(t_lem *lem, char **line, int *index);
 
 int					set_graph(t_lem *lem);
-int					init_lem(t_lem **lem);
+t_lem				*alloc_new_lem(void);
 t_room				*alloc_new_room(void);
 void				free_room(t_head *rooms, t_room **room);
 t_config			*alloc_new_config(void);
@@ -119,6 +119,8 @@ int					update_config(t_lem *lem, t_config *config
 int					manage_valid_path(t_lem *lem, t_path *path);
 int					get_max_walk(t_lem *lem);
 void				balance_load(t_lem *lem);
+int					display_lem(t_lem *lem);
+t_display			*alloc_new_display(unsigned total_rooms);
 
 void				print_anthill(char *lem);
 void				print_lem(t_lem *lem, char *args);

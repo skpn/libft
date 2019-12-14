@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 22:15:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 20:05:55 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/14 21:09:45 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,31 @@ t_config	*alloc_new_config(void)
 	return (config);
 }
 
-t_display	alloc_new_display(void)
+t_display	*alloc_new_display(unsigned total_rooms)
 {
 	t_display	*display;
 
 	if (!(display = (t_display *)easymalloc(sizeof(*display))))
-		return (0);
+		return (NULL);
+	if (!(display->ants_tab = (t_ant *)easymalloc(sizeof(t_ant) * total_rooms + 1)))
+		return (NULL);
 	return (display);
 }
 
-int			alloc_new_lem(t_lem **lem)
+t_lem		*alloc_new_lem(void)
 {
-	if (!(*lem = (t_lem *)easymalloc(sizeof(**lem))))
-		return (0);
-	if (!((*lem)->rooms = ft_lstnew_head(NULL, NULL)))
-		return (0);
-	if (!((*lem)->config_lst = ft_lstnew_head(NULL, NULL)))
-		return (0);
-	if (!((*lem)->paths = ft_lstnew_head(NULL, NULL)))
-		return (0);
-	(*lem)->max_dist = 0xFFFFFFFF;
-	(*lem)->max_paths = 0xFFFFFFFF;
-	(*lem)->turns = 0xFFFFFFFF;
-	return (1);
+	t_lem	*lem;
+
+	if (!(lem = (t_lem *)easymalloc(sizeof(*lem))))
+		return (NULL);
+	if (!(lem->rooms = ft_lstnew_head(NULL, NULL)))
+		return (NULL);
+	if (!(lem->config_lst = ft_lstnew_head(NULL, NULL)))
+		return (NULL);
+	if (!(lem->paths = ft_lstnew_head(NULL, NULL)))
+		return (NULL);
+	lem->max_dist = 0xFFFFFFFF;
+	lem->max_paths = 0xFFFFFFFF;
+	lem->turns = 0xFFFFFFFF;
+	return (lem);
 }
