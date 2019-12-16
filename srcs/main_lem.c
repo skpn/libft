@@ -22,25 +22,26 @@ int		main(void)
 	g_fd = open("debug", O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	dprintf(g_fd, "%s %d\n", __func__, __LINE__);
 	if (!(lem = alloc_new_lem()))
-		return (exit_lem(lem, "init failed\n", 1));
+		return (exit_lem(&lem, "init failed\n", 1));
 	PRINTPOSN;
 	if (!parse_input(lem))
-		return (exit_lem(lem, "ERROR", 2));
+		return (exit_lem(&lem, "ERROR", 2));
 	PRINTPOSN;
 	if (!set_graph(lem))
 	{
 		printf("BEFORE EXIT, ROOMS:\n");
 		//print_rooms(lem->rooms);
-		return (exit_lem(lem, "ERROR", 2));
+		return (exit_lem(&lem, "ERROR", 2));
 	}
 	if (!seek_paths(lem))
 	{
-		return (exit_lem(lem, "ERROR", 2));
+		return (exit_lem(&lem, "ERROR", 2));
 	}
 	PRINTPOSN;
 	printf("\nSORTIE DE L'ALGO, config->first =\n");
 	print_config(lem->config_lst->first->content);
 	if (!display_lem(lem))
-		return (exit_lem(lem, "ERROR", 2));
+		return (exit_lem(&lem, "ERROR", 2));
+	exit_lem(&lem, "", 2);
 	return (0);
 }

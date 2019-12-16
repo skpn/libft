@@ -103,7 +103,6 @@ void		pop_dead_paths(t_config *config)
 int			add_path(t_lem *lem, t_config *config, t_path *new_path)
 {
 	t_lst	*config_path_elem;
-	t_lst	*config_path;
 	t_lst	*new_path_elem;
 
 	lem->lives--;
@@ -116,7 +115,6 @@ int			add_path(t_lem *lem, t_config *config, t_path *new_path)
 		while (((t_path *)config_path_elem->content)->rooms->size > new_path->rooms->size)
 		{
 			config_path_elem = config_path_elem->next;
-			config_path = config_path_elem->content;
 		}
 		ft_lstinsert(config->paths, config_path_elem, new_path_elem, BEFORE);
 	}
@@ -136,12 +134,9 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 {
 	unsigned	current_nb_paths;
 	unsigned	check_alloc;
-	t_lst		*new_elem;
 
 	PRINTPOSN;
 	if (!ft_lstadd_new(lem->paths, path))
-		return (0);
-	if (!(new_elem = ft_lstnew_elem(path)))
 		return (0);
 	if (!add_path(lem, lem->current_config, path))
 		return (0);

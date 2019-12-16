@@ -95,7 +95,6 @@ void		easyfree(void **match)
 	{
 		if (*match)
 		{
-			dprintf(g_fd, "freed %p\n", *match);
 			free(*match);
 			*match = NULL;
 		}
@@ -123,9 +122,7 @@ void		*easymalloc(size_t size)
 	if (!EASY)
 	{
 		zone = ft_memalloc(size);
-		dprintf(g_fd, "alloc'd %p\n", zone);
 		return (zone);
-//		return (ft_memalloc(size));
 	}
 	if (size < 1 || !(gc_list = get_gc_list(1)))
 		return (0);

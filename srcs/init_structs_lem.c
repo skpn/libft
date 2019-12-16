@@ -50,23 +50,33 @@ t_config	*alloc_new_config(void)
 	return (config);
 }
 
-t_display	*alloc_new_display(unsigned total_rooms)
+t_ant		**alloc_new_ants_tab(unsigned total_rooms)
 {
-	t_display	*display;
 	unsigned	cell;
+	t_ant		**ants_tab;
 
-	if (!(display = (t_display *)easymalloc(sizeof(*display))))
+	if (!(ants_tab = (t_ant **)easymalloc(sizeof(t_ant *) * (total_rooms + 1))))
 		return (NULL);
-	if (!(display->ants_tab = (t_ant **)easymalloc(sizeof(t_ant *) * (total_rooms + 1))))
-		return (NULL);
-	display->last_id = 1;
 	cell = 0;
 	while (cell < total_rooms)
 	{
-		if (!(display->ants_tab[cell] = (t_ant *)easymalloc(sizeof(t_ant))))
+		if (!(ants_tab[cell] = (t_ant *)easymalloc(sizeof(t_ant))))
 			return (NULL);
 		cell++;
 	}
+	return (ants_tab);
+}
+
+t_display	*alloc_new_display(unsigned total_rooms)
+{
+	t_display	*display;
+
+	if (!(display = (t_display *)easymalloc(sizeof(*display))))
+		return (NULL);
+	if (!(display->ants_tab = alloc_new_ants_tab(total_rooms)))
+		return (NULL);
+	display->last_id = 1;
+	display->total_rooms = total_rooms;
 	return (display);
 }
 

@@ -19,7 +19,6 @@ char	*ft_strjoin_free(char **s1, char **s2, int opt)
 	int		len2;
 	char	*new;
 
-	printf("joining %s and %s\n", *s1, *s2);
 	new = NULL;
 	if (*s1 && *s2)
 	{
@@ -32,9 +31,7 @@ char	*ft_strjoin_free(char **s1, char **s2, int opt)
 	}
 	else if (*s1 || *s2)
 		new = ft_strdup(*s1 ? *s1 : *s2);
-	printf("joined %s\n", new);
 	opt == BOTH || opt == LEFT ? ft_free((void **)s1) : 0;
 	opt == BOTH || opt == RIGHT ? ft_free((void **)s2) : 0;
-	printf("s1 %p s2 %p\n", *s1, *s2);
 	return (new);
 }

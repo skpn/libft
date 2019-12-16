@@ -69,7 +69,7 @@ void		path_to_tab(t_display *display, t_path *path, unsigned *set_cell)
 		display->ants_tab[*set_cell]->wait = wait++;
 		display->ants_tab[*set_cell]->max = path->load;
 		display->ants_tab[*set_cell]->path = path;
-		display->ants_tab[*set_cell]->current_room = path->rooms->first;
+		display->ants_tab[*set_cell]->current_room = path->rooms->first->next;
 		(*set_cell)++;
 	}
 }
@@ -149,10 +149,11 @@ int			display_lem(t_lem *lem)
 
 	if (!(display = set_display(lem)))
 		return (0);
+	lem->display = display;
 	clean_anthill(lem);
 //	printf("%s\n", lem->anthill);
 	print_ants_tab(display->ants_tab);
-	while (display->turn <= lem->turns)
+	while (display->turn < lem->turns)
 	{
 		display->first_print = 1;
 		print_ants(display);

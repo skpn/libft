@@ -34,6 +34,7 @@ void	ft_lstprint(t_head *head, char *name, unsigned opt)
 	t_lst	*elem;
 
 	i = 0;
+	printf("THIS USES PRINTF\n");
 	printf("\nprinting list '%s'\n--\nlist start\n--\n", name);
 	printf("head: %p, size: %u, first: %p, last: %p\n"
 		, head, head->size, head->first, head->last);

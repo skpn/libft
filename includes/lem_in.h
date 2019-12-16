@@ -68,9 +68,9 @@ typedef struct		s_display
 	unsigned		last_id;
 	unsigned		turn;
 	unsigned		first_print;
+	unsigned		total_rooms;
 	size_t			nb_ants;
 	t_config		*best;
-	t_lst			*last_path;
 	t_ant			**ants_tab;
 }					t_display;
 
@@ -91,6 +91,7 @@ typedef struct 		s_lem
 	t_head			*paths;
 	t_head			*config_lst;
 	t_config		*current_config;
+	t_display		*display;
 }					t_lem;
 
 int					gnl_lem_in(int fd, unsigned *pos, unsigned *done
@@ -103,12 +104,8 @@ int					parse_tube(t_lem *lem, char **line, int *index);
 int					set_graph(t_lem *lem);
 t_lem				*alloc_new_lem(void);
 t_room				*alloc_new_room(void);
-void				free_room(t_head *rooms, t_room **room);
 t_config			*alloc_new_config(void);
-void				free_config(t_config **config);
 t_path				*alloc_new_path(void);
-void				free_path(t_path **path);
-int					exit_lem(t_lem *lem, char *msg, int ret);
 int					parse_input(t_lem *lem);
 void				set_next_lvl_dists(t_lvl *lvl);
 void				set_next_lvl_families(t_lvl *lvl, t_room *end);
@@ -123,6 +120,10 @@ int					get_max_walk(t_lem *lem);
 void				balance_load(t_lem *lem);
 int					display_lem(t_lem *lem);
 t_display			*alloc_new_display(unsigned total_rooms);
+void				free_room(t_head *rooms, t_room **room);
+void				free_config(t_config **config);
+void				free_path(t_path **path);
+int					exit_lem(t_lem **lem, char *msg, int ret);
 
 void				print_anthill(char *lem);
 void				print_lem(t_lem *lem, char *args);

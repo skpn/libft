@@ -16,15 +16,12 @@
 
 void	free_room(t_head *rooms, t_room **room)
 {
+	dprintf(g_fd, "freeing room %s\n", (*room)->name);
 	print_room(*room);
 	ft_lstpop(rooms, *room);
-	dprintf(g_fd, "freeing room name\n");
 	ft_free((void **)&(*room)->name);
-	dprintf(g_fd, "freeing room parents head\n");
 	ft_lstfree(&(*room)->parents, FREE_LINKS, FREE_HEAD);
-	dprintf(g_fd, "freeing room children head\n");
 	ft_lstfree(&(*room)->children, FREE_LINKS, FREE_HEAD);
-	dprintf(g_fd, "freeing room itself\n");
 	ft_free((void **)room);
 }
 
@@ -33,18 +30,16 @@ void	free_rooms(t_head **rooms)
 	t_lst	*elem;
 	t_lst	*tmp;
 
-	printf("freeing head %p, first: %p, last: %p, size: %u\n"
+	dprintf(g_fd, "freeing head %p, first: %p, last: %p, size: %u\n"
 		, *rooms, (*rooms)->first, (*rooms)->last, (*rooms)->size);
 	elem = (*rooms)->first;
 	while (elem)
 	{
 		tmp = elem->next;
 		free_room(*rooms, (t_room **)&elem->content);
-		dprintf(g_fd, "freeing room link\n");
 		ft_lstfree_elem(&elem, FREE_LINKS);
 		elem = tmp;
 	}
-	dprintf(g_fd, "freeing room head\n");
 	ft_lstfree_head(rooms);
 	printf("rooms freed ok\n");
 }
@@ -74,33 +69,65 @@ void	free_config(t_config **config)
 	ft_free((void **)config);
 }
 
-void	free_config_lst(t_head *config_lst)
+void	free_config_lst(t_head **config_lst)
 {
 	t_lst	*config_elem;
 
-	config_elem = config_lst->first;
+	config_elem = (*config_lst)->first;
 	while (config_elem)
 	{
 		free_config((t_config **)&(config_elem->content));
 		config_elem = config_elem->next;
 	}
-	ft_lstfree(&config_lst, FREE_LINKS, FREE_HEAD);
+	ft_lstfree(config_lst, FREE_LINKS, FREE_HEAD);
 }
 
-int		exit_lem(t_lem *lem, char *msg, int ret)
+void	free_display(t_display **display)
 {
-	if (lem->config_lst->first)
-		free_config_lst(lem->config_lst);
-	if (lem->rooms)
+	unsigned	cell;
+
+	cell = 0;
+	if ((*display)->ants_tab)
 	{
-		PRINTPOSN;
-		//print_rooms(lem->rooms);
-		free_rooms(&lem->rooms);
+		while (cell < (*display)->total_rooms)
+		{
+			if ((*display)->ants_tab[cell])
+				ft_free((void **)&((*display)->ants_tab[cell]));
+		}
+		ft_free((void **)&(*display)->ants_tab);
+	}
+	ft_free((void **)display);
+}
+
+int		exit_lem(t_lem **lem, char *msg, int ret)
+{
+	ft_free((void **)&((*lem)->anthill));
+	if ((*lem)->rooms)
+	{
+		printf("freeing lem rooms, head: %p\n", (*lem)->rooms);
+		free_rooms(&(*lem)->rooms);
+	}
+	if ((*lem)->paths)
+	{
+		printf("freeing lem paths, head: %p\n", (*lem)->paths);
+		free_paths(&((*lem)->paths));
+	}
+	if ((*lem)->config_lst->first)
+	{
+		printf("freeing lem config_lst, head: %p\n", (*lem)->config_lst);
+		free_config_lst(&((*lem)->config_lst));
+	}
+	if ((*lem)->current_config)
+	{
+		printf("freeing lem current_config: %p\n", (*lem)->current_config);
+		free_config(&(*lem)->current_config);
+	}
+	if ((*lem)->display)
+	{
+		printf("freeing lem display: %p\n", (*lem)->display);
+		ft_free((void **)&((*lem)->display));
 	}
 	msg ? write(1, msg, ft_strlen(msg)) : 0;
-	dprintf(g_fd, "freeing anthill\n");
-	ft_free((void **)&lem->anthill);
-	dprintf(g_fd, "freeing lem\n");
-	ft_free((void **)&lem);
+	ft_free((void **)lem);
 	return (ret);
 }
