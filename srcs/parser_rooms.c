@@ -30,7 +30,7 @@ int		manage_start_end(t_lem *lem, char **line, int *start_end)
 	if (!ft_strcmp(*line, "##start") || !ft_strcmp(*line, "##end"))
 	{
 		*start_end = ((!ft_strcmp(*line, "##start") ? START : END));
-		lem->anthill = ft_strjoin_anthill(&(lem->anthill), line, LEFT);
+		lem->anthill = ft_strjoin_anthill(&(lem->anthill), line);
 		if ((ret = gnl_lem_in(0, &(lem->shortest), &(lem->max_dist), line))
 			<= 0)
 			return (0);

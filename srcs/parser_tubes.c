@@ -20,7 +20,7 @@ int		add_links(t_lem *lem, char *name1, char *name2)
 			room2 = room;
 		elem = elem->next;
 	}
-	if (ctr != 2)
+	if (ctr != 2 || room1 == room2)
 		return (0);
 	if (ft_lstfind(room1->children, room2))
 		return (1);

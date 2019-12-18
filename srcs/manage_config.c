@@ -20,13 +20,13 @@ t_config	*copy_config(t_lem *lem)
 	t_head		*new_head;
 	
 	original = lem->current_config;
-	if (!(new_config = alloc_new_config()))
+	if (!(new_config = alloc_new_config(WITHOUT_HEAD)))
 		return (NULL);
 	if (!(new_head = ft_lstcpy(original->paths)))
 		return (NULL);
 	new_config->paths = new_head;
 	new_config->turns = original->turns;
-	print_config(new_config);
+//	print_config(new_config);
 	lem->lives = lem->end->parents->size;
 	return (new_config);
 }
@@ -58,15 +58,15 @@ int		compare_configs(t_lem *lem)
 		{
 			if (lem->current_config->turns < config->turns)
 			{
-				printf("\nREPLACING CONFIG:\n");
-				print_config(config);
+//				printf("\nREPLACING CONFIG:\n");
+//				print_config(config);
 				if (!(replace_config(lem, config)))
 					return (0);
 			}
 			return (1);
 		}
 	}
-	PRINTPOSN;
+//	PRINTPOSN;
 	return (0);
 }
 
@@ -74,7 +74,7 @@ int			add_new_config(t_lem *lem, t_config *current_config)
 {
 	t_config	*copy;
 
-	printf("\nADDING CONFIG\n");
+//	printf("\nADDING CONFIG\n");
 	lem->most_paths++;
 	lem->turns = current_config->turns;
 	if (!(copy = copy_config(lem)))
@@ -87,15 +87,21 @@ int			add_new_config(t_lem *lem, t_config *current_config)
 void		pop_dead_paths(t_config *config)
 {
 	t_lst	*path_lst;
+	t_lst	*dead_path_elem;
 	t_path	*path;
 
 	path_lst = config->paths->first;
-	while(path_lst)
+	while (path_lst)
 	{
 		path = path_lst->content;
 		path_lst = path_lst->next;
 		if (path->is_dead)
-			ft_lstpop(config->paths, path);
+		{
+			dead_path_elem = ft_lstpop(config->paths, path);
+			if (dead_path_elem)
+				ft_lstfree_elem(&dead_path_elem, FREE_LINKS);
+		}
+//		PRINTPOSN;
 	}
 }
 
@@ -108,8 +114,8 @@ int			add_path(t_lem *lem, t_config *config, t_path *new_path)
 	lem->lives--;
 	if (!(new_path_elem = ft_lstnew_elem(new_path)))
 		return (0);
-	printf("\nBEFORE ADDING PATH, CONFIG:\n");
-	print_config(config);
+//	printf("\nBEFORE ADDING PATH, CONFIG:\n");
+//	print_config(config);
 	if ((config_path_elem = config->paths->first))
 	{
 		while (((t_path *)config_path_elem->content)->rooms->size > new_path->rooms->size)
@@ -120,13 +126,13 @@ int			add_path(t_lem *lem, t_config *config, t_path *new_path)
 	}
 	else
 	{
-		PRINTPOSN;
+//		PRINTPOSN;
 		ft_lstadd(config->paths,new_path_elem);
 	}
 	pop_dead_paths(config);
 	balance_load(lem);
-	printf("\nUPDATED CONFIG:\n");
-	print_config(config);
+//	printf("\nUPDATED CONFIG:\n");
+//	print_config(config);
 	return (1);
 }
 
@@ -135,7 +141,7 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 	unsigned	current_nb_paths;
 	unsigned	check_alloc;
 
-	PRINTPOSN;
+//	PRINTPOSN;
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);
 	if (!add_path(lem, lem->current_config, path))

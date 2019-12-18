@@ -25,9 +25,9 @@ int		ft_itoa_base_s(long long int n, char *base_to, t_buf *buf, t_arg *arg)
 		keep /= blen;
 	pos = pos + (n < 1 ? 1 : 0);
 	pos = pos - (!n && arg->max ? 1 : 0);
-	while (buf->pos + pos >= buf->size)
-		if (!(buf->size = ft_realloc((void *)&(buf->str), buf->size, BLOCK)))
-			return (ft_display(buf, 0));
+	while (buf->pos + pos >= buf->lim)
+		if (!(buf->lim = ft_realloc((void *)&(buf->str), buf->lim, BLOCK)))
+			return (-1);
 	pos += buf->pos;
 	buf->str[buf->pos] = n < 0 ? '-' : 0;
 	keep = pos;
@@ -41,23 +41,41 @@ int		ft_itoa_base_s(long long int n, char *base_to, t_buf *buf, t_arg *arg)
 	return (keep);
 }
 
-int		f_num_s(t_arg *arg, t_buf *buf, va_list arg_list)
+char	*get_base(long type)
 {
-	long long int	n;
+	if (type == UTYPE || type == DTYPE)
+		return ("0123456789");
+	else if (type == OTYPE)
+		return ("01234567");
+	else if (type == XTYPE)
+		return ("0123456789abcdef");
+	else if (type == XMAJTYPE)
+		return ("0123456789ABCDEF");
+	else
+		return ("01");
+}
+
+int		f_num_s(t_arg *arg, t_buf *buf, va_list arg_lst)
+{
+	long long	n;
+	char		*base;
 
 	n = 0;
 	if (!(arg->field))
-		n = (int)va_arg(arg_list, int);
+		n = (int)va_arg(arg_lst, int);
 	else if (arg->field == HFIELD)
-		n = (short)va_arg(arg_list, int);
+		n = (short)va_arg(arg_lst, int);
 	else if (arg->field == HHFIELD)
-		n = (char)va_arg(arg_list, int);
+		n = (char)va_arg(arg_lst, int);
 	else if (arg->field == LFIELD)
-		n = (long int)va_arg(arg_list, long int);
+		n = (long int)va_arg(arg_lst, long int);
 	else
-		n = (long long int)va_arg(arg_list, long long int);
+		n = (long long int)va_arg(arg_lst, long long int);
+	base = get_base(arg->type);
 	if (!arg->prec || arg->max || n)
-		buf->pos = ft_itoa_base_s(n, "0123456789", buf, arg);
+		buf->pos = ft_itoa_base_s(n, base, buf, arg);
+	if (buf->pos == -1)
+		return (-1);
 	return (ft_pad(arg, buf));
 }
 
@@ -75,9 +93,9 @@ int		ft_itoa_base_u(unsigned long long n, char *base_to, t_buf *buf
 		keep /= blen;
 	pos = pos + (n < 1 ? 1 : 0);
 	pos = pos - (!n && arg->max ? 1 : 0);
-	while (buf->pos + pos >= buf->size)
-		if (!(buf->size = ft_realloc((void *)&(buf->str), buf->size, BLOCK)))
-			return (ft_display(buf, 0));
+	while (buf->pos + pos >= buf->lim)
+		if (!(buf->lim = ft_realloc((void *)&(buf->str), buf->lim, BLOCK)))
+			return (-1);
 	pos += buf->pos;
 	buf->str[buf->pos] = n ? buf->str[buf->pos] : *base_to;
 	keep = pos;
@@ -91,31 +109,27 @@ int		ft_itoa_base_u(unsigned long long n, char *base_to, t_buf *buf
 	return (keep);
 }
 
-int		f_num_u(t_arg *arg, t_buf *buf, va_list arg_list)
+int		f_num_u(t_arg *arg, t_buf *buf, va_list arg_lst)
 {
 	long long int		n;
+	char				*base;
 
 	if (!arg->field)
-		n = (unsigned int)va_arg(arg_list, int);
+		n = (unsigned int)va_arg(arg_lst, int);
 	else if (arg->field == HFIELD)
-		n = (unsigned short)va_arg(arg_list, int);
+		n = (unsigned short)va_arg(arg_lst, int);
 	else if (arg->field == HHFIELD)
-		n = (unsigned char)va_arg(arg_list, int);
+		n = (unsigned char)va_arg(arg_lst, int);
 	else if (arg->field == LFIELD)
-		n = (unsigned long int)va_arg(arg_list, long int);
+		n = (unsigned long int)va_arg(arg_lst, long int);
 	else
-		n = (unsigned long long int)va_arg(arg_list, long long int);
+		n = (unsigned long long int)va_arg(arg_lst, long long int);
 	!n && arg->flags & HASH && (arg->type != OTYPE || !arg->prec)
 		? (arg->flags ^= HASH) : 0;
-	if (arg->type == UTYPE && (!arg->prec || arg->max || n))
-		buf->pos = ft_itoa_base_u(n, "0123456789", buf, arg);
-	else if (arg->type == OTYPE && (!arg->prec || arg->max || n))
-		buf->pos = ft_itoa_base_u(n, "01234567", buf, arg);
-	else if (arg->type == XTYPE && (!arg->prec || arg->max || n))
-		buf->pos = ft_itoa_base_u(n, "0123456789abcdef", buf, arg);
-	else if (arg->type == XMAJTYPE && (!arg->prec || arg->max || n))
-		buf->pos = ft_itoa_base_u(n, "0123456789ABCDEF", buf, arg);
-	else if (!arg->prec || arg->max || n)
-		buf->pos = ft_itoa_base_u(n, "01", buf, arg);
+	base = get_base(arg->type);
+	if (!arg->prec || arg->max || n)
+		buf->pos = ft_itoa_base_u(n, base, buf, arg);
+	if (buf->pos == -1)
+		return (-1);
 	return (ft_pad(arg, buf));
 }

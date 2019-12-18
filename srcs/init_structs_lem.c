@@ -13,6 +13,18 @@
 #include "libft.h"
 #include "lem_in.h"
 
+t_lvl	*alloc_new_lvl(void)
+{
+	t_lvl	 *lvl;
+
+	if (!(lvl = (t_lvl *)easymalloc(sizeof(*lvl))))
+		return (NULL);
+	if (!(lvl->rooms = ft_lstnew_head(NULL, NULL)))
+		return (NULL);
+	lvl->dist = 0;
+	return (lvl);
+}
+
 t_path		*alloc_new_path(void)
 {
 	t_path	*path;
@@ -30,22 +42,25 @@ t_room		*alloc_new_room(void)
 
 	if (!(room = (t_room *)easymalloc(sizeof(*room))))
 		return (NULL);
-	room->dist = 0xFFFFFFFF;
 	if (!(room->parents = ft_lstnew_head(NULL, NULL)))
 		return (NULL);
 	if (!(room->children = ft_lstnew_head(NULL, NULL)))
 		return (NULL);
+	room->dist = 0xFFFFFFFF;
 	return (room);
 }
 
-t_config	*alloc_new_config(void)
+t_config	*alloc_new_config(int head_opt)
 {
 	t_config	*config;
 
 	if (!(config = (t_config *)easymalloc(sizeof(*config))))
 		return (NULL);
-	if (!(config->paths = ft_lstnew_head(NULL, NULL)))
-		return (NULL);
+	if (head_opt == WITH_HEAD)
+	{
+		if (!(config->paths = ft_lstnew_head(NULL, NULL)))
+			return (NULL);
+	}
 	config->turns = 0xFFFFFFFF;
 	return (config);
 }
@@ -57,11 +72,13 @@ t_ant		**alloc_new_ants_tab(unsigned total_rooms)
 
 	if (!(ants_tab = (t_ant **)easymalloc(sizeof(t_ant *) * (total_rooms + 1))))
 		return (NULL);
+	dprintf(g_fd_free, "alloc ants tab %p\n", ants_tab);
 	cell = 0;
 	while (cell < total_rooms)
 	{
 		if (!(ants_tab[cell] = (t_ant *)easymalloc(sizeof(t_ant))))
 			return (NULL);
+		dprintf(g_fd_free, "alloc ant cell %p\n", ants_tab[cell]);
 		cell++;
 	}
 	return (ants_tab);

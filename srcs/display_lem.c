@@ -13,6 +13,19 @@
 #include "libft.h"
 #include "lem_in.h"
 
+void		start_joined_to_end(t_lem *lem)
+{
+	unsigned	ant;
+
+	ant = 0;
+	ft_printf("L%u-end", ant);
+	while (++ant < lem->nb_ants)
+	{
+		ft_printf(" L%u-end", ant);
+	}
+	ft_printf("\n");
+}
+
 t_config	*get_best_config(t_head *config_lst)
 {
 	t_lst		*config_elem;
@@ -63,8 +76,9 @@ void		path_to_tab(t_display *display, t_path *path, unsigned *set_cell)
 	room_count = 0;
 	while (++room_count <= path->rooms->size)
 	{
-		PRINTPOSN;
-		printf("ants_tab = %p\n", display->ants_tab);
+	//	PRINTPOSN;
+	//	printf("ants_tab %p, cell %d - %p\n", display->ants_tab, *set_cell,
+	//	display->ants_tab[*set_cell]);
 		display->ants_tab[*set_cell]->id = display->last_id++;
 		display->ants_tab[*set_cell]->wait = wait++;
 		display->ants_tab[*set_cell]->max = path->load;
@@ -106,18 +120,21 @@ t_display		*set_display(t_lem *lem)
 
 void		print_ant(t_display *display, t_ant *ant)
 {
+	t_room		*room;
+
 //	printf("first: %u, prefix: '%s'\n", display->first_print, prefix);
 	if (ant->wait <= display->turn && ant->current_room)
 	{
 		//printf("ants->wait = %u, display->turn = %u\n", ant->wait, display->turn);
+		room = ant->current_room->content;
 		if (display->first_print == 1)
 		{
-			printf("L%u-%s", ant->id, ((t_room *)ant->current_room->content)->name);
+			ft_printf("L%u-%s", ant->id, room->name);
 			display->first_print = 0;
 		}
 		else
 		{
-			printf(" L%u-%s", ant->id, ((t_room *)ant->current_room->content)->name);
+			ft_printf(" L%u-%s", ant->id, room->name);
 		}
 		ant->current_room = ant->current_room->next;
 		if (!ant->current_room && display->last_id < display->nb_ants)
@@ -150,10 +167,11 @@ int			display_lem(t_lem *lem)
 	if (!(display = set_display(lem)))
 		return (0);
 	lem->display = display;
+//	printf("in display lem, ants_tab %p\n", lem->display->ants_tab);
 	clean_anthill(lem);
-//	printf("%s\n", lem->anthill);
-	print_ants_tab(display->ants_tab);
-	while (display->turn < lem->turns)
+	ft_printf("%s\n", lem->anthill);
+//	print_ants_tab(display->ants_tab);
+	while (display->turn < lem->turns - 1)
 	{
 		display->first_print = 1;
 		print_ants(display);

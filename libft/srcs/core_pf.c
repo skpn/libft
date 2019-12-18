@@ -6,120 +6,73 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 20:26:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/03 20:08:54 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/09/30 22:21:23 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_arg		*ft_init(t_buf *buf, t_arg *arg, int opt)
+int		init_structs(t_buf **buf, t_arg **arg)
 {
-	if (opt)
-	{
-		ft_memset(buf, 0, sizeof(*buf));
-		buf->tab[0] = &f_percent;
-		buf->tab[1] = &f_c;
-		buf->tab[2] = &f_s;
-		buf->tab[3] = &f_p;
-		buf->tab[4] = &f_num_s;
-		buf->tab[5] = &f_num_u;
-	}
-	else
-	{
-		ft_memset(arg, 0, sizeof(*arg));
-		arg->prefix = "";
-	}
-	return (arg);
+	if (!(*buf = (t_buf *)easymalloc(sizeof(**buf))))
+		return (0);
+	(*buf)->tab[0] = &f_percent;
+	(*buf)->tab[1] = &f_c;
+	(*buf)->tab[2] = &f_s;
+	(*buf)->tab[3] = &f_p;
+	(*buf)->tab[4] = &f_num_s;
+	(*buf)->tab[5] = &f_num_u;
+	if (!(*arg = (t_arg *)easymalloc(sizeof(**arg))))
+		return (0);
+	return (1);
 }
 
-int			get_field(t_arg *arg, const char *str, int pos, int check)
+void	set_arg(t_arg *arg)
 {
-	if ((check = ft_strchr_pos(FIELD, str[pos])) > -1)
-	{
-		if ((str[pos] == 'h' || str[pos] == 'l') && str[pos + 1] == str[pos])
-		{
-			check++;
-			pos++;
-		}
-		arg->field = check + 1;
-	}
-	return (pos);
+	ft_memset(arg, 0, sizeof(*arg));
+	arg->prefix = "";
 }
 
-int			get_size(va_list arg_list, const char *str, int *pos
-	, unsigned long *prec)
+int		format_to_str(const char *str, t_buf *buf, t_arg *arg, va_list arg_lst)
 {
-	unsigned long long int		ret;
-
-	if (str[*pos] == '*')
-	{
-		ret = (int)va_arg(arg_list, int);
-	}
-	else
-	{
-		ret = ft_ato_ull(str, pos);
-	}
-	if (prec)
-		*prec = 1;
-	if (ret > 2000000)
-		ft_display(NULL, 0);
-	else if ((int)ret < 0)
-		ret = 0;
-	return (ret);
-}
-
-int			ft_parse(t_arg *arg, const char *str, t_buf *buf, va_list arg_list)
-{
-	int		pos;
-	int		check;
-
-	pos = -1;
-	while (str[++pos] && ft_strchr_pos(ALL, str[pos]) > -1)
-	{
-		if ((check = ft_strchr_pos(FLAGS, str[pos])) > -1)
-			arg->flags |= (1 << check);
-		else if (ft_isdigit(str[pos]) || (str[pos] == '*' && ++pos))
-			arg->min = get_size(arg_list, str + pos, &pos, 0);
-		else if ((str[pos] == '.' || str[pos] == '*') && ++pos)
-			arg->max = get_size(arg_list, str + pos, &pos, &arg->prec);
-		else if ((check = ft_strchr_pos(FIELD, str[pos])) > -1)
-			pos = get_field(arg, str, pos, check);
-	}
-	check = str[pos] == 'i' ? (int)DTYPE : ft_strchr_pos(TYPE, str[pos]);
-	if (check < 0)
-		return (ft_display(buf, 0));
-	arg->type = check;
-	arg->start = buf->pos;
-	if (arg->type > DTYPE)
-		buf->tab[DTYPE + 1](arg, buf, arg_list);
-	else
-		buf->tab[arg->type](arg, buf, arg_list);
-	return (pos + 1);
-}
-
-int			base_func(t_buf *buf, const char *str, va_list arg_list)
-{
-	t_arg			arg;
+	int				ret;
 	unsigned int	str_pos;
 
 	str_pos = 0;
 	while (str[str_pos])
 	{
-		if (buf->pos == buf->size)
-			if (!(buf->size = ft_realloc((void *)&(buf->str), buf->size
-						, BLOCK)))
-				return (ft_display(buf, 0));
+		if (buf->pos == buf->lim
+			&& !(buf->lim = ft_realloc((void *)&(buf->str), buf->lim, BLOCK)))
+				return (-1);
 		if (str[str_pos] == '%')
 		{
-			str_pos += ft_parse(ft_init(buf, &arg, 0), str + str_pos + 1, buf
-				, arg_list) + 1;
+			set_arg(arg);
+			if ((ret = parse_arg(buf, arg, str + str_pos + 1, arg_lst)) == -1)
+				return (-1);
+			str_pos += ret + 1;
 		}
 		else
 		{
 			buf->str[buf->pos++] = str[str_pos++];
 		}
 	}
+	return (1);
+}
+
+t_buf	*core_func(const char *str, va_list arg_lst)
+{
+	int		check;
+	t_buf	*buf;
+	t_arg	*arg;
+
+	buf = NULL;
+	arg = NULL;
+	if (!init_structs(&buf, &arg))
+		return (NULL);
+	if ((check = format_to_str(str, buf, arg, arg_lst)) == -1)
+		return (NULL);
 	if (buf->str)
 		buf->str[buf->pos] = 0;
-	return (0);
+	easyfree((void **)&arg);
+	return (buf);
 }

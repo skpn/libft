@@ -15,10 +15,10 @@
 int		left_just(t_arg *arg, t_buf *buf)
 {
 	if (buf->pos < arg->start + arg->min)
-		while (arg->start + arg->min >= buf->size)
-			if (!(buf->size = ft_realloc((void *)&(buf->str), buf->size
+		while (arg->start + arg->min >= buf->lim)
+			if (!(buf->lim = ft_realloc((void *)&(buf->str), buf->lim
 							, BLOCK)))
-				return (ft_display(buf, 0));
+				return (-1);
 	while (buf->pos < arg->start + arg->min)
 	{
 		buf->str[buf->pos] = arg->fill;
@@ -40,9 +40,9 @@ int		right_just(t_arg *arg, t_buf *buf)
 	off = pos - buf->pos;
 	if (off < 1)
 		return (0);
-	while ((unsigned)pos >= buf->size)
-		if (!(buf->size = ft_realloc((void *)&(buf->str), buf->size, BLOCK)))
-			return (ft_display(buf, 0));
+	while ((unsigned)pos >= buf->lim)
+		if (!(buf->lim = ft_realloc((void *)&(buf->str), buf->lim, BLOCK)))
+			return (-1);
 	while ((unsigned)pos >= arg->start + off)
 	{
 		buf->str[pos] = buf->str[pos - off];
@@ -60,9 +60,9 @@ int		ft_prefix(t_arg *arg, t_buf *buf)
 	int		pos;
 
 	off = arg->prefix[1] ? 2 : 1;
-	while (buf->pos + off >= buf->size)
-		if (!(buf->size = ft_realloc((void *)&(buf->str), buf->size, BLOCK)))
-			return (ft_display(buf, 0));
+	while (buf->pos + off >= buf->lim)
+		if (!(buf->lim = ft_realloc((void *)&(buf->str), buf->lim, BLOCK)))
+			return (-1);
 	buf->pos += off;
 	pos = buf->pos - 1;
 	while (pos >= (int)arg->start + off)
@@ -79,14 +79,14 @@ int		ft_pad(t_arg *arg, t_buf *buf)
 {
 	if (arg->flags & PLUS || arg->flags & SPACE)
 		if ((arg->type != DTYPE) || (arg->flags & SPACE && arg->type & PLUS))
-			return (ft_display(buf, 0));
+			return (-1);
 	if (arg->flags & PLUS || arg->flags & SPACE)
 		arg->prefix = arg->flags & PLUS ? "+" : " ";
 	arg->prefix = buf->str[arg->start] == '-' ? "" : arg->prefix;
 	if (arg->flags & HASH)
 	{
 		if (arg->type < DTYPE)
-			return (ft_display(buf, 0));
+			return (-1);
 		else if (arg->type == OTYPE && buf->str[arg->start] != '0')
 			arg->prefix = "0";
 		else if (arg->type == XTYPE)

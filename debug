@@ -1,2 +1,11 @@
-main 23
-alloc for gnl
+main 25
+line dup for room name
+new list elem for room
+line dup for room name
+new list elem for room
+line dup for room name
+new list elem for room
+adding child to room1
+adding child to room2
+adding child to room1
+adding child to room2

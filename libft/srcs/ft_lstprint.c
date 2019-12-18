@@ -15,17 +15,17 @@
 void	print_content(void *content, unsigned opt)
 {
 	if (opt == CTYPE)
-		printf("content: '%c'\n", *(char *)content);
+		ft_printf("content: '%c'\n", *(char *)content);
 	else if(opt == STYPE)
-		printf("content: '%s'\n", (char *)content);
+		ft_printf("content: '%s'\n", (char *)content);
 	else if(opt == DTYPE)
-		printf("content: %d\n", *(int *)content);
+		ft_printf("content: %d\n", *(int *)content);
 	else if(opt == UTYPE)
-		printf("content: %u\n", *(unsigned *)content);
+		ft_printf("content: %u\n", *(unsigned *)content);
 	else if(opt == OTYPE)
-		printf("content: %o\n", *(unsigned *)content);
+		ft_printf("content: %o\n", *(unsigned *)content);
 	else if(opt == XTYPE)
-		printf("content: %x\n", *(unsigned *)content);
+		ft_printf("content: %x\n", *(unsigned *)content);
 }
 
 void	ft_lstprint(t_head *head, char *name, unsigned opt)
@@ -34,24 +34,24 @@ void	ft_lstprint(t_head *head, char *name, unsigned opt)
 	t_lst	*elem;
 
 	i = 0;
-	printf("THIS USES PRINTF\n");
-	printf("\nprinting list '%s'\n--\nlist start\n--\n", name);
-	printf("head: %p, size: %u, first: %p, last: %p\n"
+	ft_printf("THIS USES PRINTF\n");
+	ft_printf("\nprinting list '%s'\n--\nlist start\n--\n", name);
+	ft_printf("head: %p, size: %u, first: %p, last: %p\n"
 		, head, head->size, head->first, head->last);
 	if (!(elem = head->first))
 	{
-		printf("--\nlist '%s' is empty\n--\n", name);
+		ft_printf("--\nlist '%s' is empty\n--\n", name);
 		return ;
 	}
-	printf("first->prev: %p - last->next: %p\n--\n"
+	ft_printf("first->prev: %p - last->next: %p\n--\n"
 		, head->first->prev, head->last->next);
 	while (elem)
 	{
-		printf("link %d: %-14p, prev %-14p, content %-14p\n"
+		ft_printf("link %d: %-14p, prev %-14p, content %-14p\n"
 			, ++i, elem, elem->prev, elem->content);
 		if (opt)
 			print_content(elem->content, opt);
 		elem = elem->next;
 	}
-	printf("--\nlist end\n--\n\n");
+	ft_printf("--\nlist end\n--\n\n");
 }

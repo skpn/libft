@@ -24,11 +24,8 @@ SRCFILES = \
 			ft_atoi.c \
 			ft_atoi_base.c \
 			ft_atou_mv.c \
-			ft_bzero.c \
 			ft_check_base.c \
 			ft_convert_base.c \
-			ft_fili.c \
-			ft_find_next_prime.c \
 			ft_free.c \
 			ft_free_tab.c \
 			ft_isalnum.c \
@@ -39,8 +36,6 @@ SRCFILES = \
 			ft_isspace.c \
 			ft_itoa.c \
 			ft_itoa_base.c \
-			ft_lstlast.c \
-			ft_lstsize.c \
 			ft_lstsort.c \
 			ft_lstinsert.c \
 			ft_lstcycle.c \
@@ -61,6 +56,7 @@ SRCFILES = \
 			ft_lstprint.c \
 			ft_lstswap_heads.c \
 			ft_lstswap_contents.c \
+			ft_lst_replace_elem.c \
 			ft_malloc.c \
 			ft_max.c \
 			ft_memalloc.c \
@@ -77,11 +73,8 @@ SRCFILES = \
 			ft_min.c \
 			ft_pow.c \
 			ft_printf_pf.c \
-			ft_print_words_tables.c \
 			ft_putchar.c \
 			ft_putchar_fd.c \
-			ft_putendl.c \
-			ft_putendl_fd.c \
 			ft_putnbr.c \
 			ft_putnbr_fd.c \
 			ft_putstr.c \
@@ -89,29 +82,18 @@ SRCFILES = \
 			ft_putstr_fd_ret.c \
 			ft_putstr_ret.c \
 			ft_realloc.c \
-			ft_strcat.c \
 			ft_strchr.c \
 			ft_strchr_pos.c \
-			ft_strclr.c \
 			ft_strcmp.c \
 			ft_strcpy.c \
 			ft_strdel.c \
 			ft_strdup.c \
-			ft_strequ.c \
-			ft_striter.c \
-			ft_striteri.c \
 			ft_strjoin.c \
 			ft_strjoin_free.c \
-			ft_strlcat.c \
 			ft_strlen.c \
-			ft_strmap.c \
-			ft_strmapi.c \
-			ft_strncat.c \
 			ft_strncmp.c \
 			ft_strncpy.c \
-			ft_strnequ.c \
 			ft_strnew.c \
-			ft_strnstr.c \
 			ft_strrchr.c \
 			ft_strrev.c \
 			ft_strsplit.c \
@@ -124,12 +106,11 @@ SRCFILES = \
 			ft_toupper.c \
 			ft_ulltoa.c \
 			core_pf.c \
+			parsing_pf.c \
 			num_funcs_pf.c \
-			padding_pf.c \
-			str_calc_pf.c \
-			support_pf.c \
 			text_funcs_pf.c \
-			ft_lst_replace_elem.c
+			padding_pf.c \
+			support_pf.c
 
 SRCDIR = srcs/
 
@@ -145,12 +126,13 @@ INCLDIR = includes/
 
 all: $(NAME)
 
-$(NAME): $(INCLS) $(SRCS)
+$(NAME): $(INCLS) $(SRCS) Makefile
 	@/bin/echo make $(NAME)
 	@rm -f auteur
 	@mkdir -p $(OBJDIR)
 	@make -j --no-print-directory objects
 	@ar sr $(NAME) $(OBJS)
+	@ranlib $(NAME)
 
 objects: $(OBJS)
 

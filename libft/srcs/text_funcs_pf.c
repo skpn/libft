@@ -12,68 +12,65 @@
 
 #include "libft.h"
 
-int		f_s(t_arg *arg, t_buf *buf, va_list arg_list)
+int		f_s(t_arg *arg, t_buf *buf, va_list arg_lst)
 {
 	char		*str;
 	unsigned	len;
 
 	len = 0;
-	if (!(str = (char *)va_arg(arg_list, char *)))
+	if (!(str = (char *)va_arg(arg_lst, char *)))
 		str = "(null)";
 	while (str[len] && (arg->max ? len < arg->max : 1))
 	{
 		if (!(buf->pos % BLOCK))
-			if (!(buf->size = ft_realloc((void *)&(buf->str), buf->size
+			if (!(buf->lim = ft_realloc((void *)&(buf->str), buf->lim
 						, BLOCK)))
-				return (ft_display(buf, 0));
+				return (-1);
 		buf->str[buf->pos] = str[len];
 		buf->pos++;
 		len++;
 	}
-	ft_pad(arg, buf);
-	return (0);
+	return (ft_pad(arg, buf));
 }
 
-int		f_c(t_arg *arg, t_buf *buf, va_list arg_list)
+int		f_c(t_arg *arg, t_buf *buf, va_list arg_lst)
 {
 	char	c;
 
-	c = (char)va_arg(arg_list, int);
+	c = (char)va_arg(arg_lst, int);
 	if (!(buf->pos % BLOCK))
-		if (!(buf->size = ft_realloc((void *)&(buf->str), buf->size
+		if (!(buf->lim = ft_realloc((void *)&(buf->str), buf->lim
 					, BLOCK + 1)))
-			return (ft_display(buf, 0));
+			return (-1);
 	buf->str[buf->pos++] = c;
-	ft_pad(arg, buf);
-	return (0);
+	return (ft_pad(arg, buf));
 }
 
-int		f_percent(t_arg *arg, t_buf *buf, va_list arg_list)
+int		f_percent(t_arg *arg, t_buf *buf, va_list arg_lst)
 {
-	(void)arg_list;
+	(void)arg_lst;
 	arg->flags & PLUS ? (arg->flags ^= PLUS) : 0;
 	arg->flags & SPACE ? (arg->flags ^= SPACE) : 0;
 	if (!(buf->pos % BLOCK))
-		if (!(buf->size = ft_realloc((void *)&(buf->str), buf->size, BLOCK)))
-			return (ft_display(buf, 0));
+		if (!(buf->lim = ft_realloc((void *)&(buf->str), buf->lim, BLOCK)))
+			return (-1);
 	buf->str[buf->pos++] = '%';
-	ft_pad(arg, buf);
-	return (0);
+	return (ft_pad(arg, buf));
 }
 
-int		f_p(t_arg *arg, t_buf *buf, va_list arg_list)
+int		f_p(t_arg *arg, t_buf *buf, va_list arg_lst)
 {
 	long long int	addr;
 	char			*nil;
 
 	if (arg->max || arg->field || arg->flags & ~MINUS)
-		return (ft_display(buf, 0));
-	if (!(addr = (unsigned long long int)va_arg(arg_list, long int)))
+		return (-1);
+	if (!(addr = (unsigned long long int)va_arg(arg_lst, long int)))
 	{
 		nil = "0x0";
-		if (buf->pos + 3 > buf->size
-			&& !(buf->size = ft_realloc((void *)&(buf->str), buf->size, BLOCK)))
-			return (ft_display(buf, 0));
+		if (buf->pos + 3 > buf->lim
+			&& !(buf->lim = ft_realloc((void *)&(buf->str), buf->lim, BLOCK)))
+			return (-1);
 		while (*nil)
 			buf->str[buf->pos++] = *(nil++);
 	}

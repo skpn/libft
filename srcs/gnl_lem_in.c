@@ -19,14 +19,10 @@ int		get_line(char **buf, unsigned *pos, unsigned *done, char **line)
 
 	if ((n_pos = ft_strchr_pos(*buf + *pos, '\n')) == -1)
 	{
-			dprintf(g_fd, "alloc for gnl last line\n");
 		if (!(*line = ft_strdup(*buf + *pos)))
 			return (-1);
 		if (!**buf)
-		{
-			dprintf(g_fd, "freeing gnl buf\n");
-			ft_free((void **)buf);
-		}
+			easyfree((void **)buf);
 		if (*done == 1)
 		{
 			*buf = *line;
@@ -42,7 +38,6 @@ int		get_line(char **buf, unsigned *pos, unsigned *done, char **line)
 
 int		prep_loop(char **buf, int *size, unsigned *done)
 {
-			dprintf(g_fd, "alloc for gnl\n");
 	if (!(ft_realloc((void **)buf, *size, BUFF_SIZE + 1)))
 		return (-1);
 	*done = 0;
@@ -70,7 +65,7 @@ int		gnl_lem_in(int fd, unsigned *pos, unsigned *done, char **line)
 			if (ret < 0	|| !(ft_realloc((void **)&buf, size, BUFF_SIZE)))
 			{
 				buf ? dprintf(g_fd, "alloc for gnl\n") : 0;
-				buf ? ft_free((void **)&buf) : 0;
+				buf ? easyfree((void **)&buf) : 0;
 				return (-1);
 			}
 			*pos += BUFF_SIZE;

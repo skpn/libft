@@ -14,10 +14,8 @@
 
 void	ft_lstfree_elem(t_lst **elem, int opt)
 {
-	if (opt == FREE_LINKS_AND_CONTENT || opt == FREE_CONTENT)
-		ft_free((void **)&(*elem)->content);
-	if (opt == FREE_LINKS_AND_CONTENT || opt == FREE_LINKS)
-	{
-		ft_free((void **)elem);
-	}
+	if (opt == FREE_BOTH || opt == FREE_CONTENT)
+		easyfree((void **)&(*elem)->content);
+	if (opt == FREE_BOTH || opt == FREE_LINKS)
+		easyfree((void **)elem);
 }

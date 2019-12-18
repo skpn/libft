@@ -1,0 +1,34 @@
+20
+##start
+start 0 0
+##end
+end 0 0
+1L 0 0
+2L 0 0
+3L 0 0
+4L 0 0
+1M 0 0
+2M 0 0
+3M 0 0
+4M 0 0
+1R 0 0
+2R 0 0
+3R 0 0
+4R 0 0
+start-1L
+1L-2L
+2L-3L
+3L-4L
+4L-end
+start-1M
+1M-2M
+2M-3M
+3M-4M
+4M-end
+start-1R
+1R-2R
+2R-3R
+3R-4R
+4R-end
+1L-3M
+3M-4R

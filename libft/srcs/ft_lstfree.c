@@ -25,7 +25,7 @@ void	ft_lstfree(t_head **head, int opt_elems, int opt_head)
 		}
 		ft_lstfree_elem(&(elem), opt_elems);
 	}
-	if (opt_head)
+	if (opt_head == FREE_HEAD)
 		ft_lstfree_head(head);
 	return ;
 }

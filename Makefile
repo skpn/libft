@@ -12,7 +12,7 @@
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=leak
 
 NAME = lem-in
 
@@ -64,8 +64,7 @@ $(NAME): $(INCLS) $(LIB_INCLS) $(SRCS) $(LIB) Makefile
 	@mkdir -p objs
 	@make -j --no-print-directory objects
 	@echo "compiling with -g fsanitize"
-	@$(CC) $(CFLAGS) -g3 -fsanitize=address -fsanitize=leak -I $(INC_DIR) -o $@ $(OBJS) $(LIB)
-	#@$(CC) $(CFLAGS) -g -I $(INC_DIR) -o $@ $(OBJS) $(LIB)
+	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ $(OBJS) $(LIB)
 
 $(LIB): FORCE
 	@make -j --no-print-directory -C $(LIB_DIR)

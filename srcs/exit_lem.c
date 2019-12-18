@@ -14,15 +14,21 @@
 #include "libft.h"
 #include "lem_in.h"
 
+void	free_lvl(t_lvl **lvl)
+{
+	ft_lstfree(&(*lvl)->rooms, FREE_LINKS, FREE_HEAD);
+	easyfree((void **)lvl);
+}
+
 void	free_room(t_head *rooms, t_room **room)
 {
-	dprintf(g_fd, "freeing room %s\n", (*room)->name);
-	print_room(*room);
+//	printf(g_fd_free, "freeing room %s\n", (*room)->name);
+//	print_room(*room);
 	ft_lstpop(rooms, *room);
-	ft_free((void **)&(*room)->name);
+	easyfree((void **)&(*room)->name);
 	ft_lstfree(&(*room)->parents, FREE_LINKS, FREE_HEAD);
 	ft_lstfree(&(*room)->children, FREE_LINKS, FREE_HEAD);
-	ft_free((void **)room);
+	easyfree((void **)room);
 }
 
 void	free_rooms(t_head **rooms)
@@ -30,8 +36,6 @@ void	free_rooms(t_head **rooms)
 	t_lst	*elem;
 	t_lst	*tmp;
 
-	dprintf(g_fd, "freeing head %p, first: %p, last: %p, size: %u\n"
-		, *rooms, (*rooms)->first, (*rooms)->last, (*rooms)->size);
 	elem = (*rooms)->first;
 	while (elem)
 	{
@@ -41,13 +45,12 @@ void	free_rooms(t_head **rooms)
 		elem = tmp;
 	}
 	ft_lstfree_head(rooms);
-	printf("rooms freed ok\n");
 }
 
 void	free_path(t_path **path)
 {
 	ft_lstfree(&(*path)->rooms, FREE_LINKS, FREE_HEAD);
-	ft_free((void **)path);
+	easyfree((void **)path);
 }
 
 void	free_paths(t_head **paths)
@@ -60,13 +63,13 @@ void	free_paths(t_head **paths)
 		free_path((t_path **)&elem->content);
 		elem = elem->next;
 	}
-	ft_lstfree_head(paths);
+	ft_lstfree(paths, FREE_LINKS, FREE_HEAD);
 }
 
 void	free_config(t_config **config)
 {
 	ft_lstfree(&(*config)->paths, FREE_LINKS, FREE_HEAD);
-	ft_free((void **)config);
+	easyfree((void **)config);
 }
 
 void	free_config_lst(t_head **config_lst)
@@ -92,42 +95,49 @@ void	free_display(t_display **display)
 		while (cell < (*display)->total_rooms)
 		{
 			if ((*display)->ants_tab[cell])
-				ft_free((void **)&((*display)->ants_tab[cell]));
+			{
+				easyfree((void **)&((*display)->ants_tab[cell]));
+			}
+			cell++;
 		}
-		ft_free((void **)&(*display)->ants_tab);
+		easyfree((void **)&(*display)->ants_tab);
 	}
-	ft_free((void **)display);
+	easyfree((void **)display);
 }
 
 int		exit_lem(t_lem **lem, char *msg, int ret)
 {
-	ft_free((void **)&((*lem)->anthill));
+	if ((*lem)->anthill)
+	{
+//		printf("freeing lem anthill: %p\n", (*lem)->anthill);
+		easyfree((void **)&(*lem)->anthill);
+	}
 	if ((*lem)->rooms)
 	{
-		printf("freeing lem rooms, head: %p\n", (*lem)->rooms);
+//		printf("freeing lem rooms, head: %p\n", (*lem)->rooms);
 		free_rooms(&(*lem)->rooms);
 	}
 	if ((*lem)->paths)
 	{
-		printf("freeing lem paths, head: %p\n", (*lem)->paths);
+//		printf("freeing lem paths, head: %p\n", (*lem)->paths);
 		free_paths(&((*lem)->paths));
 	}
-	if ((*lem)->config_lst->first)
+	if ((*lem)->config_lst)
 	{
-		printf("freeing lem config_lst, head: %p\n", (*lem)->config_lst);
+//		printf("freeing lem config_lst, head: %p\n", (*lem)->config_lst);
 		free_config_lst(&((*lem)->config_lst));
 	}
 	if ((*lem)->current_config)
 	{
-		printf("freeing lem current_config: %p\n", (*lem)->current_config);
+//		printf("freeing lem current_config: %p\n", (*lem)->current_config);
 		free_config(&(*lem)->current_config);
 	}
 	if ((*lem)->display)
 	{
-		printf("freeing lem display: %p\n", (*lem)->display);
-		ft_free((void **)&((*lem)->display));
+//		printf("freeing lem display: %p\n", (*lem)->display);
+		free_display(&(*lem)->display);
 	}
 	msg ? write(1, msg, ft_strlen(msg)) : 0;
-	ft_free((void **)lem);
+	easyfree((void **)lem);
 	return (ret);
 }

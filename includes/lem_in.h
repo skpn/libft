@@ -22,6 +22,8 @@
 # define ADD_CONFIG 1
 # define POP_PATH 2
 # define ADD_PATH 3
+# define WITHOUT_HEAD 0
+# define WITH_HEAD 1
 # define DEBUG 1
 void	*g_ptr;
 typedef struct		s_path
@@ -96,7 +98,7 @@ typedef struct 		s_lem
 
 int					gnl_lem_in(int fd, unsigned *pos, unsigned *done
 	, char **line);
-char				*ft_strjoin_anthill(char **s1, char **s2, int opt);
+char				*ft_strjoin_anthill(char **s1, char **s2);
 int					parse_ants(t_lem *lem, char **line, int *index);
 int					parse_room(t_lem *lem, char **line, int *index);
 int					parse_tube(t_lem *lem, char **line, int *index);
@@ -104,25 +106,27 @@ int					parse_tube(t_lem *lem, char **line, int *index);
 int					set_graph(t_lem *lem);
 t_lem				*alloc_new_lem(void);
 t_room				*alloc_new_room(void);
-t_config			*alloc_new_config(void);
+t_config			*alloc_new_config(int head_opt);
 t_path				*alloc_new_path(void);
+t_lvl				*alloc_new_lvl(void);
 int					parse_input(t_lem *lem);
 void				set_next_lvl_dists(t_lvl *lvl);
 void				set_next_lvl_families(t_lvl *lvl, t_room *end);
 void				kill_dead_rooms(t_lem *lem, t_room *dead_room);
 void				kill_end_children(t_room *end, unsigned max_dist);
-void				get_next_lvl_rooms(t_lem *lem, t_lvl *lvl);
 int					seek_paths(t_lem *lem);
 int					update_config(t_lem *lem, t_config *config
 	, t_path *new_path);
 int					manage_valid_path(t_lem *lem, t_path *path);
 int					get_max_walk(t_lem *lem);
 void				balance_load(t_lem *lem);
+void				start_joined_to_end(t_lem *lem);
 int					display_lem(t_lem *lem);
 t_display			*alloc_new_display(unsigned total_rooms);
 void				free_room(t_head *rooms, t_room **room);
 void				free_config(t_config **config);
 void				free_path(t_path **path);
+void				free_lvl(t_lvl **lvl);
 int					exit_lem(t_lem **lem, char *msg, int ret);
 
 void				print_anthill(char *lem);

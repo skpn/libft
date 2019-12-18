@@ -24,7 +24,7 @@
 # define BOTH 3
 # define FREE_CONTENT 1
 # define FREE_LINKS 2
-# define FREE_LINKS_AND_CONTENT 3
+# define FREE_BOTH 3
 # define KEEP_HEAD 0
 # define FREE_HEAD 1
 # define BUFF_SIZE 40000
@@ -64,6 +64,8 @@
 #define DPRINTPOSN dprintf(g_fd, "%s %d\n", __func__, __LINE__); fflush(0)
 void	*g_addr;
 int		g_fd;
+int		g_fd_alloc;
+int		g_fd_free;
 typedef struct			s_lst
 {
 	void				*content;
@@ -99,13 +101,13 @@ typedef struct			s_hash_tab
 
 typedef struct			s_arg
 {
-	unsigned int		flags;
-	unsigned long		min;
-	unsigned long		prec;
-	unsigned long		max;
-	unsigned int		field;
-	unsigned int		type;
-	unsigned int		start;
+	long				flags;
+	long				min;
+	long				prec;
+	long				max;
+	long				field;
+	long				type;
+	long				start;
 	char				fill;
 	char				*prefix;
 }						t_arg;
@@ -117,25 +119,24 @@ typedef int				(*t_f)(t_arg *, t_buf *, va_list);
 struct					s_buf
 {
 	char				*str;
-	unsigned long long	pos;
-	unsigned long long	size;
+	long				pos;
+	long				lim;
 	t_f					tab[7];
 };
 
 int						add_to_buf(char *str, t_buf *buf);
 int						ft_printf(const char *str, ...);
 int						ft_fprintf(int fd, const char *str, ...);
-int						ft_sprintf(char **res, const char *str, ...);
-int						base_func(t_buf *buf, const char *str
+int						ft_sprintf(char **dest, const char *str, ...);
+int						parse_arg(t_buf *buf, t_arg *arg, const char *str
 	, va_list arg_list);
-t_arg					*ft_init(t_buf *buf, t_arg *arg, int opt);
+t_buf					*core_func(const char *str, va_list arg_list);
 void					*ft_stralloc(char *str);
 int						ft_realloc(void **zone, long curr_size
 	, long to_add);
 unsigned long long		ft_ato_ull(const char *str, int *pos);
 int						ft_display(t_buf *buf, int opt);
-int						set_arg(t_arg *arg, const char *str, t_buf *buf
-	, va_list arg_list);
+void					set_arg(t_arg *arg);
 int						f_s(t_arg *arg, t_buf *buf, va_list arg_list);
 int						f_c(t_arg *arg, t_buf *buf, va_list arg_list);
 int						f_percent(t_arg *arg, t_buf *buf, va_list arg_list);
@@ -242,7 +243,7 @@ int						ft_strequ(char const *s1, char const *s2);
 int						ft_strnequ(char const *s1, char const *s2, size_t n);
 char					*ft_strsub(char const *s, unsigned int start
 	, size_t len);
-char					*ft_strjoin(char const *s1, char const *s2);
+char					*ft_strjoin(char *s1, char *s2);
 char					*ft_strjoin_free(char **s1, char **s2, int opt);
 char					*ft_strtrim(char const *s);
 char					*ft_strnew(size_t size);
