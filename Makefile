@@ -6,13 +6,13 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/12/14 19:12:16 by sikpenou         ###   ########.fr        #
+#    Updated: 2019/12/19 18:12:46 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=leak
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 NAME = lem-in
 
@@ -22,10 +22,7 @@ SRC_FILES =	main_lem.c				\
 			init_structs_lem.c		\
 			exit_lem.c				\
 			parser_lem.c			\
-			gnl_lem_in.c			\
-			parser_ants.c			\
-			parser_rooms.c			\
-			parser_tubes.c			\
+			get_anthill.c			\
 			set_graph.c				\
 			set_lvl.c				\
 			clean_graph.c			\
@@ -34,7 +31,12 @@ SRC_FILES =	main_lem.c				\
 			manage_config.c			\
 			load_balancing.c		\
 			debug_lem.c				\
-			display_lem.c
+			display_lem.c			\
+			get_rooms.c				\
+			get_tubes.c
+			#parser_ants.c			\
+			parser_rooms.c			\
+			parser_tubes.c			\
 
 SRC_DIR = ./srcs/
 

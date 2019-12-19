@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 22:35:26 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/19 19:00:06 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 
 # include <unistd.h>
 # include "libft.h"
+# define LEM_BUFF 500000
+# define MAX_SIZE 1500000
+# define ACCEPT_START_END 1
+# define REJECT_START_END 2
+# define START 3
+# define END 4
+# define MALLOC_ERROR -1
+# define PARSING_ERROR -2
 # define PARENT 1
 # define BROTHER 2
 # define CHILD 3
@@ -69,6 +77,7 @@ typedef struct		s_display
 {
 	unsigned		last_id;
 	unsigned		turn;
+	unsigned		lem_turns;
 	unsigned		first_print;
 	unsigned		total_rooms;
 	size_t			nb_ants;
@@ -78,7 +87,7 @@ typedef struct		s_display
 
 typedef struct 		s_lem
 {
-	size_t			nb_ants;
+	unsigned		nb_ants;
 	unsigned		nb_rooms;
 	unsigned		max_paths;
 	unsigned		shortest;
@@ -87,6 +96,8 @@ typedef struct 		s_lem
 	unsigned		lives;
 	unsigned		most_paths;
 	char			*anthill;
+	char			*copy;
+	unsigned		pos;
 	t_room			*start;
 	t_room			*end;
 	t_head			*rooms;
@@ -96,8 +107,10 @@ typedef struct 		s_lem
 	t_display		*display;
 }					t_lem;
 
-int					gnl_lem_in(int fd, unsigned *pos, unsigned *done
-	, char **line);
+int					get_anthill(t_lem *lem);
+int					get_rooms(t_lem *lem, char *anthill_copy);
+int					get_tubes(t_lem *lem, char *anthill_copy);
+int					manage_com(t_lem *lem, char *anthill, int *opt);
 char				*ft_strjoin_anthill(char **s1, char **s2);
 int					parse_ants(t_lem *lem, char **line, int *index);
 int					parse_room(t_lem *lem, char **line, int *index);
@@ -140,4 +153,5 @@ void				print_path(t_path *path);
 //void				print_rooms_addr(t_head *rooms);
 void				print_lvl(t_lvl *lvl);
 void				print_ants_tab(t_ant **tab);
+void				print_display(t_display *display);
 #endif

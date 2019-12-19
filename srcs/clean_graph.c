@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:45:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 17:14:41 by hehlinge         ###   ########.fr       */
+/*   Updated: 2019/12/19 13:51:34 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	kill_dead_rooms(t_lem *lem, t_room *dead_room)
 
 	if (dead_room->children->first != NULL || dead_room->parents->size > 1)
 		return ;
-	printf("killing room:\n");
-	print_room(dead_room);
+//	printf("killing room:\n");
+//	print_room(dead_room);
 	parents_lst = dead_room->parents->first;
 	while (parents_lst)
 	{

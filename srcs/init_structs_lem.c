@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 22:15:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 22:35:24 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/19 14:32:37 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,11 @@ t_ant		**alloc_new_ants_tab(unsigned total_rooms)
 
 	if (!(ants_tab = (t_ant **)easymalloc(sizeof(t_ant *) * (total_rooms + 1))))
 		return (NULL);
-	dprintf(g_fd_free, "alloc ants tab %p\n", ants_tab);
 	cell = 0;
 	while (cell < total_rooms)
 	{
 		if (!(ants_tab[cell] = (t_ant *)easymalloc(sizeof(t_ant))))
 			return (NULL);
-		dprintf(g_fd_free, "alloc ant cell %p\n", ants_tab[cell]);
 		cell++;
 	}
 	return (ants_tab);

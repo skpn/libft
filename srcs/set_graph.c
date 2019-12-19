@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 21:05:19 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 17:56:15 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/19 18:25:12 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 
 int		check_graph(t_lem *lem)
 {
-	if (lem->max_paths < 1 || lem->max_paths > lem->nb_rooms)
+	if (lem->max_paths < 1 || lem->max_paths > lem->rooms->size)
 	{
-//		printf("check graph: max paths %u, nb rooms %u\n", lem->max_paths,
-//		lem->nb_rooms);
+		printf("%s %d, check graph: max paths %u, nb rooms %u\n", __func__, __LINE__, lem->max_paths,
+		lem->nb_rooms);
 		return (0);
 	}
 	if (lem->shortest != lem->end->dist + 1)
 	{
-//		printf("check graph, shortest %u, end dist + 1 %u\n", lem->shortest,
-//		lem->end->dist + 1);
+		printf("%s %d, check graph, shortest %u, end dist + 1 %u\n", __func__, __LINE__, lem->shortest,
+		lem->end->dist + 1);
 		return (0);
 	}
 	return (1);

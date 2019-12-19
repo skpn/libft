@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42->fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 19:12:41 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 22:35:22 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/19 14:05:46 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ unsigned	get_total_rooms(t_config *best)
 	{
 		path = path_elem->content;
 		path_elem = path_elem->next;
-		total += path->rooms->size;
+		total += path->rooms->size - 1;
 	}
 	return (total);
 }
@@ -74,7 +74,7 @@ void		path_to_tab(t_display *display, t_path *path, unsigned *set_cell)
 
 	wait = 0;
 	room_count = 0;
-	while (++room_count <= path->rooms->size)
+	while (++room_count < path->rooms->size)
 	{
 	//	PRINTPOSN;
 	//	printf("ants_tab %p, cell %d - %p\n", display->ants_tab, *set_cell,
@@ -114,6 +114,7 @@ t_display		*set_display(t_lem *lem)
 		return (NULL);
 	display->best = best;
 	display->nb_ants = lem->nb_ants;
+	display->lem_turns = lem->turns;
 	set_tab(display, total_rooms);
 	return (display);
 }
@@ -137,9 +138,9 @@ void		print_ant(t_display *display, t_ant *ant)
 			ft_printf(" L%u-%s", ant->id, room->name);
 		}
 		ant->current_room = ant->current_room->next;
-		if (!ant->current_room && display->last_id < display->nb_ants)
+		if (!ant->current_room && display->last_id <= display->nb_ants)
 		{
-			ant->current_room = ant->path->rooms->first;
+			ant->current_room = ant->path->rooms->first->next;
 			ant->id = display->last_id++;
 		}
 	}
@@ -167,11 +168,11 @@ int			display_lem(t_lem *lem)
 	if (!(display = set_display(lem)))
 		return (0);
 	lem->display = display;
-//	printf("in display lem, ants_tab %p\n", lem->display->ants_tab);
+	//print_display(display);
 	clean_anthill(lem);
 	ft_printf("%s\n", lem->anthill);
-//	print_ants_tab(display->ants_tab);
-	while (display->turn < lem->turns - 1)
+	//print_ants_tab(display->ants_tab);
+	while (display->turn < lem->turns)
 	{
 		display->first_print = 1;
 		print_ants(display);

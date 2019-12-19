@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 15:28:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 18:40:42 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/19 19:02:31 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,68 +14,94 @@
 #include "lem_in.h"
 #include <stdlib.h>
 
-char	*ft_strjoin_anthill(char **s1, char **s2)
+int		manage_start_end(t_lem *lem, char *anthill, int *opt)
 {
-	int		len1;
-	int		len2;
-	char	*new;
-	char	*backn;
-
-	new = NULL;
-	backn = "\n";
-	if (*s1 && *s2)
+	if (*opt == REJECT_START_END)
+		return (PARSING_ERROR);
+	else if (!ft_strncmp(anthill + lem->pos, "start\n", 6))
 	{
-		len1 = ft_strlen(*s1);
-		len2 = ft_strlen(*s2);
-		if (!(new = (char *)easymalloc(len1 + len2 + 2)))
-			return (NULL);
-		ft_strcpy(new, *s1);
-		ft_strcpy(new + len1, *s2);
-		*(new + len1 + len2) = '\n';
+		if (lem->start)
+			return (PARSING_ERROR);
+		*opt = START;
+		lem->pos += 6;
 	}
-	else if (*s1 || *s2)
-		new = *s1 ? ft_strjoin_anthill(s1, &backn)
-			: ft_strjoin(*s2, backn);
-	easyfree((void **)s1);
-	return (new);
+	else if (!ft_strncmp(anthill + lem->pos, "end\n", 4))
+	{
+		if (lem->end)
+			return (PARSING_ERROR);
+		*opt = END;
+		lem->pos += 4;
+	}
+	else
+	{
+		while (anthill[lem->pos] && anthill[lem->pos++] != '\n')
+			;
+	}
+	return (1);
+}
+
+int		manage_com(t_lem *lem, char *anthill, int *opt)
+{
+	if (anthill[++lem->pos] == '#')
+	{
+		lem->pos++;
+		return (manage_start_end(lem, anthill, opt));
+	}
+	while (anthill[lem->pos] && anthill[lem->pos] != '\n')
+		lem->pos++;
+	return (1);
+}
+
+int		get_ants(t_lem *lem, char *anthill)
+{
+	int		check_startend;
+
+	if (lem->nb_ants)
+	{
+//		printf("lem ants: %u\n", lem->nb_ants);
+		return (0);
+	}
+	check_startend = REJECT_START_END;
+//	PRINTPOSN;
+	if (anthill[lem->pos] == '#')
+		return (manage_com(lem, anthill, &check_startend));
+//	PRINTPOSN;
+//	printf("lem pos: %u, anthill pos '%c'\n", lem->pos, anthill[lem->pos]);
+	while (anthill[lem->pos] >= '0' && anthill[lem->pos] <= '9')
+		lem->nb_ants = lem->nb_ants * 10 + anthill[lem->pos++] - '0';
+//	PRINTPOSN;
+//	printf("lem ants: %u\n", lem->nb_ants);
+	if (anthill[lem->pos] != '\n' || !anthill[lem->pos++] || !lem->nb_ants)
+		return (-1);
+//	PRINTPOSN;
+	return (1);
 }
 
 int		check_input(t_lem *lem)
 {
-	if (lem->start == NULL || lem->end == NULL || !lem->nb_ants ||
-		!lem->nb_rooms)
-	{
-//		printf("CHECK INPUT RETURNS 0");
-		return (0);
-	}
+	if (lem->start == NULL || lem->end == NULL
+		|| !lem->nb_ants || !lem->rooms->size)
+		return (-1);
 	return (1);
 }
 
 int		parse_input(t_lem *lem)
 {
-	char	*line;
-	int		ret;
-	int		index;
-	int		(*tab[3])(t_lem *, char **, int *);
+	int			ret;
 
-	line = 0;
-	tab[0] = parse_ants;
-	tab[1] = parse_room;
-	tab[2] = parse_tube;
-	index = 0;
-	while ((ret = gnl_lem_in(0, &(lem->shortest), &(lem->max_dist), &line) > 0))
-	{
-		if (!(tab[index](lem, &line, &index)))
-			return (-1);
-		if (!(lem->anthill = ft_strjoin_anthill(&(lem->anthill), &line)))
-			return (-1);
-	}
-	easyfree((void **)&line);
-	lem->shortest = 0xFFFFFFFF;
-	lem->max_dist = 0xFFFFFFFF;
-	if (ret)
-		return (0);
-	if (!check_input(lem))
-		return (0);
+	if (!get_anthill(lem))
+		return (MALLOC_ERROR);
+	while ((ret = get_ants(lem, lem->copy)) > 0)
+		;
+	if (ret < 0)
+		return (ret);
+	while ((ret = get_rooms(lem, lem->copy)) > 0)
+		;
+	if (ret < 0)
+		return (ret);
+	while ((ret = get_tubes(lem, lem->copy)) > 0)
+		;
+	if (ret < 0)
+		return (ret);
 	return (1);
 }

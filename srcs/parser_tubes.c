@@ -27,9 +27,9 @@ int		add_links(t_lem *lem, char *name1, char *name2)
 //	printf("adding:\n");
 //	print_room(room1);
 //	print_room(room2);
-	dprintf(g_fd, "adding child to room1\n");
+//	dprintf(g_fd, "adding child to room1\n");
 	ft_lstadd_new(room1->children, room2);
-	dprintf(g_fd, "adding child to room2\n");
+//	dprintf(g_fd, "adding child to room2\n");
 	ft_lstadd_new(room2->children, room1);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:52:16 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 14:04:17 by sikpenou         ###   ########.fr       */
+/*   Updated: 2019/12/19 17:58:20 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_room(t_head *rooms, t_room **room)
 //	printf(g_fd_free, "freeing room %s\n", (*room)->name);
 //	print_room(*room);
 	ft_lstpop(rooms, *room);
-	easyfree((void **)&(*room)->name);
+//	easyfree((void **)&(*room)->name);
 	ft_lstfree(&(*room)->parents, FREE_LINKS, FREE_HEAD);
 	ft_lstfree(&(*room)->children, FREE_LINKS, FREE_HEAD);
 	easyfree((void **)room);
@@ -112,6 +112,12 @@ int		exit_lem(t_lem **lem, char *msg, int ret)
 //		printf("freeing lem anthill: %p\n", (*lem)->anthill);
 		easyfree((void **)&(*lem)->anthill);
 	}
+	if ((*lem)->copy)
+	{
+//		printf("freeing lem anthill copy: %p\n", (*lem)->copy);
+		easyfree((void **)&(*lem)->copy);
+	}
+
 	if ((*lem)->rooms)
 	{
 //		printf("freeing lem rooms, head: %p\n", (*lem)->rooms);
