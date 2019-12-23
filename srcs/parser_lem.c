@@ -42,6 +42,7 @@ int		manage_start_end(t_lem *lem, char *anthill, int *opt)
 
 int		manage_com(t_lem *lem, char *anthill, int *opt)
 {
+//	PRINTPOSN;
 	if (anthill[++lem->pos] == '#')
 	{
 		lem->pos++;

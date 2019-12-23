@@ -13,71 +13,72 @@
 #include "libft.h"
 #include "lem_in.h"
 
-int		skip_coord(t_lem *lem, char *anthill_copy)
+int		skip_coord(t_lem *lem)
 {
-	while (anthill_copy[lem->pos] <= '9' && anthill_copy[lem->pos] >= '0')
+	if (lem->copy[lem->pos++] != '\0')
+		return (PARSING_ERROR);
+	while (lem->copy[lem->pos] <= '9' && lem->copy[lem->pos] >= '0')
 	{
-//		printf("%s %d, cpy[lem->pos]: '%c'\n", __func__, __LINE__, anthill_copy[lem->pos]);
+//		printf("%s %d, cpy[lem->pos]: '%c'\n", __func__, __LINE__, lem->copy[lem->pos]);
 		lem->pos++;
 	}
-	if (anthill_copy[lem->pos++] != ' ')
+	if (lem->copy[lem->pos++] != ' ')
 		return (PARSING_ERROR);
-	while (anthill_copy[lem->pos] <= '9' && anthill_copy[lem->pos] >= '0')
+	while (lem->copy[lem->pos] <= '9' && lem->copy[lem->pos] >= '0')
 	{
-//		printf("%s %d, cpy[lem->pos]: '%c'\n", __func__, __LINE__, anthill_copy[lem->pos]);
+//		printf("%s %d, cpy[lem->pos]: '%c'\n", __func__, __LINE__, lem->copy[lem->pos]);
 		lem->pos++;
 	}
-//	printf("%s %d, cpy[lem->pos]: '%c'\n", __func__, __LINE__, anthill_copy[lem->pos]);
-	if (anthill_copy[lem->pos++] != '\n')
+//	printf("%s %d, cpy[lem->pos]: '%c', lem->pos = %u\n", __func__, __LINE__, lem->copy[lem->pos], lem->pos);
+	if (lem->copy[lem->pos++] != '\n')
 		return (PARSING_ERROR);
-//	printf("%s %d, cpy[lem->pos]: '%c', lem->pos = %u\n", __func__, __LINE__, anthill_copy[lem->pos], lem->pos);
+//	printf("%s %d, cpy[lem->pos]: '%c', lem->pos = %u\n", __func__, __LINE__, lem->copy[lem->pos], lem->pos);
 	return (1);
 }
 
-int		get_name(t_lem *lem, t_room *room, char *anthill_copy)
-{
-	unsigned	start_pos;
-
-	start_pos = lem->pos;
-	if (anthill_copy[lem->pos] == 'L')
-		return (PARSING_ERROR);
-	room->name = anthill_copy + lem->pos;
-	while(anthill_copy[lem->pos] && anthill_copy[lem->pos] != '\n')
-	{
-//		printf("%s %d, cpy[lem->pos]: '%c', lem->pos = %u\n", __func__, __LINE__, anthill_copy[lem->pos], lem->pos);
-		if (anthill_copy[lem->pos] == ' ')
-		{
-			anthill_copy[lem->pos++] = '\0';
-			return (skip_coord(lem, anthill_copy));
-		}
-		else if (anthill_copy[lem->pos] == '-')
-		{
-//			printf("%s %d, start pso: %u\n", __func__, __LINE__, start_pos);
-			free_room(lem->rooms, &room);
-			lem->pos = start_pos;
-			return (0);
-		}
-		lem->pos++;
-	}
-	return (PARSING_ERROR);
-}
-
-int		check_same_name(t_lem *lem, t_room *room_to_check)
+int		check_same_name(t_lem *lem, char *name_to_check)
 {
 	t_lst	*room_elem;
 	t_room	*room;
 
-	if (!lem->rooms->first)
-		return (1);	
-	room_elem = lem->rooms->first->next;
+	room_elem = lem->rooms->first;
 	while (room_elem)
 	{
 		room = room_elem->content;
-		if (!ft_strcmp(room->name, room_to_check->name))
+		if (!ft_strcmp(room->name, name_to_check))
 			return (PARSING_ERROR);
 		room_elem = room_elem->next;
 	}
 	return (1);
+}
+
+int		get_name(t_lem *lem, char **name)
+{
+	unsigned	start_pos;
+	char		c;
+
+//	printf("getting name from:\n'%s'", lem->copy + lem->pos);
+	if ((c = lem->copy[lem->pos]) == 'L' || c == '-' || c == '\0' || c == ' ')
+		return (PARSING_ERROR);
+	start_pos = lem->pos;
+	while ((c = lem->copy[++lem->pos]) != ' ')
+	{
+	//	printf("%c\n", c);
+		if (c == '\0' || c == '\n')
+		{
+			lem->pos = start_pos;
+			return (PARSING_ERROR);
+		}
+		else if (c == '-')
+		{
+			lem->pos = start_pos;
+			return (0);
+		}
+	}
+	*name = lem->copy + start_pos;
+	lem->copy[lem->pos] = 0;
+//	PRINTPOSN;
+	return (skip_coord(lem));
 }
 
 int		get_rooms(t_lem *lem, char *anthill_copy)
@@ -85,26 +86,29 @@ int		get_rooms(t_lem *lem, char *anthill_copy)
 	int		check_start_end;
 	int		ret;
 	t_room	*room;
+	char	*name;
 
 //	printf("lem pos: %u\n", lem->pos);
 	check_start_end = ACCEPT_START_END;
 	if (anthill_copy[lem->pos] == '#')
-		manage_com(lem, anthill_copy, &check_start_end);
+		if (manage_com(lem, anthill_copy, &check_start_end) == PARSING_ERROR)
+			return (PARSING_ERROR);
+	if ((ret = get_name(lem, &name)) < 1)
+	{
+		return (ret);
+	}
+	if (!(check_same_name(lem, name)))
+		return (PARSING_ERROR);
 	if (!(room = alloc_new_room()))
 		return (MALLOC_ERROR);
 	if (!ft_lstadd_new(lem->rooms, room))
 		return (MALLOC_ERROR);
-	if ((ret = get_name(lem, room, anthill_copy)) < 1)
-	{
-//		printf("%s, ret: %d\n", __func__, ret);
-		return (ret);
-	}
-//	printf("%s %d, ret: %d\n", 
-	if (!(check_same_name(lem, room)))
-		return (PARSING_ERROR);
+	room->name = name;
 	if (check_start_end == START)
 		lem->start = room;
 	else if (check_start_end == END)
 		lem->end = room;
+//	printf("alloc'ed room:\n");
+//	print_room(room);
 	return (1);
 }
