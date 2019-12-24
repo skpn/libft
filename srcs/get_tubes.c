@@ -13,27 +13,47 @@
 #include "libft.h"
 #include "lem_in.h"
 
+t_room	*seek_second_room(t_lst *elem, char *name)
+{
+	t_room	*room;
+	t_room	*ret;
+
+	ret = NULL;
+	while (elem && !ret)
+	{
+		room = (t_room *)elem->content;	
+		if (!ft_strcmp(room->name, name))
+			ret = room;
+		elem = elem->next;
+	}
+	return (ret);
+}
+
 int		add_links(t_lem *lem, char *name_1, char *name_2)
 {
 	t_lst	*elem;
 	t_room	*room;
 	t_room	*room_1;
 	t_room	*room_2;
-	int		ctr;
 
 //	printf("name 1: %s, name 2: %s\n", name_1, name_2);
 	elem = lem->rooms->first;
-	ctr = 0;
-	while (elem && ctr < 2)
+	while (elem && !room_1 && !room_2)
 	{
 		room = (t_room *)elem->content;	
-		if (!ft_strcmp(room->name, name_1) && ++ctr)
+		if (!ft_strcmp(room->name, name_1))
 			room_1 = room;
-		else if (!ft_strcmp(room->name, name_2) && ++ctr)
+		else if (!ft_strcmp(room->name, name_2))
 			room_2 = room;
 		elem = elem->next;
 	}
-	if (ctr != 2 || room_1 == room_2)
+	if (!room_1 && !room_2)
+		return (PARSING_ERROR);
+	else if (room_1 && !(room_2 = seek_second_room(elem, name_2)))
+		return (PARSING_ERROR);
+	else if (room_2 && !(room_1 = seek_second_room(elem, name_1)))
+		return (PARSING_ERROR);
+	if (room_1 == room_2)
 		return (PARSING_ERROR);
 	if (ft_lstfind(room_1->children, room_2))
 		return (1);

@@ -24,6 +24,7 @@ int		main(void)
 //	g_fd_alloc = open("alloc_log", O_WRONLY | O_TRUNC | O_CREAT, 0644);
 //	g_fd_free = open("free_log", O_WRONLY | O_TRUNC | O_CREAT, 0644);
 //	dprintf(g_fd, "%s %d\n", __func__, __LINE__);
+	sleep(10);
 	if (!(lem = alloc_new_lem()))
 		return (exit_lem(&lem, "init failed\n", 1));
 	if (!parse_input(lem))
