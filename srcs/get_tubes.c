@@ -16,17 +16,15 @@
 t_room	*seek_second_room(t_lst *elem, char *name)
 {
 	t_room	*room;
-	t_room	*ret;
 
-	ret = NULL;
-	while (elem && !ret)
+	while (elem)
 	{
 		room = (t_room *)elem->content;	
 		if (!ft_strcmp(room->name, name))
-			ret = room;
+			return (room);
 		elem = elem->next;
 	}
-	return (ret);
+	return (NULL);
 }
 
 int		add_links(t_lem *lem, char *name_1, char *name_2)

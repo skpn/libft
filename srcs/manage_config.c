@@ -114,20 +114,14 @@ int			add_path(t_lem *lem, t_config *config, t_path *new_path)
 	lem->lives--;
 	if (!(new_path_elem = ft_lstnew_elem(new_path)))
 		return (0);
-//	printf("\nBEFORE ADDING PATH, CONFIG:\n");
-//	print_config(config);
-	if ((config_path_elem = config->paths->first))
-	{
-		while (((t_path *)config_path_elem->content)->rooms->size > new_path->rooms->size)
-		{
-			config_path_elem = config_path_elem->next;
-		}
-		ft_lstinsert(config->paths, config_path_elem, new_path_elem, BEFORE);
-	}
+	if (!(config_path_elem = config->paths->first)
+		|| ((t_path *)config_path_elem->content)->rooms->size > new_path->rooms->size)
+		ft_lstadd(config->paths, new_path_elem);
 	else
 	{
-//		PRINTPOSN;
-		ft_lstadd(config->paths,new_path_elem);
+		while (config_path_elem->next && ((t_path *)config_path_elem->next->content)->rooms->size > new_path->rooms->size)
+			config_path_elem = config_path_elem->next;
+		ft_lstinsert(config->paths, config_path_elem, new_path_elem, AFTER);
 	}
 	pop_dead_paths(config);
 	balance_load(lem);

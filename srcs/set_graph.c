@@ -16,17 +16,10 @@
 int		check_graph(t_lem *lem)
 {
 	if (lem->max_paths < 1 || lem->max_paths > lem->rooms->size)
-	{
-		printf("%s %d, check graph: max paths %u, nb rooms %u\n", __func__, __LINE__, lem->max_paths,
-		lem->nb_rooms);
-		return (0);
-	}
+		return (PARSING_ERROR);
+	//printf("lem->shortest = %u, lem->end->dist = %u\n", lem->shortest, lem->end->dist + 1);
 	if (lem->shortest != lem->end->dist + 1)
-	{
-		printf("%s %d, check graph, shortest %u, end dist + 1 %u\n", __func__, __LINE__, lem->shortest,
-		lem->end->dist + 1);
-		return (0);
-	}
+		return (PARSING_ERROR);
 	return (1);
 }
 
@@ -122,6 +115,7 @@ int		set_first_lvl(t_lem *lem, t_lvl *lvl)
 int		set_graph(t_lem *lem)
 {
 	t_lvl	*lvl;
+	int		ret;
 
 //	PRINTPOSN;
 	if (!(lvl = alloc_new_lvl()))
@@ -130,12 +124,15 @@ int		set_graph(t_lem *lem)
 		return (0);
 	if (!set_lvls(lem, lvl))
 		return (0);
-	lem->start->dist = 0;
-	if (!(check_graph(lem)))
-	{
-		printf("CHECK GRAPH RETURNS 0\n");
-		free_lvl(&lvl);
+	if (lem->start)
+		lem->start->dist = 0;
+	else
 		return (0);
+	if ((ret = (check_graph(lem))) <= 0)
+	{
+		free_lvl(&lvl);
+		//printf("ret = %d\n", ret);
+		return (ret);
 	}
 //	PRINTPOSN;
 	kill_end_children(lem->end, lem->max_dist);

@@ -107,6 +107,7 @@ t_lem		*alloc_new_lem(void)
 		return (NULL);
 	if (!(lem->paths = ft_lstnew_head(NULL, NULL)))
 		return (NULL);
+	lem->shortest = 0xFFFFFFFF;
 	lem->max_dist = 0xFFFFFFFF;
 	lem->max_paths = 0xFFFFFFFF;
 	lem->turns = 0xFFFFFFFF;

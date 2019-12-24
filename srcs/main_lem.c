@@ -24,19 +24,22 @@ int		main(void)
 //	g_fd_alloc = open("alloc_log", O_WRONLY | O_TRUNC | O_CREAT, 0644);
 //	g_fd_free = open("free_log", O_WRONLY | O_TRUNC | O_CREAT, 0644);
 //	dprintf(g_fd, "%s %d\n", __func__, __LINE__);
-	sleep(10);
+	//sleep(10);
 	if (!(lem = alloc_new_lem()))
 		return (exit_lem(&lem, "init failed\n", 1));
-	if (!parse_input(lem))
-		return (exit_lem(&lem, "ERROR", 2));
+	if (parse_input(lem) <= 0)
+	{
+		//printf("ret parse input < 0\n");
+		return (exit_lem(&lem, "ERROR\n", 2));
+	}
 //	printf("%p\n", lem->start);
 //	print_rooms(lem->rooms);
 //	return (0);
-	if (!set_graph(lem))
+	if (set_graph(lem) <= 0)
 	{
-		printf("BEFORE EXIT, ROOMS:\n");
-		print_rooms(lem->rooms);
-		return (exit_lem(&lem, "ERROR", 2));
+		//printf("BEFORE EXIT, ROOMS:\n");
+		//print_rooms(lem->rooms);
+		return (exit_lem(&lem, "ERROR\n", 2));
 	}
 	if (lem->end->dist == 1)
 	{
@@ -45,11 +48,11 @@ int		main(void)
 	else
 	{
 		if (!seek_paths(lem))
-			return (exit_lem(&lem, "ERROR", 2));
+			return (exit_lem(&lem, "ERROR\n", 2));
 			//		printf("\nSORTIE DE L'ALGO, config->first =\n");
 			//		print_config(lem->config_lst->first->content);
 		else if (!display_lem(lem))
-			return (exit_lem(&lem, "ERROR", 2));
+			return (exit_lem(&lem, "ERROR\n", 2));
 	}
 	exit_lem(&lem, "", 2);
 	return (0);

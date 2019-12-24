@@ -41,14 +41,19 @@ int		check_same_name(t_lem *lem, char *name_to_check)
 	t_lst	*room_elem;
 	t_room	*room;
 
+	//printf("IN CHECK_SAME NAME\n");
 	room_elem = lem->rooms->first;
 	while (room_elem)
 	{
 		room = room_elem->content;
 		if (!ft_strcmp(room->name, name_to_check))
+		{
+			//printf("SAME NAME FOUND\n");
 			return (PARSING_ERROR);
+		}
 		room_elem = room_elem->next;
 	}
+	//printf("same name not found\n");
 	return (1);
 }
 
@@ -97,7 +102,7 @@ int		get_rooms(t_lem *lem, char *anthill_copy)
 	{
 		return (ret);
 	}
-	if (!(check_same_name(lem, name)))
+	if (check_same_name(lem, name) <= 0)
 		return (PARSING_ERROR);
 	if (!(room = alloc_new_room()))
 		return (MALLOC_ERROR);

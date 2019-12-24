@@ -37,10 +37,10 @@ void	kill_dead_rooms(t_lem *lem, t_room *dead_room)
 	t_lst	*parents_lst;
 	t_room	*parent;
 
+	if (dead_room == lem->start)
+		lem->start = NULL;
 	if (dead_room->children->first != NULL || dead_room->parents->size > 1)
 		return ;
-//	printf("killing room:\n");
-//	print_room(dead_room);
 	parents_lst = dead_room->parents->first;
 	while (parents_lst)
 	{
