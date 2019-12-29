@@ -28,8 +28,10 @@
 # define KEEP_HEAD 0
 # define FREE_HEAD 1
 # define BUFF_SIZE 40000
-# define HASH_ELEMS_LIMIT 2
-# define HASH_COLLISIONS_LIMIT 3
+# define INITIAL_HASH_ARRAY_SIZE 4999
+# define COLLISIONS_REJECTION_FACTOR 10
+# define QUIET 0
+# define VERBOSE 1
 # define BLOCK 5000
 # define ALL "-+ 0#hlL.123456789*"
 # define FLAGS "-+ 0#"
@@ -80,24 +82,26 @@ typedef struct			s_head
 	t_lst				*last;
 }						t_head;
 
-typedef int				(*t_hashfunc)(char *, long);
-
-typedef struct			s_hash_elem
+typedef struct			s_h_elem
 {
-	void				*content;
+	unsigned			hash;
 	char				*key;
-}						t_hash_elem;
+	void				*content;
+}						t_h_elem;
 
-typedef struct			s_hash_tab
+typedef unsigned		(*t_h_hash_func)(char *);
+
+typedef void			(*t_h_free_func)(void **);
+
+typedef struct			s_h_table
 {
-	long				size;
-	long				elems;
-	long				collisions;
-	long				elems_limit;
-	long				collisions_limit;
-	t_hashfunc			func;
-	void				*array;
-}						t_hash_tab;
+	unsigned			size;
+	unsigned			collisions;
+	unsigned			collisions_limit;
+	t_h_hash_func		hash_func;
+	t_h_free_func		free_func;
+	t_head				*array;
+}						t_h_table;
 
 typedef struct			s_arg
 {
@@ -131,7 +135,6 @@ int						ft_sprintf(char **dest, const char *str, ...);
 int						parse_arg(t_buf *buf, t_arg *arg, const char *str
 	, va_list arg_list);
 t_buf					*core_func(const char *str, va_list arg_list);
-void					*ft_stralloc(char *str);
 int						ft_realloc(void **zone, long curr_size
 	, long to_add);
 unsigned long long		ft_ato_ull(const char *str, int *pos);
@@ -147,10 +150,6 @@ char					*ft_ulltoa(unsigned long long n);
 int						ft_itoa_base_u(unsigned long long n, char *base_to
 	, t_buf *buf, t_arg *arg);
 int						ft_pad(t_arg *arg, t_buf *buf);
-char					*ft_stradd(char *sht, char *lng);
-char					*ft_stradd_fract(char *sht, char *lng);
-char					*ft_strmult(char *sht, char *lng);
-char					*ft_strdiv(char **nb, int turns, int len, int pos);
 void					*easymalloc(size_t size);
 int						ft_abs(int a);
 int						ft_atoi(const char *str);
@@ -161,10 +160,9 @@ long long int			ft_pow(long long int nb, long long int pow);
 int						ft_check_base(char *str, char *base);
 char					*ft_convert_base(char *nbr, char *base_from
 	, char *base_to);
-void					ft_fili(char *file, int line);
+int						ft_find_next_prime(long unsigned nb);
 void					ft_free(void **match);
 void					easyfree(void **match);
-int						ft_free_ptr(void **ptr);
 int						ft_free_tab(void **tab, size_t len);
 void					ft_free_gc(void);
 int						ft_isalnum(int c);
@@ -200,8 +198,9 @@ void					ft_lstsort(t_head *head
 void					ft_lstswap_contents(t_lst *upstream, t_lst *downstream);
 void					ft_lstswap_heads(t_head *head, t_lst *elem_1
 	, t_lst *elem_2);
+void					ft_lst_replace_elem(t_head *head, t_lst *original,
+	t_lst *replacement);
 int						ft_max(int a, int b);
-void					*ft_memchr(const void *s, int c, size_t n);
 int						ft_memchr_pos(const void *s, int c, size_t n);
 void					*ft_memset(void *b, int c, size_t len);
 void					ft_memcset(void *o_s, int c, int stop);
@@ -223,20 +222,15 @@ void					ft_putstr(char const *s);
 int						ft_putstr_ret(char const *s);
 void					ft_putstr_fd(char const *str, int fd);
 int						ft_putstr_fd_ret(char const *str, int fd);
-char					*ft_strcat(char *s1, const char *s2);
 int						ft_strcmp(const char *s1, const char *s2);
 int						ft_strncmp(const char *s1, const char *s2, size_t n);
-char					*ft_strcpy(char *dst, char *src);
+int						ft_strcpy(char *dest, char *src);
 char					*ft_strdup(const char *s1);
-unsigned int			ft_strlcat(char *dst, const char *src, size_t size);
 size_t					ft_strlen(const char *s);
-char					*ft_strncat(char *s1, const char *s2, size_t n);
+size_t					ft_strlen_v4(const char *s);
 char					*ft_strncpy(char *dst, const char *src, size_t len);
 char					*ft_strrev(char *str);
 char					*ft_strstr(const char *haystack, const char *needle);
-char					*ft_strnstr(const char *haystack, const char *needle
-	, size_t len);
-char					*ft_strchr(const char *s, int c);
 int						ft_strchr_pos(char *str, int c);
 char					*ft_strrchr(const char *str, int c);
 int						ft_strequ(char const *s1, char const *s2);
@@ -251,21 +245,21 @@ void					ft_strdel(char **as);
 void					ft_strclr(char *s);
 char					**ft_strsplit(char const *s, char c);
 void					ft_print_words_tables(char **tab);
-char					*ft_strmap(char const *s, char (*f_m) (char));
-char					*ft_strmapi(char const *s
-	, char (*f_mi) (unsigned int, char));
-void						ft_striter(char *s, void (*f_i)(char *));
-void						ft_striteri(char *s
-	, void (*f_ii)(unsigned int, char *));
-void						ft_swap(void **a, void **b, int opt);
-void						ft_swapstr(char **a, char **b);
-int							ft_toupper(int c);
-int							ft_tolower(int c);
-void						ft_lstprint(t_head *head, char *name, unsigned opt);
-int							get_gc_data(int opt);
-t_head						*get_gc_list(int opt);
-int							filler_gnl(int fd, char **line);
-void						ft_lst_replace_elem(t_head *head, t_lst *original,
-	t_lst *replacement);
+void					ft_swap(void **a, void **b, int opt);
+void					ft_swapstr(char **a, char **b);
+void					ft_lstprint(t_head *head, char *name, unsigned opt);
+int						get_gc_data(int opt);
+t_head					*get_gc_list(int opt);
+t_h_table	*ft_hash_new_table(void);
+int			ft_hash_add_elem(t_h_table *table, char *key, void *content);
+int			ft_hash_resize_array(t_h_table *table, unsigned new_size);
+void		*ft_hash_get_content(t_h_table *table, char *key);
+t_h_elem	*ft_hash_get_elem(t_h_table *table, char *key);
+void		ft_hash_free_elem(t_h_table *table, t_h_elem *hash_elem);
+t_h_elem	*ft_hash_pop_elem(t_h_table *table, char *key);
+void		ft_hash_free_table(t_h_table *table, int opt);
+void		hash_print_elem(t_h_elem *elem);
+void		hash_print_index(t_h_table *table, unsigned index, int opt);
+void		hash_print_table(t_h_table *table, int opt);
 
 #endif

@@ -100,6 +100,7 @@ typedef struct 		s_lem
 	unsigned		pos;
 	t_room			*start;
 	t_room			*end;
+	t_h_table		*rooms_table;
 	t_head			*rooms;
 	t_head			*paths;
 	t_head			*config_lst;

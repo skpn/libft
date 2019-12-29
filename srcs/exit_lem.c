@@ -20,6 +20,16 @@ void	free_lvl(t_lvl **lvl)
 	easyfree((void **)lvl);
 }
 
+void	free_table_room(void **void_room)
+{
+	t_room	**room;
+
+	room = (t_room **)void_room;
+	ft_lstfree(&(*room)->parents, FREE_LINKS, FREE_HEAD);
+	ft_lstfree(&(*room)->children, FREE_LINKS, FREE_HEAD);
+	easyfree((void **)room);
+}
+
 void	free_room(t_head *rooms, t_room **room)
 {
 //	printf(g_fd_free, "freeing room %s\n", (*room)->name);

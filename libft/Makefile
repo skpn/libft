@@ -12,7 +12,7 @@
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 NAME = libft.a
 
@@ -26,6 +26,7 @@ SRCFILES = \
 			ft_atou_mv.c \
 			ft_check_base.c \
 			ft_convert_base.c \
+			ft_find_next_prime.c \
 			ft_free.c \
 			ft_free_tab.c \
 			ft_isalnum.c \
@@ -63,7 +64,6 @@ SRCFILES = \
 			ft_memccpy.c \
 			ft_memchr.c \
 			ft_memchr_pos.c \
-			ft_memchrset.c \
 			ft_memcmp.c \
 			ft_memcpy.c \
 			ft_memcset.c \
@@ -110,7 +110,11 @@ SRCFILES = \
 			num_funcs_pf.c \
 			text_funcs_pf.c \
 			padding_pf.c \
-			support_pf.c
+			support_pf.c \
+			hash_tables_memory.c \
+			hash_tables_access.c \
+			hash_tables_insert.c \
+			hash_tables_display.c
 
 SRCDIR = srcs/
 
