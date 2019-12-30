@@ -1,0 +1,9 @@
+L1-s3
+L1-s4 L2-s3
+L1-re L2-s4 L3-s3
+L2-re L3-s4
+
+L1-s1 L2-s3
+L1-s2 L2-s4 L3-s1
+L1-re L2-re L3-s2
+L3-re

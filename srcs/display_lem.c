@@ -76,14 +76,14 @@ void		path_to_tab(t_display *display, t_path *path, unsigned *set_cell)
 	room_count = 0;
 	while (++room_count < path->rooms->size)
 	{
-	//	PRINTPOSN;
-	//	printf("ants_tab %p, cell %d - %p\n", display->ants_tab, *set_cell,
-	//	display->ants_tab[*set_cell]);
-		display->ants_tab[*set_cell]->id = display->last_id++;
-		display->ants_tab[*set_cell]->wait = wait++;
-		display->ants_tab[*set_cell]->max = path->load;
-		display->ants_tab[*set_cell]->path = path;
-		display->ants_tab[*set_cell]->current_room = path->rooms->first->next;
+		if (display->last_id < display->nb_ants)
+		{
+			display->ants_tab[*set_cell]->id = display->last_id++;
+			display->ants_tab[*set_cell]->wait = wait++;
+			display->ants_tab[*set_cell]->max = path->load;
+			display->ants_tab[*set_cell]->path = path;
+			display->ants_tab[*set_cell]->current_room = path->rooms->first->next;
+		}
 		(*set_cell)++;
 	}
 }
@@ -109,9 +109,11 @@ t_display		*set_display(t_lem *lem)
 	t_config	*best;
 
 	best = get_best_config(lem->config_lst);
+	print_config(best);
 	total_rooms = get_total_rooms(best);
 	if (!(display = alloc_new_display(total_rooms)))
 		return (NULL);
+	print_display(display);
 	display->best = best;
 	display->nb_ants = lem->nb_ants;
 	display->lem_turns = lem->turns;
@@ -168,7 +170,6 @@ int			display_lem(t_lem *lem)
 	if (!(display = set_display(lem)))
 		return (0);
 	lem->display = display;
-	//print_display(display);
 	clean_anthill(lem);
 	ft_printf("%s\n", lem->anthill);
 	//print_ants_tab(display->ants_tab);
