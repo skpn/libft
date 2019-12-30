@@ -15,9 +15,8 @@
 
 int		check_graph(t_lem *lem)
 {
-	if (lem->max_paths < 1 || lem->max_paths > lem->rooms->size)
+	if (lem->max_paths < 1 || lem->max_paths > lem->table->elems)
 		return (PARSING_ERROR);
-	//printf("lem->shortest = %u, lem->end->dist = %u\n", lem->shortest, lem->end->dist + 1);
 	if (lem->shortest != lem->end->dist + 1)
 		return (PARSING_ERROR);
 	return (1);
@@ -94,7 +93,10 @@ int		set_lvls(t_lem *lem, t_lvl *lvl)
 		set_next_lvl_families(lvl, lem->end);
 		update_lem_info(lem, lvl);
 		if (!get_next_lvl_rooms(lem, lvl))
+		{
+			free_lvl(&lvl);
 			return (0);
+		}
 		if (lvl->dist + 1 == lem->end->dist)
 		{
 			manage_end(lem, lvl);
@@ -107,7 +109,10 @@ int		set_lvls(t_lem *lem, t_lvl *lvl)
 int		set_first_lvl(t_lem *lem, t_lvl *lvl)
 {
 	if (!(ft_lstadd_new(lvl->rooms, lem->start)))
+	{
+		free_lvl(&lvl);
 		return (0);
+	}
 	lem->start->dist = 0;
 	return (1);
 }
@@ -117,7 +122,6 @@ int		set_graph(t_lem *lem)
 	t_lvl	*lvl;
 	int		ret;
 
-//	PRINTPOSN;
 	if (!(lvl = alloc_new_lvl()))
 		return (0);
 	if (!set_first_lvl(lem, lvl))
@@ -127,16 +131,16 @@ int		set_graph(t_lem *lem)
 	if (lem->start)
 		lem->start->dist = 0;
 	else
+	{
+		free_lvl(&lvl);
 		return (0);
+	}
 	if ((ret = (check_graph(lem))) <= 0)
 	{
 		free_lvl(&lvl);
-		//printf("ret = %d\n", ret);
 		return (ret);
 	}
-//	PRINTPOSN;
 	kill_end_children(lem->end, lem->max_dist);
 	free_lvl(&lvl);
-//	PRINTPOSN;
 	return (1);
 }

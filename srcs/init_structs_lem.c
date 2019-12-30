@@ -101,12 +101,13 @@ t_lem		*alloc_new_lem(void)
 
 	if (!(lem = (t_lem *)easymalloc(sizeof(*lem))))
 		return (NULL);
-	if (!(lem->rooms = ft_lstnew_head(NULL, NULL)))
-		return (NULL);
 	if (!(lem->config_lst = ft_lstnew_head(NULL, NULL)))
 		return (NULL);
 	if (!(lem->paths = ft_lstnew_head(NULL, NULL)))
 		return (NULL);
+	if (!(lem->table = ft_hash_new_table()))
+		return (0);
+	lem->table->free_func = &free_table_room;
 	lem->shortest = 0xFFFFFFFF;
 	lem->max_dist = 0xFFFFFFFF;
 	lem->max_paths = 0xFFFFFFFF;

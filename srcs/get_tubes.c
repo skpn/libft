@@ -29,27 +29,12 @@ t_room	*seek_second_room(t_lst *elem, char *name)
 
 int		add_links(t_lem *lem, char *name_1, char *name_2)
 {
-	t_lst	*elem;
-	t_room	*room;
 	t_room	*room_1;
 	t_room	*room_2;
 
-//	printf("name 1: %s, name 2: %s\n", name_1, name_2);
-	elem = lem->rooms->first;
-	while (elem && !room_1 && !room_2)
-	{
-		room = (t_room *)elem->content;	
-		if (!ft_strcmp(room->name, name_1))
-			room_1 = room;
-		else if (!ft_strcmp(room->name, name_2))
-			room_2 = room;
-		elem = elem->next;
-	}
-	if (!room_1 && !room_2)
+	if (!(room_1 = ft_hash_get_content(lem->table, name_1)))
 		return (PARSING_ERROR);
-	else if (room_1 && !(room_2 = seek_second_room(elem, name_2)))
-		return (PARSING_ERROR);
-	else if (room_2 && !(room_1 = seek_second_room(elem, name_1)))
+	if (!(room_2 = ft_hash_get_content(lem->table, name_2)))
 		return (PARSING_ERROR);
 	if (room_1 == room_2)
 		return (PARSING_ERROR);
@@ -68,6 +53,8 @@ int		add_links(t_lem *lem, char *name_1, char *name_2)
 int		get_link_names(t_lem *lem, char **name_1, char **name_2)
 {
 	*name_1 = lem->copy + lem->pos;
+	if (!ft_strcmp(*name_1, "\n"))
+		return (END);
 	while (lem->copy[lem->pos] && lem->copy[lem->pos] != '-')
 		lem->pos++;
 	if (lem->copy[lem->pos] != '-')
@@ -94,6 +81,8 @@ int		get_tubes(t_lem *lem, char *anthill_copy)
 		manage_com(lem, anthill_copy, &check_start_end);
 	if ((ret = get_link_names(lem, &name_1, &name_2)) < 1)
 		return (ret);
+	else if (ret == END)
+		return (0);
 	if ((ret = add_links(lem, name_1, name_2)) < 1)
 	{
 		return (ret);

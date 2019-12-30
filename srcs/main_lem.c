@@ -15,9 +15,22 @@
 #include "lem_in.h"
 #include <fcntl.h>
 
+int		check_enough_info(t_lem *lem)
+{
+	// Si parsing error alors il faut checker si on a assez de 
+	// contenu pour lancer l'algo
+	// genre il faut un start, un end
+	// sinon en soit c'est peut etre tout pq l'algo est protégé
+	// contre les maps sans chemin valide
+	if (lem->start && lem->end)
+		return (1);
+	return (0);
+}
+
 int		main(void)
 {
 	t_lem	*lem;
+	int		ret;
 
 	
 //	g_fd = open("debug", O_WRONLY | O_TRUNC | O_CREAT, 0644);
@@ -27,18 +40,14 @@ int		main(void)
 	//sleep(10);
 	if (!(lem = alloc_new_lem()))
 		return (exit_lem(&lem, "init failed\n", 1));
-	if (parse_input(lem) <= 0)
-	{
-		//printf("ret parse input < 0\n");
+	if ((ret = parse_input(lem)) == MALLOC_ERROR
+		|| (ret == PARSING_ERROR && !check_enough_info(lem)))
 		return (exit_lem(&lem, "ERROR\n", 2));
-	}
+//	hash_print_table(lem->table, QUIET);
 //	printf("%p\n", lem->start);
-//	print_rooms(lem->rooms);
 //	return (0);
 	if (set_graph(lem) <= 0)
 	{
-		//printf("BEFORE EXIT, ROOMS:\n");
-		//print_rooms(lem->rooms);
 		return (exit_lem(&lem, "ERROR\n", 2));
 	}
 	if (lem->end->dist == 1)
@@ -49,8 +58,6 @@ int		main(void)
 	{
 		if (!seek_paths(lem))
 			return (exit_lem(&lem, "ERROR\n", 2));
-			//		printf("\nSORTIE DE L'ALGO, config->first =\n");
-			//		print_config(lem->config_lst->first->content);
 		else if (!display_lem(lem))
 			return (exit_lem(&lem, "ERROR\n", 2));
 	}

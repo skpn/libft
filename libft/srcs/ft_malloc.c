@@ -80,7 +80,7 @@ void		*easymalloc(size_t size)
 	if (!EASY)
 	{
 		zone = ft_memalloc(size);
-		dprintf(g_fd_alloc, "alloc %p\n", zone);
+//		dprintf(g_fd_alloc, "alloc %p\n", zone);
 		return (zone);
 	}
 	if (size < 1 || !(gc_list = get_gc_list(1)))

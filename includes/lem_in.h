@@ -32,7 +32,7 @@
 # define ADD_PATH 3
 # define WITHOUT_HEAD 0
 # define WITH_HEAD 1
-# define DEBUG 1
+# define DEBUG 0
 void	*g_ptr;
 typedef struct		s_path
 {
@@ -95,12 +95,13 @@ typedef struct 		s_lem
 	unsigned		turns;
 	unsigned		lives;
 	unsigned		most_paths;
+	unsigned		anthill_size;
 	char			*anthill;
 	char			*copy;
 	unsigned		pos;
 	t_room			*start;
 	t_room			*end;
-	t_head			*rooms;
+	t_h_table		*table;
 	t_head			*paths;
 	t_head			*config_lst;
 	t_config		*current_config;
@@ -137,6 +138,7 @@ void				start_joined_to_end(t_lem *lem);
 int					display_lem(t_lem *lem);
 t_display			*alloc_new_display(unsigned total_rooms);
 void				free_room(t_head *rooms, t_room **room);
+void				free_table_room(void **room);
 void				free_config(t_config **config);
 void				free_path(t_path **path);
 void				free_lvl(t_lvl **lvl);

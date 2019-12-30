@@ -62,10 +62,10 @@ int		get_ants(t_lem *lem, char *anthill)
 	check_startend = REJECT_START_END;
 	if (anthill[lem->pos] == '#')
 		return (manage_com(lem, anthill, &check_startend));
-//	printf("lem pos: %u, anthill pos '%c'\n", lem->pos, anthill[lem->pos]);
+	//printf("lem pos: %u, anthill pos '%c'\n", lem->pos, anthill[lem->pos]);
 	while (anthill[lem->pos] >= '0' && anthill[lem->pos] <= '9')
 		lem->nb_ants = lem->nb_ants * 10 + anthill[lem->pos++] - '0';
-//	printf("lem ants: %u\n", lem->nb_ants);
+	//printf("lem ants: %u\n", lem->nb_ants);
 	if (anthill[lem->pos] != '\n' || !anthill[lem->pos++] || !lem->nb_ants)
 		return (-1);
 	return (1);
@@ -74,7 +74,7 @@ int		get_ants(t_lem *lem, char *anthill)
 int		check_input(t_lem *lem)
 {
 	if (lem->start == NULL || lem->end == NULL
-		|| !lem->nb_ants || !lem->rooms->size)
+		|| !lem->nb_ants || !lem->table->elems)
 		return (-1);
 	return (1);
 }
@@ -85,6 +85,7 @@ int		parse_input(t_lem *lem)
 
 	if (!get_anthill(lem))
 		return (MALLOC_ERROR);
+	//printf("pos = %u, anthill:\n---\n%s\n---\n", lem->pos, lem->anthill);
 	while ((ret = get_ants(lem, lem->copy)) > 0)
 		;
 	if (!lem->nb_ants)
@@ -93,7 +94,7 @@ int		parse_input(t_lem *lem)
 		return (ret);
 	while ((ret = get_rooms(lem, lem->copy)) > 0)
 		;
-	if (ret < 0 ||(!lem->start) ||(!lem->end))
+	if (ret < 0 ||(!lem->start) || (!lem->end))
 		return (ret);
 	while ((ret = get_tubes(lem, lem->copy)) > 0)
 		;

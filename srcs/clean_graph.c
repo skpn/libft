@@ -24,8 +24,6 @@ void	kill_end_children(t_room *end, unsigned max_dist)
 	{
 		child = child_elem->content;
 		child_elem = child_elem->next;
-//		printf("END CHILD:\n");
-//		print_room(child);
 		transfer = ft_lstpop(end->children, child);
 		if (child->dist <= max_dist)
 			ft_lstadd(end->parents, transfer);
@@ -34,8 +32,10 @@ void	kill_end_children(t_room *end, unsigned max_dist)
 
 void	kill_dead_rooms(t_lem *lem, t_room *dead_room)
 {
-	t_lst	*parents_lst;
-	t_room	*parent;
+	t_lst		*parents_lst;
+	t_lst		*popped;
+	t_room		*parent;
+	t_h_elem	*dead_room_hash_elem;
 
 	if (dead_room == lem->start)
 		lem->start = NULL;
@@ -46,10 +46,14 @@ void	kill_dead_rooms(t_lem *lem, t_room *dead_room)
 	{
 		parent = (t_room *)parents_lst->content;
 		parents_lst = parents_lst->next;
-		ft_lstpop(dead_room->parents, parent);
-		ft_lstpop(parent->children, dead_room);
+		if ((popped = ft_lstpop(dead_room->parents, parent)))
+			ft_lstfree_elem(&popped, FREE_LINKS);
+		if ((popped = ft_lstpop(parent->children, dead_room)))
+			ft_lstfree_elem(&popped, FREE_LINKS);
 		if (parent->children->first == NULL)
 			kill_dead_rooms(lem, parent);
 	}
-	free_room(lem->rooms, &dead_room);
+	if (!(dead_room_hash_elem = ft_hash_pop_elem(lem->table, dead_room->name)))
+		return ;
+	ft_hash_free_elem(lem->table, dead_room_hash_elem, FREE_BOTH);
 }

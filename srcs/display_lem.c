@@ -171,7 +171,7 @@ int			display_lem(t_lem *lem)
 		return (0);
 	lem->display = display;
 	clean_anthill(lem);
-	ft_printf("%s\n", lem->anthill);
+	write(1, lem->anthill, ft_strlen(lem->anthill));
 	//print_ants_tab(display->ants_tab);
 	while (display->turn < lem->turns)
 	{

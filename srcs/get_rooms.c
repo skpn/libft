@@ -38,22 +38,8 @@ int		skip_coord(t_lem *lem)
 
 int		check_same_name(t_lem *lem, char *name_to_check)
 {
-	t_lst	*room_elem;
-	t_room	*room;
-
-	//printf("IN CHECK_SAME NAME\n");
-	room_elem = lem->rooms->first;
-	while (room_elem)
-	{
-		room = room_elem->content;
-		if (!ft_strcmp(room->name, name_to_check))
-		{
-			//printf("SAME NAME FOUND\n");
-			return (PARSING_ERROR);
-		}
-		room_elem = room_elem->next;
-	}
-	//printf("same name not found\n");
+	if (ft_hash_get_elem(lem->table, name_to_check))
+		return (PARSING_ERROR);
 	return (1);
 }
 
@@ -106,9 +92,8 @@ int		get_rooms(t_lem *lem, char *anthill_copy)
 		return (PARSING_ERROR);
 	if (!(room = alloc_new_room()))
 		return (MALLOC_ERROR);
-	if (!ft_lstadd_new(lem->rooms, room))
-		return (MALLOC_ERROR);
 	room->name = name;
+	ft_hash_add_elem(lem->table, room->name, room);
 	if (check_start_end == START)
 		lem->start = room;
 	else if (check_start_end == END)
