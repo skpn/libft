@@ -96,6 +96,7 @@ typedef void			(*t_h_free_func)(void **);
 typedef struct			s_h_table
 {
 	unsigned			size;
+	unsigned			elems;
 	unsigned			collisions;
 	unsigned			collisions_limit;
 	t_h_hash_func		hash_func;

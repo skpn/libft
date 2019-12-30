@@ -33,7 +33,7 @@ t_h_elem		*ft_hash_pop_elem(t_h_table *table, char *key)
 {
 	unsigned	index;
 	t_head		*index_head;
-	t_lst		*popped_elem_lst;
+	t_lst		*popped_lst;
 	t_h_elem	*popped_elem;
 
 	index = table->hash_func(key) % table->size;
@@ -41,12 +41,13 @@ t_h_elem		*ft_hash_pop_elem(t_h_table *table, char *key)
 	if (index_head)
 	{
 		popped_elem = ft_hash_get_elem(table, key);
-		popped_elem_lst = ft_lstpop(index_head, popped_elem);
-		if (popped_elem_lst)
+		popped_lst = ft_lstpop(index_head, popped_elem);
+		if (popped_lst)
 		{
 			if (index_head->size > 0)
 				table->collisions--;
-			ft_lstfree_elem(&popped_elem_lst, FREE_LINKS);
+			ft_lstfree_elem(&popped_lst, FREE_LINKS);
+			table->elems--;
 			return (popped_elem);
 		}
 	}

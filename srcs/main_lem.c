@@ -32,14 +32,11 @@ int		main(void)
 		//printf("ret parse input < 0\n");
 		return (exit_lem(&lem, "ERROR\n", 2));
 	}
-	hash_print_table(lem->table, QUIET);
+//	hash_print_table(lem->table, QUIET);
 //	printf("%p\n", lem->start);
-//	print_rooms(lem->rooms);
 //	return (0);
 	if (set_graph(lem) <= 0)
 	{
-		//printf("BEFORE EXIT, ROOMS:\n");
-		//print_rooms(lem->rooms);
 		return (exit_lem(&lem, "ERROR\n", 2));
 	}
 	if (lem->end->dist == 1)

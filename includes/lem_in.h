@@ -15,7 +15,7 @@
 
 # include <unistd.h>
 # include "libft.h"
-# define LEM_BUFF 500000
+# define LEM_BUFF 5
 # define MAX_SIZE 1500000
 # define ACCEPT_START_END 1
 # define REJECT_START_END 2
@@ -95,13 +95,13 @@ typedef struct 		s_lem
 	unsigned		turns;
 	unsigned		lives;
 	unsigned		most_paths;
+	unsigned		anthill_size;
 	char			*anthill;
 	char			*copy;
 	unsigned		pos;
 	t_room			*start;
 	t_room			*end;
 	t_h_table		*table;
-	t_head			*rooms;
 	t_head			*paths;
 	t_head			*config_lst;
 	t_config		*current_config;

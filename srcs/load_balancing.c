@@ -25,12 +25,6 @@ void	balance_load(t_lem *lem)
 	nb_paths = lem->current_config->paths->size;
 	ants = lem->nb_ants;
 	lem->current_config->turns = 0;
-	/*
-	printf("\nBEFORE LOAD BALANCING:\n");
-	printf("ants: %u\n", ants);
-	printf("shortest: %u\n", lem->shortest);
-	printf("nb_paths: %u\n", nb_paths);
-	*/
 	while (config_path_lst && ants)
 	{
 		current_path = config_path_lst->content;
@@ -39,13 +33,11 @@ void	balance_load(t_lem *lem)
 			(ants - current_path->rooms->size
 			+ ((t_path *)lem->current_config->paths->last->content)->rooms->size)
 			/ nb_paths;
-	//	printf("added turns = %u\n", added_turns);
 		ants -= nb_paths * added_turns;
 		lem->current_config->turns += added_turns;
 		current_path->load = lem->current_config->turns;
 		nb_paths--;
 	}
-	//printf("added turns = %u\n", ((t_path *)lem->current_config->paths->last->content)->rooms->size - 2);
 	current_path = lem->current_config->paths->last->content;
 	lem->current_config->turns += current_path->rooms->size - 2;
 }

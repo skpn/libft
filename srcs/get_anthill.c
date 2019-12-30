@@ -27,21 +27,18 @@ int		lem_realloc(char **zone, unsigned curr_size, long to_add)
 	return (curr_size + to_add);
 }
 
-int		get_anthill(t_lem *lem)
+int		read_loop(t_lem *lem, unsigned curr_size)
 {
-	unsigned	curr_size;
-	int			ret;
+	int		ret;
 
-	if (!(lem->anthill = (char *)malloc(LEM_BUFF + 1)))
-		return (0);
-	curr_size = LEM_BUFF + 1;
-	lem->anthill[LEM_BUFF] = 0;
-	while ((ret = read(0, lem->anthill, LEM_BUFF)) >= 0 && curr_size < MAX_SIZE)
+	while ((ret = read(0, lem->anthill, LEM_BUFF)) >= 0
+		&& curr_size < MAX_SIZE)
 	{
+		printf("anthill:\n---\n%s\n---\n", lem->anthill);
 		lem->anthill[ret] = 0;
+		lem->anthill_size += ret;
 		if (ret == LEM_BUFF)
 		{
-//			printf("before realloc, anthill: %s\n", lem->anthill);
 			if (!(curr_size = lem_realloc(&lem->anthill, curr_size, LEM_BUFF)))
 				return (0);
 		}
@@ -49,10 +46,22 @@ int		get_anthill(t_lem *lem)
 		{
 			if (!(lem->copy = (char *)malloc(curr_size + 1)))
 				return (0);
-//			printf("before copy, anthill: %s\n", lem->anthill);
 			ft_strcpy(lem->copy, lem->anthill);
+			lem->anthill[lem->anthill_size] = '\n';
 			return (1);
 		}
 	}
 	return (0);
+}
+
+int		get_anthill(t_lem *lem)
+{
+	unsigned	curr_size;
+
+	if (!(lem->anthill = (char *)malloc(LEM_BUFF + 2)))
+		return (0);
+	curr_size = LEM_BUFF + 2;
+	lem->anthill[LEM_BUFF] = 0;
+	lem->anthill[LEM_BUFF + 1] = 0;
+	return (read_loop(lem, curr_size));
 }

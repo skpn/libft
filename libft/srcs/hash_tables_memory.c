@@ -4,7 +4,7 @@
 void		ft_hash_free_elem(t_h_table *table, t_h_elem *hash_elem, int opt)
 {
 	if (opt != FREE_LINKS)
-		table->free_func(hash_elem->content);
+		table->free_func(&(hash_elem->content));
 	easyfree((void **)&hash_elem);
 }
 

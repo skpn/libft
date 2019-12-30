@@ -74,7 +74,7 @@ int		get_ants(t_lem *lem, char *anthill)
 int		check_input(t_lem *lem)
 {
 	if (lem->start == NULL || lem->end == NULL
-		|| !lem->nb_ants || !lem->rooms->size)
+		|| !lem->nb_ants || !lem->table->elems)
 		return (-1);
 	return (1);
 }
@@ -85,6 +85,7 @@ int		parse_input(t_lem *lem)
 
 	if (!get_anthill(lem))
 		return (MALLOC_ERROR);
+	printf("anthill:\n---\n%s\n---\n", lem->anthill);
 	while ((ret = get_ants(lem, lem->copy)) > 0)
 		;
 	if (!lem->nb_ants)

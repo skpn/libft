@@ -32,10 +32,7 @@ void	free_table_room(void **void_room)
 
 void	free_room(t_head *rooms, t_room **room)
 {
-//	printf(g_fd_free, "freeing room %s\n", (*room)->name);
-//	print_room(*room);
 	ft_lstpop(rooms, *room);
-//	easyfree((void **)&(*room)->name);
 	ft_lstfree(&(*room)->parents, FREE_LINKS, FREE_HEAD);
 	ft_lstfree(&(*room)->children, FREE_LINKS, FREE_HEAD);
 	easyfree((void **)room);
@@ -43,18 +40,7 @@ void	free_room(t_head *rooms, t_room **room)
 
 void	free_rooms(t_head **rooms)
 {
-	t_lst	*elem;
-	t_lst	*tmp;
-
-	elem = (*rooms)->first;
-	while (elem)
-	{
-		tmp = elem->next;
-		free_room(*rooms, (t_room **)&elem->content);
-		ft_lstfree_elem(&elem, FREE_LINKS);
-		elem = tmp;
-	}
-	ft_lstfree_head(rooms);
+	ft_lstfree(rooms, FREE_LINKS, FREE_HEAD);
 }
 
 void	free_path(t_path **path)
@@ -117,6 +103,10 @@ void	free_display(t_display **display)
 
 int		exit_lem(t_lem **lem, char *msg, int ret)
 {
+	if ((*lem)->table)
+	{
+		ft_hash_free_table((*lem)->table, FREE_BOTH);
+	}
 	if ((*lem)->anthill)
 	{
 //		printf("freeing lem anthill: %p\n", (*lem)->anthill);
@@ -126,15 +116,6 @@ int		exit_lem(t_lem **lem, char *msg, int ret)
 	{
 //		printf("freeing lem anthill copy: %p\n", (*lem)->copy);
 		easyfree((void **)&(*lem)->copy);
-	}
-	if ((*lem)->table)
-	{
-		ft_hash_free_table((*lem)->table, FREE_LINKS);
-	}
-	if ((*lem)->rooms)
-	{
-//		printf("freeing lem rooms, head: %p\n", (*lem)->rooms);
-		free_rooms(&(*lem)->rooms);
 	}
 	if ((*lem)->paths)
 	{

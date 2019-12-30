@@ -103,5 +103,6 @@ int		ft_hash_add_elem(t_h_table *table, char *key, void *content)
 		ft_hash_free_elem(table, new_elem, FREE_LINKS);
 		return (0);
 	}
+	table->elems++;
 	return (1);
 }

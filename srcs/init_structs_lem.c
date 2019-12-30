@@ -101,8 +101,6 @@ t_lem		*alloc_new_lem(void)
 
 	if (!(lem = (t_lem *)easymalloc(sizeof(*lem))))
 		return (NULL);
-	if (!(lem->rooms = ft_lstnew_head(NULL, NULL)))
-		return (NULL);
 	if (!(lem->config_lst = ft_lstnew_head(NULL, NULL)))
 		return (NULL);
 	if (!(lem->paths = ft_lstnew_head(NULL, NULL)))

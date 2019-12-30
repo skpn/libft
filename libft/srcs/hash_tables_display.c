@@ -37,8 +37,9 @@ void		hash_print_table(t_h_table *table, int opt)
 	unsigned	index;
 
 	index = 0;
-	ft_printf("printing hash table %p\nsize : %u\ncoll : %u\nlimit: %u\n"
-			, table, table->size, table->collisions, table->collisions_limit);
+	ft_printf("printing hash table %p\nsize : %u\nelems: %u\ncoll : %u\n"
+		"limit: %u\n", table, table->size, table->elems, table->collisions
+		, table->collisions_limit);
 	while (index < table->size)
 	{
 		hash_print_index(table, index, opt);
