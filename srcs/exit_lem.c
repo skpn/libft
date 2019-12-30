@@ -127,7 +127,10 @@ int		exit_lem(t_lem **lem, char *msg, int ret)
 //		printf("freeing lem anthill copy: %p\n", (*lem)->copy);
 		easyfree((void **)&(*lem)->copy);
 	}
-
+	if ((*lem)->table)
+	{
+		ft_hash_free_table((*lem)->table, FREE_LINKS);
+	}
 	if ((*lem)->rooms)
 	{
 //		printf("freeing lem rooms, head: %p\n", (*lem)->rooms);

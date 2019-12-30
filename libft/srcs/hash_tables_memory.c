@@ -1,13 +1,11 @@
 
 #include "libft.h"
 
-void		ft_hash_free_elem(t_h_table *table, t_h_elem *hash_elem)
+void		ft_hash_free_elem(t_h_table *table, t_h_elem *hash_elem, int opt)
 {
-	if (hash_elem)
-	{
+	if (opt != FREE_LINKS)
 		table->free_func(hash_elem->content);
-		easyfree((void **)&hash_elem);
-	}
+	easyfree((void **)&hash_elem);
 }
 
 void		ft_hash_free_table(t_h_table *table, int opt)
@@ -25,8 +23,7 @@ void		ft_hash_free_table(t_h_table *table, int opt)
 			while (index_head->first)
 			{
 				index_lst = ft_lstpop(index_head, index_head->first->content);
-				if (opt != FREE_LINKS)
-					ft_hash_free_elem(table, index_lst->content);
+				ft_hash_free_elem(table, index_lst->content, opt);
 				ft_lstfree_elem(&index_lst, FREE_LINKS);
 			}
 		}

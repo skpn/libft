@@ -18,8 +18,6 @@ t_lst	*ft_lstfind(t_head *head, void *match)
 
 	if (!head || !head->first)
 		return (NULL);
-	if (head->last->content == match)
-		return (head->last);
 	elem = head->first;
 	while (elem)
 	{

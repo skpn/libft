@@ -100,7 +100,7 @@ typedef struct 		s_lem
 	unsigned		pos;
 	t_room			*start;
 	t_room			*end;
-	t_h_table		*rooms_table;
+	t_h_table		*table;
 	t_head			*rooms;
 	t_head			*paths;
 	t_head			*config_lst;
@@ -138,6 +138,7 @@ void				start_joined_to_end(t_lem *lem);
 int					display_lem(t_lem *lem);
 t_display			*alloc_new_display(unsigned total_rooms);
 void				free_room(t_head *rooms, t_room **room);
+void				free_table_room(void **room);
 void				free_config(t_config **config);
 void				free_path(t_path **path);
 void				free_lvl(t_lvl **lvl);

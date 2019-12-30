@@ -107,9 +107,9 @@ t_lem		*alloc_new_lem(void)
 		return (NULL);
 	if (!(lem->paths = ft_lstnew_head(NULL, NULL)))
 		return (NULL);
-	if (!(lem->rooms_table = ft_hash_new_table()))
+	if (!(lem->table = ft_hash_new_table()))
 		return (0);
-	tem->rooms_table->free_func = &free_room;
+	lem->table->free_func = &free_table_room;
 	lem->shortest = 0xFFFFFFFF;
 	lem->max_dist = 0xFFFFFFFF;
 	lem->max_paths = 0xFFFFFFFF;

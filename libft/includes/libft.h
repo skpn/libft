@@ -255,7 +255,7 @@ int			ft_hash_add_elem(t_h_table *table, char *key, void *content);
 int			ft_hash_resize_array(t_h_table *table, unsigned new_size);
 void		*ft_hash_get_content(t_h_table *table, char *key);
 t_h_elem	*ft_hash_get_elem(t_h_table *table, char *key);
-void		ft_hash_free_elem(t_h_table *table, t_h_elem *hash_elem);
+void		ft_hash_free_elem(t_h_table *table, t_h_elem *hash_elem, int opt);
 t_h_elem	*ft_hash_pop_elem(t_h_table *table, char *key);
 void		ft_hash_free_table(t_h_table *table, int opt);
 void		hash_print_elem(t_h_elem *elem);

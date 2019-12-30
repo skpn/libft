@@ -1,11 +1,11 @@
 
 #include "libft.h"
 
-void		transfer_hash_elems(t_h_table *table, unsigned new_size
+void	transfer_hash_elems(t_h_table *table, unsigned new_size
 		, unsigned old_size, t_head *old_array)
 {
 	unsigned	index;
-	t_head		*old_index_head;
+	t_head		*index_head;
 	t_head		*rehashed_index_head;
 	t_lst		*transfer;
 	t_h_elem	*hash_elem;
@@ -13,11 +13,13 @@ void		transfer_hash_elems(t_h_table *table, unsigned new_size
 	index = 0;
 	while (index < old_size)
 	{
-		old_index_head = &(old_array[index]);
-		while (old_index_head->first)
+		index_head = &(old_array[index]);
+		while (index_head->first)
 		{
-			transfer = ft_lstpop(old_index_head, old_index_head->first);
+			transfer = ft_lstpop(index_head, index_head->first->content);
 			hash_elem = transfer->content;
+//			printf("transferring elem from %u to %u\n", index, hash_elem->hash %
+//			new_size);
 			rehashed_index_head = &(table->array[hash_elem->hash % new_size]);
 			ft_lstadd(rehashed_index_head, transfer);
 		}
@@ -25,7 +27,7 @@ void		transfer_hash_elems(t_h_table *table, unsigned new_size
 	}
 }
 
-int			ft_hash_resize_array(t_h_table *table, unsigned new_size)
+int		ft_hash_resize_array(t_h_table *table, unsigned new_size)
 {
 	t_head	*old_array;
 
@@ -37,6 +39,7 @@ int			ft_hash_resize_array(t_h_table *table, unsigned new_size)
 	}
 	if (old_array)
 	{
+		table->collisions = 0;
 		transfer_hash_elems(table, new_size, table->size, old_array);
 	}
 	easyfree((void **)&old_array);
@@ -47,28 +50,44 @@ int			ft_hash_resize_array(t_h_table *table, unsigned new_size)
 	return (1);
 }
 
-int				insert_hash_elem(t_h_table *table, unsigned index
+int		str_key_is_unique(t_lst *index_lst, char *key)
+{
+	t_h_elem	*hash_elem;
+
+	while (index_lst)
+	{
+		hash_elem = index_lst->content;
+		if (!ft_strcmp(hash_elem->key, key))
+			return (0);
+		index_lst = index_lst->next;
+	}
+	return (1);
+}
+
+int		insert_hash_elem(t_h_table *table, unsigned index
 		, t_h_elem *new_elem)
 {
 	unsigned	new_size;
 	t_head		*index_head;
 
 	index_head = &(table->array[index]);
-	if (!(ft_lstadd_new(index_head, new_elem)))
+	if (!str_key_is_unique(index_head->first, new_elem->key))
+		return (0);
+	else if (!(ft_lstadd_new(index_head, new_elem)))
 		return (0);
 	if (index_head->size > 1)
 	{
 		table->collisions++;
 		if (table->collisions > table->collisions_limit)
 		{
-			new_size = ft_find_next_prime(table->size);
+			new_size = ft_find_next_prime(table->size + 1);
 			return (ft_hash_resize_array(table, new_size));
 		}
 	}
 	return (1);
 }
 
-int			ft_hash_add_elem(t_h_table *table, char *key, void *content)
+int		ft_hash_add_elem(t_h_table *table, char *key, void *content)
 {
 	unsigned	index;
 	t_h_elem	*new_elem;
@@ -81,7 +100,7 @@ int			ft_hash_add_elem(t_h_table *table, char *key, void *content)
 	index = new_elem->hash % table->size;
 	if (!insert_hash_elem(table, index, new_elem))
 	{
-		easyfree((void **)new_elem);
+		ft_hash_free_elem(table, new_elem, FREE_LINKS);
 		return (0);
 	}
 	return (1);

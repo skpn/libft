@@ -32,6 +32,7 @@ int		main(void)
 		//printf("ret parse input < 0\n");
 		return (exit_lem(&lem, "ERROR\n", 2));
 	}
+	hash_print_table(lem->table, QUIET);
 //	printf("%p\n", lem->start);
 //	print_rooms(lem->rooms);
 //	return (0);
