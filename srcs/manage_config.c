@@ -61,12 +61,15 @@ int		compare_configs(t_lem *lem)
 //				printf("\nREPLACING CONFIG:\n");
 //				print_config(config);
 				if (!(replace_config(lem, config)))
+				{
+					PRINTPOSN;
 					return (0);
+				}
 			}
 			return (1);
 		}
 	}
-//	PRINTPOSN;
+	PRINTPOSN;
 	return (0);
 }
 
@@ -74,7 +77,7 @@ int			add_new_config(t_lem *lem, t_config *current_config)
 {
 	t_config	*copy;
 
-//	printf("\nADDING CONFIG\n");
+	//printf("\nADDING CONFIG\n");
 	lem->most_paths++;
 	lem->turns = current_config->turns;
 	if (!(copy = copy_config(lem)))
@@ -125,8 +128,6 @@ int			add_path(t_lem *lem, t_config *config, t_path *new_path)
 	}
 	pop_dead_paths(config);
 	balance_load(lem);
-//	printf("\nUPDATED CONFIG:\n");
-//	print_config(config);
 	return (1);
 }
 
@@ -135,16 +136,26 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 	unsigned	current_nb_paths;
 	unsigned	check_alloc;
 
-//	PRINTPOSN;
+	PRINTPOSN;
+	print_path(path);
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);
+	PRINTPOSN;
 	if (!add_path(lem, lem->current_config, path))
 		return (0);
+	PRINTPOSN;
 	current_nb_paths = lem->current_config->paths->size;
+	printf("current_nb_path = %u, lem->most_paths = %u, current_config->turns = %u, lem->turns = %u\n", current_nb_paths, lem->most_paths, lem->current_config->turns, lem->turns);
 	if (current_nb_paths > lem->most_paths
 		&& lem->current_config->turns < lem->turns)
+	{
 		check_alloc = add_new_config(lem, lem->current_config);
+		printf("in if, check_alloc = %d\n", check_alloc);
+	}
 	else
+	{
 		check_alloc = compare_configs(lem);
+		printf("in else if, check_alloc = %d\n", check_alloc);
+	}
 	return (check_alloc);
 }

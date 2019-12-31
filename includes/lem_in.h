@@ -32,7 +32,7 @@
 # define ADD_PATH 3
 # define WITHOUT_HEAD 0
 # define WITH_HEAD 1
-# define DEBUG 0
+# define DEBUG 1
 void	*g_ptr;
 typedef struct		s_path
 {

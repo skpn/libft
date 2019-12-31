@@ -21,10 +21,10 @@ void	balance_load(t_lem *lem)
 	t_lst		*config_path_lst;
 	t_path		*current_path;
 
-	//printf("IN LOAD BALANCING\n");
+	printf("IN LOAD BALANCING\n");
 	config_path_lst = lem->current_config->paths->first;
 	nb_paths = lem->current_config->paths->size;
-	//printf("Current config size = %u\n", nb_paths);
+	printf("Current config size = %u\n", nb_paths);
 	ants = lem->nb_ants;
 	lem->current_config->turns = 0;
 	while (config_path_lst && ants)

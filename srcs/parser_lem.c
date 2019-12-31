@@ -64,7 +64,10 @@ int		get_ants(t_lem *lem, char *anthill)
 		return (manage_com(lem, anthill, &check_startend));
 	//printf("lem pos: %u, anthill pos '%c'\n", lem->pos, anthill[lem->pos]);
 	while (anthill[lem->pos] >= '0' && anthill[lem->pos] <= '9')
+	{
 		lem->nb_ants = lem->nb_ants * 10 + anthill[lem->pos++] - '0';
+		printf("lem->nb_ants = %u\n", lem->nb_ants);
+	}
 	//printf("lem ants: %u\n", lem->nb_ants);
 	if (anthill[lem->pos] != '\n' || !anthill[lem->pos++] || !lem->nb_ants)
 		return (-1);

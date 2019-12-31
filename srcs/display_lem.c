@@ -160,7 +160,7 @@ void		print_ants(t_display *display)
 		print_ant(display, ant);
 		print_cell++;
 	}
-	printf("\n");
+	ft_printf("\n");
 }
 
 int			display_lem(t_lem *lem)
@@ -172,7 +172,6 @@ int			display_lem(t_lem *lem)
 	lem->display = display;
 	clean_anthill(lem);
 	write(1, lem->anthill, ft_strlen(lem->anthill));
-	//print_ants_tab(display->ants_tab);
 	while (display->turn < lem->turns)
 	{
 		display->first_print = 1;

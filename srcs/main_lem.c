@@ -58,7 +58,7 @@ int		main(void)
 	{
 		if (!seek_paths(lem))
 			return (exit_lem(&lem, "ERROR\n", 2));
-		else if (!display_lem(lem))
+		if (!display_lem(lem))
 			return (exit_lem(&lem, "ERROR\n", 2));
 	}
 	exit_lem(&lem, "", 2);
