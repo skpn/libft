@@ -109,11 +109,11 @@ t_display		*set_display(t_lem *lem)
 	t_config	*best;
 
 	best = get_best_config(lem->config_lst);
-	print_config(best);
+	//print_config(best);
 	total_rooms = get_total_rooms(best);
 	if (!(display = alloc_new_display(total_rooms)))
 		return (NULL);
-	print_display(display);
+	//print_display(display);
 	display->best = best;
 	display->nb_ants = lem->nb_ants;
 	display->lem_turns = lem->turns;

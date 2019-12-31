@@ -109,18 +109,18 @@ int		seek_paths(t_lem *lem)
 //	printf("\n\n-------------------------ALGO START-----------------------\n\n");
 	lem->lives = lem->end->parents->size;
 	path = NULL;
-	PRINTPOSN;
+//	PRINTPOSN;
 	if (!(lem->current_config = alloc_new_config(WITH_HEAD)))
 		return (0);
-	PRINTPOSN;
+//	PRINTPOSN;
 	while (lem->lives)
 	{
-		PRINTPOSN;
+//		PRINTPOSN;
 		if (!(check_alloc = try_path(lem, &path)))
 			return (0);
 		else if (check_alloc == 1)
 		{
-			PRINTPOSN;
+//			PRINTPOSN;
 			if (!manage_valid_path(lem, path))
 			{
 				printf("ERROR FROM MANAGE VALID PATH\n");
@@ -130,6 +130,6 @@ int		seek_paths(t_lem *lem)
 //		printf("lives: %u, most paths: %u, max paths: %u\n",
 //			lem->lives, lem->most_paths, lem->max_paths);
 	}
-	PRINTPOSN;
+//	PRINTPOSN;
 	return (1);
 }

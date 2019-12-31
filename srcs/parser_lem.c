@@ -66,7 +66,7 @@ int		get_ants(t_lem *lem, char *anthill)
 	while (anthill[lem->pos] >= '0' && anthill[lem->pos] <= '9')
 	{
 		lem->nb_ants = lem->nb_ants * 10 + anthill[lem->pos++] - '0';
-		printf("lem->nb_ants = %u\n", lem->nb_ants);
+		//printf("lem->nb_ants = %u\n", lem->nb_ants);
 	}
 	//printf("lem ants: %u\n", lem->nb_ants);
 	if (anthill[lem->pos] != '\n' || !anthill[lem->pos++] || !lem->nb_ants)

@@ -46,14 +46,14 @@ int		replace_config(t_lem *lem, t_config *old_config)
 
 int		compare_configs(t_lem *lem)
 {
-	t_lst		*elem;
+	t_lst		*config_lst;
 	t_config	*config;
 
-	elem = lem->config_lst->first;
-	while (elem)
+	config_lst = lem->config_lst->first;
+	while (config_lst)
 	{
-		config = (t_config *)elem->content;
-		elem = elem->next;
+		config = (t_config *)config_lst->content;
+		config_lst = config_lst->next;
 		if (config->paths->size == lem->current_config->paths->size)
 		{
 			if (lem->current_config->turns < config->turns)
@@ -62,7 +62,7 @@ int		compare_configs(t_lem *lem)
 //				print_config(config);
 				if (!(replace_config(lem, config)))
 				{
-					PRINTPOSN;
+//					PRINTPOSN;
 					return (0);
 				}
 			}
@@ -77,7 +77,7 @@ int			add_new_config(t_lem *lem, t_config *current_config)
 {
 	t_config	*copy;
 
-	//printf("\nADDING CONFIG\n");
+//	printf("\nADDING CONFIG WITH %u PATHS\n", current_config->paths->size);
 	lem->most_paths++;
 	lem->turns = current_config->turns;
 	if (!(copy = copy_config(lem)))
@@ -90,7 +90,7 @@ int			add_new_config(t_lem *lem, t_config *current_config)
 void		pop_dead_paths(t_config *config)
 {
 	t_lst	*path_lst;
-	t_lst	*dead_path_elem;
+	t_lst	*dead_path_lst;
 	t_path	*path;
 
 	path_lst = config->paths->first;
@@ -100,33 +100,36 @@ void		pop_dead_paths(t_config *config)
 		path_lst = path_lst->next;
 		if (path->is_dead)
 		{
-			dead_path_elem = ft_lstpop(config->paths, path);
-			if (dead_path_elem)
-				ft_lstfree_elem(&dead_path_elem, FREE_LINKS);
+			dead_path_lst = ft_lstpop(config->paths, path);
+			if (dead_path_lst)
+				ft_lstfree_elem(&dead_path_lst, FREE_LINKS);
 		}
-//		PRINTPOSN;
 	}
 }
 
 // UNTESTED FUNCTION
-int			add_path(t_lem *lem, t_config *config, t_path *new_path)
+int			add_path(t_lem *lem, t_path *new_path)
 {
-	t_lst	*config_path_elem;
-	t_lst	*new_path_elem;
+	t_lst		*config_path_lst;
+	t_lst		*new_path_lst;
+	unsigned	new_path_size;
 
 	lem->lives--;
-	if (!(new_path_elem = ft_lstnew_elem(new_path)))
+	new_path_size = new_path->rooms->size;
+	if (!(new_path_lst = ft_lstnew_elem(new_path)))
 		return (0);
-	if (!(config_path_elem = config->paths->first)
-		|| ((t_path *)config_path_elem->content)->rooms->size > new_path->rooms->size)
-		ft_lstadd(config->paths, new_path_elem);
+	config_path_lst = lem->current_config->paths->first;
+	if (!config_path_lst
+		|| ((t_path *)config_path_lst->content)->rooms->size < new_path_size)
+		ft_lstadd(lem->current_config->paths, new_path_lst);
 	else
 	{
-		while (config_path_elem->next && ((t_path *)config_path_elem->next->content)->rooms->size > new_path->rooms->size)
-			config_path_elem = config_path_elem->next;
-		ft_lstinsert(config->paths, config_path_elem, new_path_elem, AFTER);
+		while (config_path_lst->next
+			&& ((t_path *)config_path_lst->next->content)->rooms->size > new_path_size)
+			config_path_lst = config_path_lst->next;
+		ft_lstinsert(lem->current_config->paths, config_path_lst, new_path_lst, AFTER);
 	}
-	pop_dead_paths(config);
+	pop_dead_paths(lem->current_config);
 	balance_load(lem);
 	return (1);
 }
@@ -136,26 +139,26 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 	unsigned	current_nb_paths;
 	unsigned	check_alloc;
 
-	PRINTPOSN;
-	print_path(path);
+//	PRINTPOSN;
+//	print_path(path);
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);
-	PRINTPOSN;
-	if (!add_path(lem, lem->current_config, path))
+//	PRINTPOSN;
+	if (!add_path(lem, path))
 		return (0);
-	PRINTPOSN;
+//	PRINTPOSN;
 	current_nb_paths = lem->current_config->paths->size;
-	printf("current_nb_path = %u, lem->most_paths = %u, current_config->turns = %u, lem->turns = %u\n", current_nb_paths, lem->most_paths, lem->current_config->turns, lem->turns);
+//	printf("current_nb_path = %u, lem->most_paths = %u, current_config->turns = %u, lem->turns = %u\n", current_nb_paths, lem->most_paths, lem->current_config->turns, lem->turns);
 	if (current_nb_paths > lem->most_paths
 		&& lem->current_config->turns < lem->turns)
 	{
 		check_alloc = add_new_config(lem, lem->current_config);
-		printf("in if, check_alloc = %d\n", check_alloc);
+//		printf("in if, check_alloc = %d\n", check_alloc);
 	}
 	else
 	{
 		check_alloc = compare_configs(lem);
-		printf("in else if, check_alloc = %d\n", check_alloc);
+//		printf("in else if, check_alloc = %d\n", check_alloc);
 	}
 	return (check_alloc);
 }
