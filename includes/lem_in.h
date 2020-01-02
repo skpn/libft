@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/19 19:00:06 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/02 13:18:21 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define ADD_CONFIG 1
 # define POP_PATH 2
 # define ADD_PATH 3
+# define LIVES_FACTOR 10000
 # define WITHOUT_HEAD 0
 # define WITH_HEAD 1
 # define DEBUG 1

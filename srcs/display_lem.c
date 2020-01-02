@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42->fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 19:12:41 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/19 14:05:46 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/02 13:44:48 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_config	*get_best_config(t_head *config_lst)
 	{
 		config = config_elem->content;
 		config_elem = config_elem->next;
+//		print_config(config);
 		if (best->turns > config->turns)
 			best = config;
 	}
@@ -109,7 +110,6 @@ t_display		*set_display(t_lem *lem)
 	t_config	*best;
 
 	best = get_best_config(lem->config_lst);
-	//print_config(best);
 	total_rooms = get_total_rooms(best);
 	if (!(display = alloc_new_display(total_rooms)))
 		return (NULL);
@@ -178,5 +178,8 @@ int			display_lem(t_lem *lem)
 		print_ants(display);
 		display->turn++;
 	}
+//	ft_printf("\n\n\nDISPLAY ENDED OK\n\n\n");
+//	ft_printf("\nPRINTING BEST CONFIG\n");
+//	print_config(display->best);
 	return (1);
 }

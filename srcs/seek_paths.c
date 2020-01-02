@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 18:07:56 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/02 11:15:37 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int		seek_paths(t_lem *lem)
 	int			check_alloc;
 
 //	printf("\n\n-------------------------ALGO START-----------------------\n\n");
-	lem->lives = lem->end->parents->size;
+	lem->lives = lem->end->parents->size * LIVES_FACTOR;
 	path = NULL;
 //	PRINTPOSN;
 	if (!(lem->current_config = alloc_new_config(WITH_HEAD)))

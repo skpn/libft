@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 11:00:06 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 20:43:48 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/02 13:00:35 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	balance_load(t_lem *lem)
 	t_lst		*config_path_lst;
 	t_path		*current_path;
 
-//	printf("IN LOAD BALANCING WITH CONFIG\n");
+//	ft_printf("\nIN LOAD BALANCING WITH CONFIG\n");
 //	print_config(lem->current_config);
 	config_path_lst = lem->current_config->paths->first;
 	nb_paths = lem->current_config->paths->size;
@@ -55,6 +55,12 @@ void	balance_load(t_lem *lem)
 	current_path = lem->current_config->paths->last->content;
 //	printf("line %d, current config turns: %u\n", __LINE__, lem->current_config->turns);
 	lem->current_config->turns += current_path->rooms->size - 2;
+	if (lem->turns > lem->current_config->turns)
+	{
+//		ft_printf("\n\nLATEST BEST CONFIG\n\n");
+//		print_config(lem->current_config);
+		lem->turns = lem->current_config->turns;
+	}
 //	printf("\nOUT LOAD BALANCING WITH CURRENT CONFIG TURNS: %u\n",
 //	lem->current_config->turns);
 }

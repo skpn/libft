@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 17:01:31 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/02 13:44:58 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_config	*copy_config(t_lem *lem)
 	new_config->paths = new_head;
 	new_config->turns = original->turns;
 //	print_config(new_config);
-	lem->lives = lem->end->parents->size;
+	lem->lives = lem->end->parents->size * LIVES_FACTOR;
 	return (new_config);
 }
 
@@ -39,7 +39,7 @@ int		replace_config(t_lem *lem, t_config *old_config)
 	if (!(copy = copy_config(lem)))
 		return (0);
 	old_config_elem = ft_lstfind(lem->config_lst, old_config);
-	old_config_elem->content = lem->current_config;
+	old_config_elem->content = copy;
 	free_config(&old_config);
 	return (1);
 }
@@ -50,12 +50,18 @@ int		compare_configs(t_lem *lem)
 	t_config	*config;
 
 	config_lst = lem->config_lst->first;
+//	ft_printf("config lst: %p\n", config_lst);
 	while (config_lst)
 	{
+//		PRINTPOSN;
 		config = (t_config *)config_lst->content;
 		config_lst = config_lst->next;
+//		ft_printf("current config size: %u, config size: %u\n"
+//			, lem->current_config->paths->size, config->paths->size);
 		if (config->paths->size == lem->current_config->paths->size)
 		{
+//			ft_printf("lem turns: %u, config turns: %u, current config turns: %u\n"
+//				, lem->turns, config->turns, lem->current_config->turns);
 			if (lem->current_config->turns < config->turns)
 			{
 //				printf("\nREPLACING CONFIG:\n");
@@ -69,17 +75,16 @@ int		compare_configs(t_lem *lem)
 			return (1);
 		}
 	}
-	PRINTPOSN;
+//	PRINTPOSN;
 	return (0);
 }
 
-int			add_new_config(t_lem *lem, t_config *current_config)
+int			add_new_config(t_lem *lem)
 {
 	t_config	*copy;
 
 //	printf("\nADDING CONFIG WITH %u PATHS\n", current_config->paths->size);
-	lem->most_paths++;
-	lem->turns = current_config->turns;
+	lem->most_paths = lem->current_config->paths->size;
 	if (!(copy = copy_config(lem)))
 		return (0);
 	if (!(ft_lstadd_new(lem->config_lst, copy)))
@@ -115,6 +120,7 @@ int			add_path(t_lem *lem, t_path *new_path)
 	unsigned	new_path_size;
 
 	lem->lives--;
+//	ft_printf("\nLEM LIVES: %u\n\n", lem->lives);
 	new_path_size = new_path->rooms->size;
 	if (!(new_path_lst = ft_lstnew_elem(new_path)))
 		return (0);
@@ -139,8 +145,9 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 	unsigned	current_nb_paths;
 	unsigned	check_alloc;
 
-//	PRINTPOSN;
-//	print_path(path);
+//	ft_printf("\nIN MANAGE VALID PATH WITH\nPATH:\n");
+//	ft_printf("\nCONFIG:\n");
+//	print_config(lem->current_config);
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);
 //	PRINTPOSN;
@@ -149,10 +156,9 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 //	PRINTPOSN;
 	current_nb_paths = lem->current_config->paths->size;
 //	printf("current_nb_path = %u, lem->most_paths = %u, current_config->turns = %u, lem->turns = %u\n", current_nb_paths, lem->most_paths, lem->current_config->turns, lem->turns);
-	if (current_nb_paths > lem->most_paths
-		&& lem->current_config->turns < lem->turns)
+	if (!lem->config_lst->first || current_nb_paths > lem->most_paths)
 	{
-		check_alloc = add_new_config(lem, lem->current_config);
+		check_alloc = add_new_config(lem);
 //		printf("in if, check_alloc = %d\n", check_alloc);
 	}
 	else
@@ -160,5 +166,6 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 		check_alloc = compare_configs(lem);
 //		printf("in else if, check_alloc = %d\n", check_alloc);
 	}
+//	print_config(lem->current_config);
 	return (check_alloc);
 }
