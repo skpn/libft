@@ -1,13 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hash_tables_display.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/03 14:47:51 by sikpenou          #+#    #+#             */
+/*   Updated: 2020/01/03 14:48:12 by sikpenou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "libft.h"
 
-void		hash_print_elem(t_h_elem *elem)
+void	hash_print_elem(t_h_elem *elem)
 {
 	ft_printf("printing hash elem %p\nkey    : %s\nhash   : %u, content: %p\n"
 			, elem, elem->key, elem->hash, elem->content);
 }
 
-void		hash_print_index(t_h_table *table, unsigned index, int opt)
+void	hash_print_index(t_h_table *table, unsigned index, int opt)
 {
 	t_head	*index_head;
 	t_lst	*hash_elem_lst;
@@ -32,7 +43,7 @@ void		hash_print_index(t_h_table *table, unsigned index, int opt)
 	}
 }
 
-void		hash_print_table(t_h_table *table, int opt)
+void	hash_print_table(t_h_table *table, int opt)
 {
 	unsigned	index;
 
@@ -46,4 +57,3 @@ void		hash_print_table(t_h_table *table, int opt)
 		index++;
 	}
 }
-

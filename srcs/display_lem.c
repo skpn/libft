@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display->c                                          :+:      :+:    :+:   */
+/*   display_lem.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42->fr>                    +#+  +:+       +#+        */
+/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/14 19:12:41 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 12:19:15 by sikpenou         ###   ########.fr       */
+/*   Created: 2020/01/03 14:36:44 by sikpenou          #+#    #+#             */
+/*   Updated: 2020/01/03 14:36:46 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "libft.h"
 #include "lem_in.h"
 
@@ -26,104 +27,32 @@ void		start_joined_to_end(t_lem *lem)
 	ft_printf("\n");
 }
 
-unsigned	get_total_rooms(t_config *best)
-{
-	unsigned	total;
-	t_lst		*path_elem;
-	t_path		*path;
-
-	total = 0;
-	path_elem = best->paths->first;
-	while (path_elem)
-	{
-		path = path_elem->content;
-		path_elem = path_elem->next;
-		total += path->rooms->size - 1;
-	}
-	return (total);
-}
-
-void		path_to_tab(t_display *display, t_path *path, unsigned *set_cell)
-{
-	unsigned	wait;
-	unsigned	room_count;
-
-	wait = 0;
-	room_count = 0;
-	while (++room_count < path->rooms->size)
-	{
-		if (display->last_id < display->nb_ants)
-		{
-			display->ants_tab[*set_cell]->wait = wait++;
-			display->ants_tab[*set_cell]->max = path->load;
-			display->ants_tab[*set_cell]->path = path;
-			display->ants_tab[*set_cell]->current_room = path->rooms->first->next;
-		}
-		(*set_cell)++;
-	}
-}
-
-void		set_tab(t_display *display, unsigned total_rooms)
-{
-	unsigned	set_cell;
-	t_lst		*path_elem;
-
-	set_cell = 0;
-	path_elem = display->best->paths->first;
-	while (set_cell < total_rooms)
-	{
-		path_to_tab(display, path_elem->content, &set_cell);
-		path_elem = path_elem->next;
-	}
-}
-
-t_display		*set_display(t_lem *lem)
-{
-	unsigned	total_rooms;
-	t_display	*display;
-
-	total_rooms = get_total_rooms(lem->best_config);
-	if (!(display = alloc_new_display(total_rooms)))
-		return (NULL);
-	//print_display(display);
-	display->best = lem->best_config;
-	display->nb_ants = lem->nb_ants;
-	display->lem_turns = lem->turns;
-	set_tab(display, total_rooms);
-	return (display);
-}
-
 void		print_ant(t_display *display, t_ant *ant)
 {
 	t_room		*room;
 
-//	printf("first: %u, prefix: '%s'\n", display->first_print, prefix);
-	if (ant->wait <= display->turn && ant->current_room)
+	if (!(ant->wait <= display->turn && ant->current_room))
+		return ;
+	if (!ant->id && display->last_id <= display->nb_ants && ant->path->load)
 	{
-		if (!ant->id && display->last_id <= display->nb_ants && ant->path->load)
-		{
-			ant->id = display->last_id++;
-			ant->path->load--;
-		}
-		if (!ant->id)
-			return ;
-		room = ant->current_room->content;
-		if (display->first_print == 1)
-		{
-			ft_printf("L%u-%s", ant->id, room->name);
-			display->first_print = 0;
-		}
-		else
-		{
-			ft_printf(" L%u-%s", ant->id, room->name);
-		}
-		ant->current_room = ant->current_room->next;
-		if (!ant->current_room && display->last_id <= display->nb_ants)
-		{
-			//ft_printf("\nnb_ants = %u, last_id = %u\n", display->nb_ants, display->last_id);
-			ant->current_room = ant->path->rooms->first->next;
-			ant->id = 0;
-		}
+		ant->id = display->last_id++;
+		ant->path->load--;
+	}
+	if (!ant->id)
+		return ;
+	room = ant->current_room->content;
+	if (display->first_print == 1)
+	{
+		ft_printf("L%u-%s", ant->id, room->name);
+		display->first_print = 0;
+	}
+	else
+		ft_printf(" L%u-%s", ant->id, room->name);
+	ant->current_room = ant->current_room->next;
+	if (!ant->current_room && display->last_id <= display->nb_ants)
+	{
+		ant->current_room = ant->path->rooms->first->next;
+		ant->id = 0;
 	}
 }
 

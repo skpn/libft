@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:00:27 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 12:14:44 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 14:04:07 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_room	*seek_second_room(t_lst *elem, char *name)
 
 	while (elem)
 	{
-		room = (t_room *)elem->content;	
+		room = (t_room *)elem->content;
 		if (!ft_strcmp(room->name, name))
 			return (room);
 		elem = elem->next;

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 20:26:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/09/30 22:21:23 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 14:43:57 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		format_to_str(const char *str, t_buf *buf, t_arg *arg, va_list arg_lst)
 	{
 		if (buf->pos == buf->lim
 			&& !(buf->lim = ft_realloc((void *)&(buf->str), buf->lim, BLOCK)))
-				return (-1);
+			return (-1);
 		if (str[str_pos] == '%')
 		{
 			set_arg(arg);

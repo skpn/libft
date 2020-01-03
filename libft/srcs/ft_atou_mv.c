@@ -6,13 +6,13 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:43:56 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/10/23 17:55:33 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 14:44:21 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-long 	ft_atou_mv(char **str, char sep)
+long	ft_atou_mv(char **str, char sep)
 {
 	long	flip;
 	long	nb;

@@ -6,28 +6,12 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 21:05:19 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/19 18:25:12 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 14:33:52 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
-
-int		check_graph(t_lem *lem)
-{
-	if (lem->max_paths < 1 || lem->max_paths > lem->table->elems)
-		return (PARSING_ERROR);
-	if (lem->shortest != lem->end->dist + 1)
-		return (PARSING_ERROR);
-	return (1);
-}
-
-void	update_lem_info(t_lem *lem, t_lvl *lvl)
-{
-	if (lvl->rooms->size < lem->max_paths && lvl->dist > 0
-		&& (lvl->dist < lem->end->dist || lvl->dist == 1))
-		lem->max_paths = lvl->rooms->size;
-}
 
 int		add_children_to_next_lvl(t_head *rooms, t_head *children)
 {
@@ -75,23 +59,17 @@ int		get_next_lvl_rooms(t_lem *lem, t_lvl *lvl)
 	return (1);
 }
 
-void	manage_end(t_lem *lem, t_lvl *lvl)
+int		set_lvls(t_lem *lem, t_lvl *lvl)
 {
 	t_lst	*end_elem;
 
-	if ((end_elem = ft_lstpop(lvl->rooms, lem->end)))
-		ft_lstfree_elem(&end_elem, FREE_LINKS);
-	lem->shortest = lvl->dist + 2;
-	lem->max_dist = lem->shortest + lem->nb_ants - 1;
-}
-
-int		set_lvls(t_lem *lem, t_lvl *lvl)
-{
 	while (lvl->dist < lem->max_dist && lvl->rooms->first)
 	{
 		set_next_lvl_dists(lvl);
 		set_next_lvl_families(lvl, lem->end);
-		update_lem_info(lem, lvl);
+		if (lvl->rooms->size < lem->max_paths && lvl->dist > 0
+			&& (lvl->dist < lem->end->dist || lvl->dist == 1))
+			lem->max_paths = lvl->rooms->size;
 		if (!get_next_lvl_rooms(lem, lvl))
 		{
 			free_lvl(&lvl);
@@ -99,7 +77,10 @@ int		set_lvls(t_lem *lem, t_lvl *lvl)
 		}
 		if (lvl->dist + 1 == lem->end->dist)
 		{
-			manage_end(lem, lvl);
+			if ((end_elem = ft_lstpop(lvl->rooms, lem->end)))
+				ft_lstfree_elem(&end_elem, FREE_LINKS);
+			lem->shortest = lvl->dist + 2;
+			lem->max_dist = lem->shortest + lem->nb_ants - 1;
 		}
 		lvl->dist++;
 	}
@@ -120,13 +101,9 @@ int		set_first_lvl(t_lem *lem, t_lvl *lvl)
 int		set_graph(t_lem *lem)
 {
 	t_lvl	*lvl;
-	int		ret;
 
-	if (!(lvl = alloc_new_lvl()))
-		return (0);
-	if (!set_first_lvl(lem, lvl))
-		return (0);
-	if (!set_lvls(lem, lvl))
+	if (!(lvl = alloc_new_lvl())
+		|| !set_first_lvl(lem, lvl) || !set_lvls(lem, lvl))
 		return (0);
 	if (lem->start)
 		lem->start->dist = 0;
@@ -135,10 +112,11 @@ int		set_graph(t_lem *lem)
 		free_lvl(&lvl);
 		return (0);
 	}
-	if ((ret = (check_graph(lem))) <= 0)
+	if (lem->max_paths < 1 || lem->max_paths > lem->table->elems
+		|| lem->shortest != lem->end->dist + 1)
 	{
 		free_lvl(&lvl);
-		return (ret);
+		return (PARSING_ERROR);
 	}
 	kill_end_children(lem->end, lem->max_dist);
 	free_lvl(&lvl);

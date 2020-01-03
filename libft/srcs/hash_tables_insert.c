@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hash_tables_insert.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/03 14:48:23 by sikpenou          #+#    #+#             */
+/*   Updated: 2020/01/03 14:48:34 by sikpenou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 
@@ -18,8 +29,6 @@ void	transfer_hash_elems(t_h_table *table, unsigned new_size
 		{
 			transfer = ft_lstpop(index_head, index_head->first->content);
 			hash_elem = transfer->content;
-//			printf("transferring elem from %u to %u\n", index, hash_elem->hash %
-//			new_size);
 			rehashed_index_head = &(table->array[hash_elem->hash % new_size]);
 			ft_lstadd(rehashed_index_head, transfer);
 		}

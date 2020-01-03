@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hash_tables_access.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/03 14:47:21 by sikpenou          #+#    #+#             */
+/*   Updated: 2020/01/03 14:47:38 by sikpenou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
 
@@ -29,7 +40,7 @@ void		*ft_hash_get_content(t_h_table *table, char *key)
 	return (NULL);
 }
 
-t_h_elem		*ft_hash_pop_elem(t_h_table *table, char *key)
+t_h_elem	*ft_hash_pop_elem(t_h_table *table, char *key)
 {
 	unsigned	index;
 	t_head		*index_head;

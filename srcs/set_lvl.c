@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 22:11:27 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/13 17:11:06 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/03 13:38:55 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,33 +35,21 @@ void	set_children_families(t_room *parent, t_room *end)
 	t_lst	*tmp;
 	t_room	*child;
 
-//	printf("SETTING FAMILY OF:\n");
-//	print_room(parent);
-//	ft_lstprint(parent->children, "children", 0);
 	room_children = parent->children->first;
 	while (room_children)
 	{
 		tmp = room_children->next;
-//		printf("SETTING PAIR:\n");
 		child = room_children->content;
-//		print_room(parent);
-//		print_room(child);
-//		printf("room_children: %p, next: %p\n", room_children, room_children->next);
 		if (child->dist > parent->dist)
 		{
-//			printf("setting as parent\n");
 			set_parent_as(PARENT, parent, child);
-//		printf("room_children: %p, next: %p\n", room_children, room_children->next);
 		}
 		else if (child->dist == parent->dist && child != end)
 		{
-//			printf("setting as brother\n");
-//			g_addr = room_children->next;
 			set_parent_as(BROTHER, parent, child);
 		}
 		else
 		{
-//			printf("setting as child\n");
 			if (child != end)
 				set_parent_as(CHILD, parent, child);
 		}

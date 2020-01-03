@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_tab.c                                      :+:      :+:    :+:   */
+/*   free_lem_paths.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/03 14:44:35 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:44:36 by sikpenou         ###   ########.fr       */
+/*   Created: 2020/01/03 14:01:15 by sikpenou          #+#    #+#             */
+/*   Updated: 2020/01/03 14:02:04 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
+#include "lem_in.h"
 
-int		ft_free_tab(void **tab, size_t len)
+void	free_path(t_path **path)
 {
-	unsigned int	pos;
+	ft_lstfree(&(*path)->rooms, FREE_LINKS, FREE_HEAD);
+	easyfree((void **)path);
+}
 
-	if (!tab)
-		return (0);
-	pos = 0;
-	while (pos < len)
+void	free_paths(t_head **paths)
+{
+	t_lst	*elem;
+
+	elem = (*paths)->first;
+	while (elem)
 	{
-		if (tab[pos])
-			easyfree((void **)tab[pos]);
-		tab[pos] = NULL;
-		pos++;
+		free_path((t_path **)&elem->content);
+		elem = elem->next;
 	}
-	easyfree((void **)tab);
-	tab = NULL;
-	return (pos);
+	ft_lstfree(paths, FREE_LINKS, FREE_HEAD);
 }

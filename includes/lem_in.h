@@ -6,14 +6,13 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 12:48:31 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 14:38:38 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-# include <unistd.h>
 # include "libft.h"
 # define LEM_BUFF 500000
 # define MAX_SIZE 1500000
@@ -34,7 +33,7 @@
 # define WITHOUT_HEAD 0
 # define WITH_HEAD 1
 # define DEBUG 1
-void	*g_ptr;
+
 typedef struct		s_path
 {
 	unsigned		load;
@@ -86,7 +85,7 @@ typedef struct		s_display
 	t_ant			**ants_tab;
 }					t_display;
 
-typedef struct 		s_lem
+typedef struct		s_lem
 {
 	unsigned		nb_ants;
 	unsigned		nb_rooms;
@@ -135,29 +134,29 @@ int					seek_paths(t_lem *lem);
 int					update_config(t_lem *lem, t_config *config
 	, t_path *new_path);
 int					manage_valid_path(t_lem *lem, t_path *path);
+int					current_to_best(t_lem *lem);
 int					get_max_walk(t_lem *lem);
 void				balance_load(t_lem *lem);
 void				start_joined_to_end(t_lem *lem);
+t_display			*set_display(t_lem *lem);
 int					display_lem(t_lem *lem);
 t_display			*alloc_new_display(unsigned total_rooms);
 void				free_room(t_head *rooms, t_room **room);
 void				free_table_room(void **room);
 void				free_config(t_config **config);
 void				free_path(t_path **path);
+void				free_paths(t_head **path);
 void				free_lvl(t_lvl **lvl);
 int					exit_lem(t_lem **lem, char *msg, int ret);
 
 void				print_anthill(char *lem);
 void				print_lem(t_lem *lem, char *args);
 void				print_room(t_room *room);
-void				print_rooms(t_head *rooms);
 void				print_config(t_config *config);
 void				print_path(t_path *path);
-void				print_paths_data(t_head *path_head);
-//void				print_room(t_room *room, char *args, int opt);
-//void				print_rooms(t_head *rooms, char *args, int opt);
-//void				print_rooms_addr(t_head *rooms);
+void				print_paths(t_head *path_head);
 void				print_lvl(t_lvl *lvl);
 void				print_ants_tab(t_ant **tab);
 void				print_display(t_display *display);
+
 #endif

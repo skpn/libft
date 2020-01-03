@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/31 14:56:31 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/06 15:02:06 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/03 14:45:39 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void	print_content(void *content, unsigned opt)
 {
 	if (opt == CTYPE)
 		ft_printf("content: '%c'\n", *(char *)content);
-	else if(opt == STYPE)
+	else if (opt == STYPE)
 		ft_printf("content: '%s'\n", (char *)content);
-	else if(opt == DTYPE)
+	else if (opt == DTYPE)
 		ft_printf("content: %d\n", *(int *)content);
-	else if(opt == UTYPE)
+	else if (opt == UTYPE)
 		ft_printf("content: %u\n", *(unsigned *)content);
-	else if(opt == OTYPE)
+	else if (opt == OTYPE)
 		ft_printf("content: %o\n", *(unsigned *)content);
-	else if(opt == XTYPE)
+	else if (opt == XTYPE)
 		ft_printf("content: %x\n", *(unsigned *)content);
 }
 

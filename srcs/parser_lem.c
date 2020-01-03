@@ -6,13 +6,12 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 15:28:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/19 19:02:31 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 14:07:23 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
-#include <stdlib.h>
 
 int		manage_start_end(t_lem *lem, char *anthill, int *opt)
 {
@@ -42,7 +41,6 @@ int		manage_start_end(t_lem *lem, char *anthill, int *opt)
 
 int		manage_com(t_lem *lem, char *anthill, int *opt)
 {
-//	PRINTPOSN;
 	if (anthill[++lem->pos] == '#')
 	{
 		lem->pos++;
@@ -62,13 +60,10 @@ int		get_ants(t_lem *lem, char *anthill)
 	check_startend = REJECT_START_END;
 	if (anthill[lem->pos] == '#')
 		return (manage_com(lem, anthill, &check_startend));
-	//printf("lem pos: %u, anthill pos '%c'\n", lem->pos, anthill[lem->pos]);
 	while (anthill[lem->pos] >= '0' && anthill[lem->pos] <= '9')
 	{
 		lem->nb_ants = lem->nb_ants * 10 + anthill[lem->pos++] - '0';
-		//printf("lem->nb_ants = %u\n", lem->nb_ants);
 	}
-	//printf("lem ants: %u\n", lem->nb_ants);
 	if (anthill[lem->pos] != '\n' || !anthill[lem->pos++] || !lem->nb_ants)
 		return (-1);
 	return (1);
@@ -88,7 +83,6 @@ int		parse_input(t_lem *lem)
 
 	if (!get_anthill(lem))
 		return (MALLOC_ERROR);
-	//printf("pos = %u, anthill:\n---\n%s\n---\n", lem->pos, lem->anthill);
 	while ((ret = get_ants(lem, lem->copy)) > 0)
 		;
 	if (!lem->nb_ants)
@@ -97,7 +91,7 @@ int		parse_input(t_lem *lem)
 		return (ret);
 	while ((ret = get_rooms(lem, lem->copy)) > 0)
 		;
-	if (ret < 0 ||(!lem->start) || (!lem->end))
+	if (ret < 0 || (!lem->start) || (!lem->end))
 		return (ret);
 	while ((ret = get_tubes(lem, lem->copy)) > 0)
 		;

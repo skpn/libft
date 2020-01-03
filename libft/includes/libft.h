@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 12:47:15 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 14:43:16 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,10 @@
 # define XMAJTYPE 8u
 # define BTYPE 9u
 # define ULLCHAIN "61615590737044764481"
+
 # include <stdarg.h>
 # include <stddef.h>
-#include <stdio.h>
-#define PRINTPOS printf("%s %d", __func__, __LINE__); fflush(0)
-#define PRINTPOSN printf("%s - %s - %d\n", __FILE__, __func__, __LINE__); fflush(0)
-#define DPRINTPOSN dprintf(g_fd, "%s %d\n", __func__, __LINE__); fflush(0)
-void	*g_addr;
-int		g_fd;
-int		g_fd_alloc;
-int		g_fd_free;
+
 typedef struct			s_lst
 {
 	void				*content;
@@ -199,8 +193,8 @@ void					ft_lstsort(t_head *head
 void					ft_lstswap_contents(t_lst *elem_1, t_lst *elem_2);
 void					ft_lstswap_heads(t_head *head, t_lst *elem_1
 	, t_lst *elem_2);
-void					ft_lst_replace_elem(t_head *head, t_lst *original,
-	t_lst *replacement);
+void					ft_lst_replace_elem(t_head *head, t_lst *original
+	, t_lst *replacement);
 int						ft_max(int a, int b);
 int						ft_memchr_pos(const void *s, int c, size_t n);
 void					*ft_memset(void *b, int c, size_t len);
@@ -251,16 +245,20 @@ void					ft_swapstr(char **a, char **b);
 void					ft_lstprint(t_head *head, char *name, unsigned opt);
 int						get_gc_data(int opt);
 t_head					*get_gc_list(int opt);
-t_h_table	*ft_hash_new_table(void);
-int			ft_hash_add_elem(t_h_table *table, char *key, void *content);
-int			ft_hash_resize_array(t_h_table *table, unsigned new_size);
-void		*ft_hash_get_content(t_h_table *table, char *key);
-t_h_elem	*ft_hash_get_elem(t_h_table *table, char *key);
-void		ft_hash_free_elem(t_h_table *table, t_h_elem *hash_elem, int opt);
-t_h_elem	*ft_hash_pop_elem(t_h_table *table, char *key);
-void		ft_hash_free_table(t_h_table *table, int opt);
-void		hash_print_elem(t_h_elem *elem);
-void		hash_print_index(t_h_table *table, unsigned index, int opt);
-void		hash_print_table(t_h_table *table, int opt);
+t_h_table				*ft_hash_new_table(void);
+int						ft_hash_add_elem(t_h_table *table, char *key
+	, void *content);
+int						ft_hash_resize_array(t_h_table *table
+	, unsigned new_size);
+void					*ft_hash_get_content(t_h_table *table, char *key);
+t_h_elem				*ft_hash_get_elem(t_h_table *table, char *key);
+void					ft_hash_free_elem(t_h_table *table, t_h_elem *hash_elem
+	, int opt);
+t_h_elem				*ft_hash_pop_elem(t_h_table *table, char *key);
+void					ft_hash_free_table(t_h_table *table, int opt);
+void					hash_print_elem(t_h_elem *elem);
+void					hash_print_index(t_h_table *table, unsigned index
+	, int opt);
+void					hash_print_table(t_h_table *table, int opt);
 
 #endif

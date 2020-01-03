@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/12/14 13:04:38 by sikpenou         ###   ########.fr        #
+#    Updated: 2020/01/03 14:41:06 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -140,7 +140,7 @@ $(NAME): $(INCLS) $(SRCS) Makefile
 
 objects: $(OBJS)
 
-$(OBJDIR)%.o: $(SRCDIR)%.c
+$(OBJDIR)%.o: $(SRCDIR)%.c $(INCLS)
 	@$(CC) $(CFLAGS) -I $(INCLDIR) -o $@ -c $<
 
 clean: FORCE

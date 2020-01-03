@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in_gnl.c                                       :+:      :+:    :+:   */
+/*   get_anthill.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/31 18:42:27 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/19 19:00:54 by sikpenou         ###   ########.fr       */
+/*   Created: 2020/01/03 13:18:41 by sikpenou          #+#    #+#             */
+/*   Updated: 2020/01/03 13:41:54 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <stdlib.h>
 #include "libft.h"
 #include "lem_in.h"
-#include <stdlib.h>
-#include <unistd.h>
 
 int		lem_realloc(char **zone, unsigned curr_size, long to_add)
 {
@@ -35,7 +35,6 @@ int		read_loop(t_lem *lem, unsigned curr_size)
 		&& curr_size < MAX_SIZE)
 	{
 		lem->anthill_size += ret;
-		//printf("ret = %d, anthill:\n---\n%s\n---\n", ret, lem->anthill);
 		if (ret == LEM_BUFF)
 		{
 			if (!(curr_size = lem_realloc(&lem->anthill, curr_size, LEM_BUFF)))

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 23:04:53 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/03 18:53:32 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 14:46:58 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,19 @@ void		easyfree(void **match)
 		free(elem);
 		elem = NULL;
 	}
-//	dprintf(g_fd_free, "freed %p\n", *match);
 	if (*match)
 		free(*match);
 	*match = NULL;
 }
 
-// the zone variable is used solely to be able to print whatever was alloc'ed
 void		*easymalloc(size_t size)
 {
 	t_lst	*new_free;
 	t_head	*gc_list;
-	void	*zone;
 
 	if (!EASY)
 	{
-		zone = ft_memalloc(size);
-//		dprintf(g_fd_alloc, "alloc %p\n", zone);
-		return (zone);
+		return (ft_memalloc(size));
 	}
 	if (size < 1 || !(gc_list = get_gc_list(1)))
 		return (0);

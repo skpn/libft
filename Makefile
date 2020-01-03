@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/01/02 15:38:25 by sikpenou         ###   ########.fr        #
+#    Updated: 2020/01/03 14:35:34 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,20 +18,25 @@ NAME = lem-in
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-SRC_FILES =	main_lem.c				\
-			init_structs_lem.c		\
-			exit_lem.c				\
-			parser_lem.c			\
-			set_graph.c				\
-			set_lvl.c				\
-			clean_graph.c			\
-			seek_paths.c 			\
-			manage_config.c			\
-			load_balancing.c		\
-			debug_lem.c				\
-			display_lem.c			\
-			get_anthill.c			\
-			get_rooms.c				\
+SRC_FILES =	main_lem.c							\
+			init_structs_lem.c					\
+			init_structs_display_lem.c			\
+			exit_lem.c							\
+			free_lem_paths.c					\
+			parser_lem.c						\
+			set_graph.c							\
+			set_lvl.c							\
+			clean_graph.c						\
+			seek_paths.c 						\
+			manage_config.c						\
+			copy_config.c						\
+			load_balancing.c					\
+			debug_display_config_lem_lvl_lem.c	\
+			debug_rooms_paths_lem.c				\
+			set_display.c						\
+			display_lem.c						\
+			get_anthill.c						\
+			get_rooms.c							\
 			get_tubes.c
 
 SRC_DIR = ./srcs/
