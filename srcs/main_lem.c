@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 13:17:30 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 16:02:32 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 17:15:56 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		main(void)
 		return (exit_lem(&lem, "init failed\n", 1));
 	if ((ret = parse_input(lem)) == MALLOC_ERROR)
 		return (exit_lem(&lem, "ERROR\n", 2));
-	if (ret == PARSING_ERROR && !check_enough_info(lem))
+	if (!check_enough_info(lem))
 		return (exit_lem(&lem, "ERROR\n", 2));
 	if (set_graph(lem) <= 0)
 		return (exit_lem(&lem, "ERROR\n", 2));

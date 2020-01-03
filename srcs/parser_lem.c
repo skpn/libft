@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 15:28:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:07:23 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 17:21:12 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ int		get_ants(t_lem *lem, char *anthill)
 	if (anthill[lem->pos] == '#')
 		return (manage_com(lem, anthill, &check_startend));
 	while (anthill[lem->pos] >= '0' && anthill[lem->pos] <= '9')
-	{
 		lem->nb_ants = lem->nb_ants * 10 + anthill[lem->pos++] - '0';
-	}
 	if (anthill[lem->pos] != '\n' || !anthill[lem->pos++] || !lem->nb_ants)
 		return (-1);
 	return (1);
