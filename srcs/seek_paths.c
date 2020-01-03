@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 12:53:28 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:38:36 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		seek_paths(t_lem *lem)
 		lem->max_lives = LIVES_LIMIT;
 	lem->lives = lem->max_lives;
 	path = NULL;
-	if (!(lem->current_config = alloc_new_config(WITH_HEAD)))
+	if (!(lem->current_config = alloc_new_config()))
 		return (0);
 	while (lem->lives)
 	{

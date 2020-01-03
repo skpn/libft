@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:45:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 13:24:18 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 16:10:09 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	kill_end_children(t_room *end, unsigned max_dist)
 		transfer = ft_lstpop(end->children, child);
 		if (child->dist <= max_dist)
 			ft_lstadd(end->parents, transfer);
+		else
+			ft_lstfree_elem(&transfer, FREE_LINKS);
 	}
 }
 

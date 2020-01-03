@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:08:55 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:09:38 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:38:47 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int		current_to_best(t_lem *lem)
 {
 	t_config	*new_config;
 
-	if (!(new_config = alloc_new_config(WITH_HEAD)))
+	if (!(new_config = alloc_new_config()))
 		return (0);
 	new_config->turns = lem->current_config->turns;
 	if (!copy_current_paths(lem, new_config))

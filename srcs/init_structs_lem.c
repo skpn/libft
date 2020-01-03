@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 22:15:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:06:57 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:38:14 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,14 @@ t_room		*alloc_new_room(void)
 	return (room);
 }
 
-t_config	*alloc_new_config(int head_opt)
+t_config	*alloc_new_config(void)
 {
 	t_config	*config;
 
 	if (!(config = (t_config *)easymalloc(sizeof(*config))))
 		return (NULL);
-	if (head_opt == WITH_HEAD)
-	{
-		if (!(config->paths = ft_lstnew_head(NULL, NULL)))
-			return (NULL);
-	}
+	if (!(config->paths = ft_lstnew_head(NULL, NULL)))
+		return (NULL);
 	config->turns = 0xFFFFFFFF;
 	return (config);
 }
