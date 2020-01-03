@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42->fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 19:12:41 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/02 13:44:48 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 12:19:15 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,6 @@ void		start_joined_to_end(t_lem *lem)
 	ft_printf("\n");
 }
 
-t_config	*get_best_config(t_head *config_lst)
-{
-	t_lst		*config_elem;
-	t_config	*config;
-	t_config	*best;
-
-	config_elem = config_lst->first;
-	best = config_elem->content;
-	while (config_elem)
-	{
-		config = config_elem->content;
-		config_elem = config_elem->next;
-//		print_config(config);
-		if (best->turns > config->turns)
-			best = config;
-	}
-	return (best);
-}
-
 unsigned	get_total_rooms(t_config *best)
 {
 	unsigned	total;
@@ -62,12 +43,6 @@ unsigned	get_total_rooms(t_config *best)
 	return (total);
 }
 
-void		clean_anthill(t_lem *lem)
-{
-	(void)lem;
-	return ;
-}
-
 void		path_to_tab(t_display *display, t_path *path, unsigned *set_cell)
 {
 	unsigned	wait;
@@ -79,7 +54,6 @@ void		path_to_tab(t_display *display, t_path *path, unsigned *set_cell)
 	{
 		if (display->last_id < display->nb_ants)
 		{
-			display->ants_tab[*set_cell]->id = display->last_id++;
 			display->ants_tab[*set_cell]->wait = wait++;
 			display->ants_tab[*set_cell]->max = path->load;
 			display->ants_tab[*set_cell]->path = path;
@@ -107,14 +81,12 @@ t_display		*set_display(t_lem *lem)
 {
 	unsigned	total_rooms;
 	t_display	*display;
-	t_config	*best;
 
-	best = get_best_config(lem->config_lst);
-	total_rooms = get_total_rooms(best);
+	total_rooms = get_total_rooms(lem->best_config);
 	if (!(display = alloc_new_display(total_rooms)))
 		return (NULL);
 	//print_display(display);
-	display->best = best;
+	display->best = lem->best_config;
 	display->nb_ants = lem->nb_ants;
 	display->lem_turns = lem->turns;
 	set_tab(display, total_rooms);
@@ -128,7 +100,13 @@ void		print_ant(t_display *display, t_ant *ant)
 //	printf("first: %u, prefix: '%s'\n", display->first_print, prefix);
 	if (ant->wait <= display->turn && ant->current_room)
 	{
-		//printf("ants->wait = %u, display->turn = %u\n", ant->wait, display->turn);
+		if (!ant->id && display->last_id <= display->nb_ants && ant->path->load)
+		{
+			ant->id = display->last_id++;
+			ant->path->load--;
+		}
+		if (!ant->id)
+			return ;
 		room = ant->current_room->content;
 		if (display->first_print == 1)
 		{
@@ -142,8 +120,9 @@ void		print_ant(t_display *display, t_ant *ant)
 		ant->current_room = ant->current_room->next;
 		if (!ant->current_room && display->last_id <= display->nb_ants)
 		{
+			//ft_printf("\nnb_ants = %u, last_id = %u\n", display->nb_ants, display->last_id);
 			ant->current_room = ant->path->rooms->first->next;
-			ant->id = display->last_id++;
+			ant->id = 0;
 		}
 	}
 }
@@ -170,7 +149,6 @@ int			display_lem(t_lem *lem)
 	if (!(display = set_display(lem)))
 		return (0);
 	lem->display = display;
-	clean_anthill(lem);
 	write(1, lem->anthill, ft_strlen(lem->anthill));
 	while (display->turn < lem->turns)
 	{
@@ -178,8 +156,5 @@ int			display_lem(t_lem *lem)
 		print_ants(display);
 		display->turn++;
 	}
-//	ft_printf("\n\n\nDISPLAY ENDED OK\n\n\n");
-//	ft_printf("\nPRINTING BEST CONFIG\n");
-//	print_config(display->best);
 	return (1);
 }

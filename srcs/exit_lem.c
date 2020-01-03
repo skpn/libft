@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:52:16 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/19 17:58:20 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/02 15:33:26 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,6 @@ void	free_config(t_config **config)
 	easyfree((void **)config);
 }
 
-void	free_config_lst(t_head **config_lst)
-{
-	t_lst	*config_elem;
-
-	config_elem = (*config_lst)->first;
-	while (config_elem)
-	{
-		free_config((t_config **)&(config_elem->content));
-		config_elem = config_elem->next;
-	}
-	ft_lstfree(config_lst, FREE_LINKS, FREE_HEAD);
-}
-
 void	free_display(t_display **display)
 {
 	unsigned	cell;
@@ -122,10 +109,10 @@ int		exit_lem(t_lem **lem, char *msg, int ret)
 //		printf("freeing lem paths, head: %p\n", (*lem)->paths);
 		free_paths(&((*lem)->paths));
 	}
-	if ((*lem)->config_lst)
+	if ((*lem)->best_config)
 	{
 //		printf("freeing lem config_lst, head: %p\n", (*lem)->config_lst);
-		free_config_lst(&((*lem)->config_lst));
+		free_config(&((*lem)->best_config));
 	}
 	if ((*lem)->current_config)
 	{

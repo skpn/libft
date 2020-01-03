@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/14 13:05:19 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 12:47:15 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void					ft_lstinsert(t_head *head, t_lst *ref, t_lst *insert
 	, int bef_or_aft);
 void					ft_lstsort(t_head *head
 	, int (*f_cmp)(t_lst *, t_lst *));
-void					ft_lstswap_contents(t_lst *upstream, t_lst *downstream);
+void					ft_lstswap_contents(t_lst *elem_1, t_lst *elem_2);
 void					ft_lstswap_heads(t_head *head, t_lst *elem_1
 	, t_lst *elem_2);
 void					ft_lst_replace_elem(t_head *head, t_lst *original,

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/02 13:18:21 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 12:48:31 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define ADD_CONFIG 1
 # define POP_PATH 2
 # define ADD_PATH 3
-# define LIVES_FACTOR 10000
+# define LIVES_LIMIT 4000
 # define WITHOUT_HEAD 0
 # define WITH_HEAD 1
 # define DEBUG 1
@@ -94,17 +94,19 @@ typedef struct 		s_lem
 	unsigned		shortest;
 	unsigned		max_dist;
 	unsigned		turns;
+	unsigned		nb_tubes;
+	unsigned		max_lives;
 	unsigned		lives;
-	unsigned		most_paths;
 	unsigned		anthill_size;
+	unsigned		scramble_flip;
+	unsigned		pos;
 	char			*anthill;
 	char			*copy;
-	unsigned		pos;
 	t_room			*start;
 	t_room			*end;
 	t_h_table		*table;
 	t_head			*paths;
-	t_head			*config_lst;
+	t_config		*best_config;
 	t_config		*current_config;
 	t_display		*display;
 }					t_lem;
@@ -151,6 +153,7 @@ void				print_room(t_room *room);
 void				print_rooms(t_head *rooms);
 void				print_config(t_config *config);
 void				print_path(t_path *path);
+void				print_paths_data(t_head *path_head);
 //void				print_room(t_room *room, char *args, int opt);
 //void				print_rooms(t_head *rooms, char *args, int opt);
 //void				print_rooms_addr(t_head *rooms);

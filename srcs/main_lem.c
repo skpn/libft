@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:05:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/02 12:05:48 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 12:15:38 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ int		main(void)
 	//sleep(10);
 	if (!(lem = alloc_new_lem()))
 		return (exit_lem(&lem, "init failed\n", 1));
+	PRINTPOSN;
 	if ((ret = parse_input(lem)) == MALLOC_ERROR
 		|| (ret == PARSING_ERROR && !check_enough_info(lem)))
 		return (exit_lem(&lem, "ERROR\n", 2));
+	PRINTPOSN;
 //	hash_print_table(lem->table, QUIET);
 //	printf("%p\n", lem->start);
 //	return (0);
@@ -50,17 +52,24 @@ int		main(void)
 	{
 		return (exit_lem(&lem, "ERROR\n", 2));
 	}
+	PRINTPOSN;
 	if (lem->end->dist == 1)
 	{
+	PRINTPOSN;
 		start_joined_to_end(lem);
 	}
 	else
 	{
+	PRINTPOSN;
 		if (!seek_paths(lem))
 			return (exit_lem(&lem, "ERROR\n", 2));
+	PRINTPOSN;
 		if (!display_lem(lem))
 			return (exit_lem(&lem, "ERROR\n", 2));
+	PRINTPOSN;
 	}
+	PRINTPOSN;
 	exit_lem(&lem, "", 2);
+	PRINTPOSN;
 	return (0);
 }

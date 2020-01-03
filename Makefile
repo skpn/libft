@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2019/12/19 18:12:46 by sikpenou         ###   ########.fr        #
+#    Updated: 2020/01/02 15:38:25 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,21 +22,17 @@ SRC_FILES =	main_lem.c				\
 			init_structs_lem.c		\
 			exit_lem.c				\
 			parser_lem.c			\
-			get_anthill.c			\
 			set_graph.c				\
 			set_lvl.c				\
 			clean_graph.c			\
-			set_config.c			\
 			seek_paths.c 			\
 			manage_config.c			\
 			load_balancing.c		\
 			debug_lem.c				\
 			display_lem.c			\
+			get_anthill.c			\
 			get_rooms.c				\
 			get_tubes.c
-			#parser_ants.c			\
-			parser_rooms.c			\
-			parser_tubes.c			\
 
 SRC_DIR = ./srcs/
 

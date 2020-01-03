@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 20:38:01 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/02 13:44:07 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 11:05:50 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,12 @@ void	print_path(t_path *path)
 		return ;
 	ft_printf("PRINTING PATH\n");
 	path_rooms = path->rooms->first;
+	ft_printf("path_address = %p, \n", path);
 	ft_printf("path->load = %u, path->room->size = %u\n", path->load, path->rooms->size);
 	while (path_rooms)
 	{
 		room = path_rooms->content;
 		ft_printf("%s (d %u, w %u) -- ", room->name, room->dist, room->walk);
-		ft_printf("%s -- ", room->name);
 		path_rooms = path_rooms->next;
 	}
 	ft_printf("\n");
@@ -151,6 +151,24 @@ void	print_paths(t_head *paths)
 		print_path(path_list->content);
 		path_list = path_list->next;
 	}
+}
+
+void	print_paths_data(t_head *paths)
+{
+	t_lst		*path_list;
+	t_path		*path;
+
+	if (DEBUG == 0)
+		return ;
+	ft_printf("PRINTING ALL PATHS DATA\n");
+	path_list = paths->first;
+	while (path_list)
+	{
+		path = path_list->content;
+		ft_printf("addr: %p , load: %u, len: %u - ", path, path->load, path->rooms->size);
+		path_list = path_list->next;
+	}
+	ft_printf("\n");
 }
 
 void	print_config(t_config *config)

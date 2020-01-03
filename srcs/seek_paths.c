@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/02 11:15:37 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 12:53:28 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,18 @@ int		update_room(t_room *room, t_path *path)
 		room->current_path->is_dead = 1;
 	room->current_path = path;
 	if (!ft_lstadd_new(path->rooms, room))
-	{
-//		printf("\nERROR ADDING ROOM TO PATH\n");
 		return (0);
-	}
 	return (1);
 }
 
-t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room, int opt)
+t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 {
 	t_room	*next_room;
 	t_lst	*child;
 	t_room	*child_room;
 
-//	printf("\nSEEKING NEXT ROOM OF\n");
-//	print_room(room);
 	next_room = NULL;
-	child = opt == CHILD ? room->children->first : room->parents->first;
+	child = room->parents->first;
 	while (child)
 	{
 		child_room = child->content;
@@ -61,10 +56,6 @@ t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room, int opt)
 		}
 		child = child->next;
 	}
-	if (opt == PARENT && !next_room)
-		return (get_next_room(lem, path, room, CHILD));
-//	printf("NEXT ROOM\n");
-//	print_room(next_room);
 	return (next_room);
 }
 
@@ -72,24 +63,20 @@ int		try_path(t_lem *lem, t_path **path)
 {
 	t_room	*room;
 
-//	PRINTPOSN;
 	if (!(*path = alloc_new_path()))
 		return (0);
 	if (!ft_lstadd_new((*path)->rooms, lem->end))
 		return (0);
 	lem->end->current_path = *path;
-	room = get_next_room(lem, *path, lem->end, PARENT);
+	room = get_next_room(lem, *path, lem->end);
 	if (!update_room(room, *path))
 		return (0);
-//	PRINTPOSN;
-	while ((room = get_next_room(lem, *path, room, PARENT)))
+	while ((room = get_next_room(lem, *path, room)))
 	{
 		if (!update_room(room, *path))
 			return (0);
 		if (room == lem->start)
 		{
-//			printf("\nCOMPLETE PATH:\n");
-//			print_path(*path);
 			lem->start->walk = 0;
 			lem->start->current_path = NULL;
 			lem->end->current_path = NULL;
@@ -97,7 +84,6 @@ int		try_path(t_lem *lem, t_path **path)
 		}
 	}
 	free_path(path);
-//	printf("NO PATH FOUND\n");
 	return (-1);
 }
 
@@ -106,30 +92,22 @@ int		seek_paths(t_lem *lem)
 	t_path		*path;
 	int			check_alloc;
 
-//	printf("\n\n-------------------------ALGO START-----------------------\n\n");
-	lem->lives = lem->end->parents->size * LIVES_FACTOR;
+	lem->max_lives = lem->end->parents->size + lem->end->dist * lem->nb_tubes;
+	if (lem->max_lives > LIVES_LIMIT)
+		lem->max_lives = LIVES_LIMIT;
+	lem->lives = lem->max_lives;
 	path = NULL;
-//	PRINTPOSN;
 	if (!(lem->current_config = alloc_new_config(WITH_HEAD)))
 		return (0);
-//	PRINTPOSN;
 	while (lem->lives)
 	{
-//		PRINTPOSN;
 		if (!(check_alloc = try_path(lem, &path)))
 			return (0);
 		else if (check_alloc == 1)
 		{
-//			PRINTPOSN;
 			if (!manage_valid_path(lem, path))
-			{
-				printf("ERROR FROM MANAGE VALID PATH\n");
 				return (0);
-			}
 		}
-//		printf("lives: %u, most paths: %u, max paths: %u\n",
-//			lem->lives, lem->most_paths, lem->max_paths);
 	}
-//	PRINTPOSN;
 	return (1);
 }

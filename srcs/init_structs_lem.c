@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 22:15:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/19 14:32:37 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/02 15:28:33 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,6 @@ t_lem		*alloc_new_lem(void)
 	t_lem	*lem;
 
 	if (!(lem = (t_lem *)easymalloc(sizeof(*lem))))
-		return (NULL);
-	if (!(lem->config_lst = ft_lstnew_head(NULL, NULL)))
 		return (NULL);
 	if (!(lem->paths = ft_lstnew_head(NULL, NULL)))
 		return (NULL);

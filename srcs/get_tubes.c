@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:00:27 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/12/19 19:03:13 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/03 12:14:44 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,11 @@ int		add_links(t_lem *lem, char *name_1, char *name_2)
 		return (PARSING_ERROR);
 	if (ft_lstfind(room_1->children, room_2))
 		return (1);
-//	printf("adding:\n");
-//	print_room(room_1);
-//	print_room(room_2);
 	if (!ft_lstadd_new(room_1->children, room_2))
 		return (MALLOC_ERROR);
 	if (!ft_lstadd_new(room_2->children, room_1))
 		return (MALLOC_ERROR);
+	lem->nb_tubes++;
 	return (1);
 }
 
@@ -84,10 +82,7 @@ int		get_tubes(t_lem *lem, char *anthill_copy)
 	else if (ret == END)
 		return (0);
 	if ((ret = add_links(lem, name_1, name_2)) < 1)
-	{
 		return (ret);
-	}
-//	printf("%s %d, added link: %s-%s\n", __func__, __LINE__,name_1, name_2);
 	if (!lem->copy[lem->pos])
 		return (0);
 	return (1);
