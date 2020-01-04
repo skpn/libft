@@ -15,7 +15,9 @@
 
 int		manage_start_end(t_lem *lem, char *anthill, int *opt)
 {
-	if (*opt == REJECT_START_END)
+	if (*opt == REJECT_START_END
+		&& (!ft_strncmp(anthill + lem->pos, "start\n", 6)
+		|| !ft_strncmp(anthill + lem->pos, "end\n", 4)))
 		return (PARSING_ERROR);
 	else if (!ft_strncmp(anthill + lem->pos, "start\n", 6))
 	{
@@ -62,8 +64,8 @@ int		get_ants(t_lem *lem, char *anthill)
 		return (manage_com(lem, anthill, &check_startend));
 	while (anthill[lem->pos] >= '0' && anthill[lem->pos] <= '9')
 		lem->nb_ants = lem->nb_ants * 10 + anthill[lem->pos++] - '0';
-	if (anthill[lem->pos] != '\n' || !anthill[lem->pos++] || !lem->nb_ants)
-		return (-1);
+	if (anthill[lem->pos] != '\n' || !anthill[lem->pos++])
+		return (PARSING_ERROR);
 	return (1);
 }
 
