@@ -112,8 +112,9 @@ int		set_graph(t_lem *lem)
 		free_lvl(&lvl);
 		return (0);
 	}
-	if (lem->max_paths < 1 || lem->max_paths > lem->table->elems
+	if ((lem->max_paths < 1 || lem->max_paths > lem->table->elems
 		|| lem->shortest != lem->end->dist + 1)
+			&& !ft_lstfind(lem->start->children, lem->end))
 	{
 		free_lvl(&lvl);
 		return (PARSING_ERROR);

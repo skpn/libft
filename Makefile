@@ -29,7 +29,7 @@ SRC_FILES =	main_lem.c							\
 			clean_graph.c						\
 			seek_paths.c 						\
 			manage_config.c						\
-			copy_config.c						\
+			update_best_config.c				\
 			load_balancing.c					\
 			debug_display_config_lem_lvl_lem.c	\
 			debug_rooms_paths_lem.c				\

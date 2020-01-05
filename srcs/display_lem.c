@@ -18,9 +18,9 @@ void		start_joined_to_end(t_lem *lem)
 {
 	unsigned	ant;
 
-	ant = 0;
+	ant = 1;
 	ft_printf("L%u-end", ant);
-	while (++ant < lem->nb_ants)
+	while (++ant <= lem->nb_ants)
 	{
 		ft_printf(" L%u-end", ant);
 	}
