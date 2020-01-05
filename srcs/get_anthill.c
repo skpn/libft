@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include "libft.h"
 #include "lem_in.h"
-#include <stdio.h>
+
 int		lem_realloc(char **zone, unsigned curr_size, long to_add)
 {
 	char	*tmp;

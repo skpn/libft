@@ -123,7 +123,7 @@ void				kill_dead_rooms(t_lem *lem, t_room *dead_room);
 void				kill_end_children(t_room *end, unsigned max_dist);
 int					seek_paths(t_lem *lem);
 int					manage_valid_path(t_lem *lem, t_path *path);
-int					current_to_best(t_lem *lem);
+int					update_best_config(t_lem *lem);
 void				balance_load(t_lem *lem);
 void				start_joined_to_end(t_lem *lem);
 t_display			*set_display(t_lem *lem);

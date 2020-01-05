@@ -17,7 +17,7 @@ t_head	*ft_lstcpy(t_head *original_head)
 	t_head	*new_head;
 	t_lst	*elem;
 
-	if (original_head && !(new_head = ft_lstnew_head(NULL, NULL)))
+	if (!(new_head = ft_lstnew_head(NULL, NULL)))
 		return (0);
 	elem = original_head->last;
 	while (elem)

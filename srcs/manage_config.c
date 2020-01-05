@@ -67,10 +67,9 @@ int		manage_valid_path(t_lem *lem, t_path *path)
 		return (0);
 	if (!add_path(lem, path))
 		return (0);
-	if (lem->best_config
-		&& lem->best_config->turns > lem->current_config->turns)
-		free_config(&lem->best_config);
-	if (!lem->best_config && !current_to_best(lem))
+	if (lem->best_config->turns <= lem->current_config->turns)
+		return (1);
+	if (!update_best_config(lem))
 		return (0);
 	return (1);
 }

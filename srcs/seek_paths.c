@@ -97,7 +97,8 @@ int		seek_paths(t_lem *lem)
 		lem->max_lives = LIVES_LIMIT;
 	lem->lives = lem->max_lives;
 	path = NULL;
-	if (!(lem->current_config = alloc_new_config()))
+	if (!(lem->current_config = alloc_new_config())
+		|| !(lem->best_config = alloc_new_config()))
 		return (0);
 	while (lem->lives)
 	{

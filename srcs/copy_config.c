@@ -19,16 +19,17 @@ t_path	*copy_path(t_path *original_path)
 
 	if (!(new_path = alloc_new_path()))
 		return (NULL);
-	new_path->rooms = original_path->rooms;
+	ft_lstfree_head(&new_path->rooms);
+	if (!(new_path->rooms = ft_lstcpy(original_path->rooms)))
+		return (NULL);
 	new_path->load = original_path->load;
 	return (new_path);
 }
 
-int		copy_current_paths(t_lem *lem, t_config *new_config)
+int		copy_current_paths(t_lem *lem)
 {
 	t_lst		*current_paths_lst;
 	t_path		*new_path;
-	t_lst		*new_path_lst;
 
 	current_paths_lst = lem->current_config->paths->first;
 	while (current_paths_lst)
@@ -36,12 +37,12 @@ int		copy_current_paths(t_lem *lem, t_config *new_config)
 		if (!(new_path = copy_path(current_paths_lst->content)))
 			return (0);
 		current_paths_lst = current_paths_lst->next;
-		if (!(new_path_lst = ft_lstnew_elem(new_path)))
+		if (!ft_lstadd_new(lem->best_config->paths, new_path)
+			|| !ft_lstadd_new(lem->paths, new_path))
 		{
 			free_path(&new_path);
 			return (0);
 		}
-		ft_lstadd(new_config->paths, new_path_lst);
 	}
 	return (1);
 }
@@ -63,22 +64,17 @@ void	scramble_end_parents(t_lem *lem)
 	}
 }
 
-int		current_to_best(t_lem *lem)
+int		update_best_config(t_lem *lem)
 {
-	t_config	*new_config;
-
-	if (!(new_config = alloc_new_config()))
+	if (lem->best_config->paths->first)
+		ft_lstfree(&lem->best_config->paths, FREE_LINKS, KEEP_HEAD);
+	if (!copy_current_paths(lem))
 		return (0);
-	new_config->turns = lem->current_config->turns;
-	if (!copy_current_paths(lem, new_config))
-	{
-		free_config(&new_config);
-		return (0);
-	}
-	if (!lem->best_config
+	if (!lem->best_config->turns
 		|| lem->best_config->turns == lem->current_config->turns)
 		scramble_end_parents(lem);
+	lem->best_config->turns = lem->current_config->turns;
 	lem->lives = lem->max_lives;
-	lem->best_config = new_config;
+	
 	return (1);
 }
