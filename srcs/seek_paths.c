@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 10:49:36 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/06 16:40:33 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,50 @@ static int		update_room(t_room *room, t_path *path)
 	return (1);
 }
 
+// here we used to block the next room dist at current config -> turns
+// ex: current_config->turns = 4, if child->dist > 4 we skip it
 static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 {
 	t_room	*next_room;
-	t_lst	*child;
-	t_room	*child_room;
+	t_lst	*children_lst;
+	t_room	*child;
 
+	(void)lem;
 	next_room = NULL;
-	child = room->parents->first;
-	while (child)
+	children_lst = room->parents->first;
+	while (children_lst)
 	{
-		child_room = child->content;
-		if (child_room->dist <= lem->current_config->turns
-			&& child_room->current_path != path)
+		child = children_lst->content;
+		if (child->current_path != path)
 		{
-			next_room = check_room(child_room, next_room);
+			next_room = check_room(child, next_room);
 		}
-		child = child->next;
+		children_lst = children_lst->next;
+	}
+	children_lst = room->children->first;
+	while (children_lst)
+	{
+		child = children_lst->content;
+		if (child->current_path != path)
+		{
+			next_room = check_room(child, next_room);
+		}
+		children_lst = children_lst->next;
 	}
 	return (next_room);
+}
+static void		erase_current_path(t_path *path)
+{
+	t_lst	*room_lst;
+	t_room	*room;
+
+	room_lst = path->rooms->first;
+	while (room_lst)
+	{
+		room = room_lst->content;
+		room_lst = room_lst->next;
+		room->current_path = NULL;
+	}
 }
 
 static int		try_path(t_lem *lem, t_path **path)
@@ -83,6 +108,7 @@ static int		try_path(t_lem *lem, t_path **path)
 			return (1);
 		}
 	}
+	erase_current_path(*path);
 	free_path(path);
 	return (-1);
 }

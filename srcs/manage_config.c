@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 10:38:29 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/06 16:41:13 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int	add_path(t_lem *lem, t_path *new_path)
 	unsigned	new_path_size;
 
 	lem->lives--;
+	//print_path(new_path);
 	new_path_size = new_path->rooms->size;
 	if (!(new_path_lst = ft_lstnew_elem(new_path)))
 		return (0);
@@ -61,12 +62,63 @@ static int	add_path(t_lem *lem, t_path *new_path)
 	return (1);
 }
 
+static void		scramble_room(t_lem *lem, t_room *room)
+{
+	t_lst	*transfer;
+
+	return ;
+	lem->scramble_ctr++;
+	if (room->parents->size < 2)
+		return ;
+	if (!(transfer = ft_lstpop(room->parents, room->parents->last->content)))
+		return ;
+	ft_lstadd(room->parents, transfer);
+	/*
+	if (lem->scramble_flip == 1)
+	{
+		lem->scramble_flip = 0;
+		ft_lstswap_contents(room->parents->last
+			, room->parents->last->prev);
+	}
+	else
+	{
+		lem->scramble_flip = 1;
+		ft_lstswap_contents(room->parents->last, room->parents->first);
+	}
+	*/
+}
+
+void			scramble_graph(t_lem *lem)
+{
+	unsigned	index;
+	t_lst		*index_lst;
+	t_h_elem	*h_elem;
+
+	index = 0;
+ //	print_room(lem->end);
+	while (index < lem->table->size)
+	{
+		if (lem->table->array[index].first)
+		{
+			index_lst = lem->table->array[index].first;
+			while (index_lst)
+			{
+				h_elem = index_lst->content;
+				scramble_room(lem, h_elem->content);
+				index_lst = index_lst->next;
+			}
+		}
+		index++;
+	}
+}
+
 int			manage_valid_path(t_lem *lem, t_path *path)
 {
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);
 	if (!add_path(lem, path))
 		return (0);
+	//scramble_graph(lem);
 	if (lem->best_config->turns <= lem->current_config->turns)
 		return (1);
 	if (!update_best_config(lem))

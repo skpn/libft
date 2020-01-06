@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 10:45:35 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/06 16:38:18 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define PARENT 1
 # define BROTHER 2
 # define CHILD 3
-# define LIVES_LIMIT 4000
-# define DEBUG 0
+# define LIVES_LIMIT 50000
+# define DEBUG 1 
 
 typedef struct		s_path
 {
@@ -81,6 +81,7 @@ typedef struct		s_display
 
 typedef struct		s_lem
 {
+	unsigned		scramble_ctr;
 	unsigned		nb_ants;
 	unsigned		nb_rooms;
 	unsigned		max_paths;

@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/01/03 16:29:35 by sikpenou         ###   ########.fr        #
+#    Updated: 2020/01/06 14:00:11 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,7 @@ SRC_FILES =	main_lem.c							\
 			manage_config.c						\
 			update_best_config.c				\
 			load_balancing.c					\
-			debug_display_config_lem_lvl_lem.c	\
-			debug_rooms_paths_lem.c				\
+			debug.c								\
 			set_display.c						\
 			display_lem.c						\
 			get_anthill.c						\

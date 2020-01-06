@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 15:28:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 17:21:12 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 13:45:33 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int		manage_com(t_lem *lem, char *anthill, int *opt)
 		lem->pos++;
 		return (manage_start_end(lem, anthill, opt));
 	}
-	while (anthill[lem->pos] && anthill[lem->pos] != '\n')
-		lem->pos++;
+	while (anthill[lem->pos] && anthill[lem->pos++] != '\n')
+		;
 	return (1);
 }
 
