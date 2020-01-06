@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:36:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 10:35:54 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:53:03 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void			start_joined_to_end(t_lem *lem)
 {
 	unsigned	ant;
 
+	write(1, lem->anthill, ft_strlen(lem->anthill));
 	ant = 1;
 	ft_printf("L%u-end", ant);
 	while (++ant <= lem->nb_ants)
