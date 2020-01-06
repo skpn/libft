@@ -6,14 +6,14 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 11:00:06 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:06:22 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:38:02 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
 
-void	calculate_main_load(t_lem *lem, unsigned ants, t_path *longest_path)
+static void	calculate_main_load(t_lem *lem, unsigned ants, t_path *longest_path)
 {
 	unsigned	ants_to_all;
 	unsigned	nb_paths;
@@ -36,7 +36,7 @@ void	calculate_main_load(t_lem *lem, unsigned ants, t_path *longest_path)
 		lem->current_config->turns++;
 }
 
-void	balance_load(t_lem *lem)
+void		balance_load(t_lem *lem)
 {
 	unsigned	ants;
 	t_lst		*path_lst;

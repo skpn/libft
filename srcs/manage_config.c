@@ -6,14 +6,14 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:09:33 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:38:29 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
 
-void	pop_dead_paths(t_config *config)
+static void	pop_dead_paths(t_config *config)
 {
 	t_lst	*path_lst;
 	t_lst	*dead_path_lst;
@@ -33,7 +33,7 @@ void	pop_dead_paths(t_config *config)
 	}
 }
 
-int		add_path(t_lem *lem, t_path *new_path)
+static int	add_path(t_lem *lem, t_path *new_path)
 {
 	t_lst		*config_path_lst;
 	t_lst		*new_path_lst;
@@ -61,7 +61,7 @@ int		add_path(t_lem *lem, t_path *new_path)
 	return (1);
 }
 
-int		manage_valid_path(t_lem *lem, t_path *path)
+int			manage_valid_path(t_lem *lem, t_path *path)
 {
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);

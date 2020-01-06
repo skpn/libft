@@ -6,13 +6,13 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:48:23 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:48:34 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:47:58 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	transfer_hash_elems(t_h_table *table, unsigned new_size
+static void	transfer_hash_elems(t_h_table *table, unsigned new_size
 		, unsigned old_size, t_head *old_array)
 {
 	unsigned	index;
@@ -36,7 +36,7 @@ void	transfer_hash_elems(t_h_table *table, unsigned new_size
 	}
 }
 
-int		ft_hash_resize_array(t_h_table *table, unsigned new_size)
+int			ft_hash_resize_array(t_h_table *table, unsigned new_size)
 {
 	t_head	*old_array;
 
@@ -59,7 +59,7 @@ int		ft_hash_resize_array(t_h_table *table, unsigned new_size)
 	return (1);
 }
 
-int		str_key_is_unique(t_lst *index_lst, char *key)
+static int	str_key_is_unique(t_lst *index_lst, char *key)
 {
 	t_h_elem	*hash_elem;
 
@@ -73,7 +73,7 @@ int		str_key_is_unique(t_lst *index_lst, char *key)
 	return (1);
 }
 
-int		insert_hash_elem(t_h_table *table, unsigned index
+static int	insert_hash_elem(t_h_table *table, unsigned index
 		, t_h_elem *new_elem)
 {
 	unsigned	new_size;
@@ -96,7 +96,7 @@ int		insert_hash_elem(t_h_table *table, unsigned index
 	return (1);
 }
 
-int		ft_hash_add_elem(t_h_table *table, char *key, void *content)
+int			ft_hash_add_elem(t_h_table *table, char *key, void *content)
 {
 	unsigned	index;
 	t_h_elem	*new_elem;

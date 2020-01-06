@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 16:54:01 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:45:35 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@
 # define CHILD 3
 # define LIVES_LIMIT 4000
 # define DEBUG 0
-#include <stdio.h>
-#define PRINTPOSN printf("%s %s %d\n", __FILE__, __func__, __LINE__); fflush(0);
+
 typedef struct		s_path
 {
 	unsigned		load;

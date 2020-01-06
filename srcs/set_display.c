@@ -6,14 +6,14 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:34:41 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:38:00 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:49:25 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
 
-unsigned	get_total_rooms(t_config *best)
+static unsigned	get_total_rooms(t_config *best)
 {
 	unsigned	total;
 	t_lst		*path_elem;
@@ -30,7 +30,7 @@ unsigned	get_total_rooms(t_config *best)
 	return (total);
 }
 
-void		path_to_tab(t_display *display, t_path *path, unsigned *cell)
+static void		path_to_tab(t_display *display, t_path *path, unsigned *cell)
 {
 	unsigned	wait;
 	unsigned	room_count;
@@ -50,7 +50,7 @@ void		path_to_tab(t_display *display, t_path *path, unsigned *cell)
 	}
 }
 
-void		set_tab(t_display *display, unsigned total_rooms)
+static void		set_tab(t_display *display, unsigned total_rooms)
 {
 	unsigned	cell;
 	t_lst		*path_elem;
@@ -64,7 +64,7 @@ void		set_tab(t_display *display, unsigned total_rooms)
 	}
 }
 
-t_display	*set_display(t_lem *lem)
+t_display		*set_display(t_lem *lem)
 {
 	unsigned	total_rooms;
 	t_display	*display;

@@ -6,28 +6,14 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:00:27 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:04:07 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:42:40 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
 
-t_room	*seek_second_room(t_lst *elem, char *name)
-{
-	t_room	*room;
-
-	while (elem)
-	{
-		room = (t_room *)elem->content;
-		if (!ft_strcmp(room->name, name))
-			return (room);
-		elem = elem->next;
-	}
-	return (NULL);
-}
-
-int		add_links(t_lem *lem, char *name_1, char *name_2)
+static int		add_links(t_lem *lem, char *name_1, char *name_2)
 {
 	t_room	*room_1;
 	t_room	*room_2;
@@ -48,7 +34,7 @@ int		add_links(t_lem *lem, char *name_1, char *name_2)
 	return (1);
 }
 
-int		get_link_names(t_lem *lem, char **name_1, char **name_2)
+static int		get_link_names(t_lem *lem, char **name_1, char **name_2)
 {
 	*name_1 = lem->copy + lem->pos;
 	if (!ft_strcmp(*name_1, "\n"))
@@ -67,7 +53,7 @@ int		get_link_names(t_lem *lem, char **name_1, char **name_2)
 	return (1);
 }
 
-int		get_tubes(t_lem *lem, char *anthill_copy)
+int				get_tubes(t_lem *lem, char *anthill_copy)
 {
 	int		check_start_end;
 	int		ret;

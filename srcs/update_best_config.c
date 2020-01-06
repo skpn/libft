@@ -6,14 +6,14 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:08:55 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 15:38:47 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:41:27 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "libft.h"
 
-t_path	*copy_path(t_path *original_path)
+static t_path	*copy_path(t_path *original_path)
 {
 	t_path	*new_path;
 
@@ -26,7 +26,7 @@ t_path	*copy_path(t_path *original_path)
 	return (new_path);
 }
 
-int		copy_current_paths(t_lem *lem)
+static int		copy_current_paths(t_lem *lem)
 {
 	t_lst		*current_paths_lst;
 	t_path		*new_path;
@@ -47,7 +47,7 @@ int		copy_current_paths(t_lem *lem)
 	return (1);
 }
 
-void	scramble_end_parents(t_lem *lem)
+static void		scramble_end_parents(t_lem *lem)
 {
 	if (lem->end->parents->size < 2)
 		return ;
@@ -64,7 +64,7 @@ void	scramble_end_parents(t_lem *lem)
 	}
 }
 
-int		update_best_config(t_lem *lem)
+int				update_best_config(t_lem *lem)
 {
 	if (lem->best_config->paths->first)
 		ft_lstfree(&lem->best_config->paths, FREE_LINKS, KEEP_HEAD);
@@ -75,6 +75,5 @@ int		update_best_config(t_lem *lem)
 		scramble_end_parents(lem);
 	lem->best_config->turns = lem->current_config->turns;
 	lem->lives = lem->max_lives;
-	
 	return (1);
 }

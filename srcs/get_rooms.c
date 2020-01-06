@@ -6,14 +6,14 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 15:41:30 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 17:18:45 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:37:09 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
 
-int		skip_coord(t_lem *lem)
+static int		skip_coord(t_lem *lem)
 {
 	if (lem->copy[lem->pos++] != '\0')
 		return (PARSING_ERROR);
@@ -32,14 +32,14 @@ int		skip_coord(t_lem *lem)
 	return (1);
 }
 
-int		check_same_name(t_lem *lem, char *name_to_check)
+static int		check_same_name(t_lem *lem, char *name_to_check)
 {
 	if (ft_hash_get_elem(lem->table, name_to_check))
 		return (PARSING_ERROR);
 	return (1);
 }
 
-int		get_name(t_lem *lem, char **name)
+static int		get_name(t_lem *lem, char **name)
 {
 	unsigned	start_pos;
 	char		c;
@@ -65,7 +65,7 @@ int		get_name(t_lem *lem, char **name)
 	return (skip_coord(lem));
 }
 
-int		get_rooms(t_lem *lem, char *anthill_copy)
+int				get_rooms(t_lem *lem, char *anthill_copy)
 {
 	int		check_start_end;
 	int		ret;

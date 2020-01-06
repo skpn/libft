@@ -6,20 +6,21 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:48:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:48:45 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:50:26 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_hash_free_elem(t_h_table *table, t_h_elem *hash_elem, int opt)
+void			ft_hash_free_elem(t_h_table *table, t_h_elem *hash_elem
+	, int opt)
 {
 	if (opt != FREE_LINKS)
 		table->free_func(&(hash_elem->content));
 	easyfree((void **)&hash_elem);
 }
 
-void		ft_hash_free_table(t_h_table *table, int opt)
+void			ft_hash_free_table(t_h_table *table, int opt)
 {
 	unsigned	index;
 	t_head		*index_head;
@@ -44,7 +45,7 @@ void		ft_hash_free_table(t_h_table *table, int opt)
 	easyfree((void **)&table);
 }
 
-unsigned	hash_str_key(char *key)
+static unsigned	hash_str_key(char *key)
 {
 	unsigned	hash;
 
@@ -57,12 +58,12 @@ unsigned	hash_str_key(char *key)
 	return (hash);
 }
 
-void		basic_free_hash_elem_content(void **content)
+void			basic_free_hash_elem_content(void **content)
 {
 	easyfree((void **)content);
 }
 
-t_h_table	*ft_hash_new_table(void)
+t_h_table		*ft_hash_new_table(void)
 {
 	t_h_table	*new_table;
 	unsigned	size;

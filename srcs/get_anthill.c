@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 13:18:41 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 17:17:24 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:36:47 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft.h"
 #include "lem_in.h"
 
-int		lem_realloc(char **zone, unsigned curr_size, long to_add)
+static int		lem_realloc(char **zone, unsigned curr_size, long to_add)
 {
 	char	*tmp;
 
@@ -27,7 +27,7 @@ int		lem_realloc(char **zone, unsigned curr_size, long to_add)
 	return (curr_size + to_add);
 }
 
-int		read_loop(t_lem *lem, unsigned curr_size)
+static int		read_loop(t_lem *lem, unsigned curr_size)
 {
 	int		ret;
 
@@ -54,7 +54,7 @@ int		read_loop(t_lem *lem, unsigned curr_size)
 	return (0);
 }
 
-int		get_anthill(t_lem *lem)
+int				get_anthill(t_lem *lem)
 {
 	unsigned	curr_size;
 

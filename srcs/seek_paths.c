@@ -6,14 +6,14 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 15:38:36 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:49:36 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "libft.h"
 
-t_room	*check_room(t_room *child, t_room *next_room)
+static t_room	*check_room(t_room *child, t_room *next_room)
 {
 	if (!next_room)
 	{
@@ -27,7 +27,7 @@ t_room	*check_room(t_room *child, t_room *next_room)
 	return (next_room);
 }
 
-int		update_room(t_room *room, t_path *path)
+static int		update_room(t_room *room, t_path *path)
 {
 	room->walk++;
 	if (room->current_path)
@@ -38,7 +38,7 @@ int		update_room(t_room *room, t_path *path)
 	return (1);
 }
 
-t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
+static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 {
 	t_room	*next_room;
 	t_lst	*child;
@@ -59,7 +59,7 @@ t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 	return (next_room);
 }
 
-int		try_path(t_lem *lem, t_path **path)
+static int		try_path(t_lem *lem, t_path **path)
 {
 	t_room	*room;
 
@@ -87,7 +87,7 @@ int		try_path(t_lem *lem, t_path **path)
 	return (-1);
 }
 
-int		seek_paths(t_lem *lem)
+int				seek_paths(t_lem *lem)
 {
 	t_path		*path;
 	int			check_alloc;

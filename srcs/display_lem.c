@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:36:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:36:46 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:35:54 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "lem_in.h"
 
-void		start_joined_to_end(t_lem *lem)
+void			start_joined_to_end(t_lem *lem)
 {
 	unsigned	ant;
 
@@ -27,7 +27,7 @@ void		start_joined_to_end(t_lem *lem)
 	ft_printf("\n");
 }
 
-void		print_ant(t_display *display, t_ant *ant)
+static void		print_ant(t_display *display, t_ant *ant)
 {
 	t_room		*room;
 
@@ -56,7 +56,7 @@ void		print_ant(t_display *display, t_ant *ant)
 	}
 }
 
-void		print_ants(t_display *display)
+static void		print_ants(t_display *display)
 {
 	unsigned	print_cell;
 	t_ant		*ant;
@@ -71,7 +71,7 @@ void		print_ants(t_display *display)
 	ft_printf("\n");
 }
 
-int			display_lem(t_lem *lem)
+int				display_lem(t_lem *lem)
 {
 	t_display	*display;
 

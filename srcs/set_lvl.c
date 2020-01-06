@@ -6,14 +6,14 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 22:11:27 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 13:38:55 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 10:45:26 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
 
-void	set_parent_as(int opt, t_room *parent, t_room *child)
+static void	set_parent_as(int opt, t_room *parent, t_room *child)
 {
 	t_lst	*transfer;
 
@@ -29,7 +29,7 @@ void	set_parent_as(int opt, t_room *parent, t_room *child)
 	}
 }
 
-void	set_children_families(t_room *parent, t_room *end)
+static void	set_children_families(t_room *parent, t_room *end)
 {
 	t_lst	*room_children;
 	t_lst	*tmp;
@@ -57,7 +57,7 @@ void	set_children_families(t_room *parent, t_room *end)
 	}
 }
 
-void	set_next_lvl_families(t_lvl *lvl, t_room *end)
+void		set_next_lvl_families(t_lvl *lvl, t_room *end)
 {
 	t_lst		*lvl_parents;
 	t_room		*parent;
@@ -72,7 +72,7 @@ void	set_next_lvl_families(t_lvl *lvl, t_room *end)
 	}
 }
 
-void	set_children_dists(t_room *parent, unsigned new_dist)
+static void	set_children_dists(t_room *parent, unsigned new_dist)
 {
 	t_lst	*room_children;
 	t_room	*child;
@@ -87,7 +87,7 @@ void	set_children_dists(t_room *parent, unsigned new_dist)
 	}
 }
 
-void	set_next_lvl_dists(t_lvl *lvl)
+void		set_next_lvl_dists(t_lvl *lvl)
 {
 	t_lst		*lvl_parents;
 	t_room		*parent;
