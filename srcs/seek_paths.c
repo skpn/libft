@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 16:40:33 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 20:19:31 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ static int		update_room(t_room *room, t_path *path)
 	room->current_path = path;
 	if (!ft_lstadd_new(path->rooms, room))
 		return (0);
+	if (path->rooms->size > 1)
+		((t_room *)path->rooms->last->prev->content)->is_closed = 1;
 	return (1);
 }
 
-// here we used to block the next room dist at current config -> turns
 // ex: current_config->turns = 4, if child->dist > 4 we skip it
 static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 {
@@ -52,7 +53,7 @@ static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 	while (children_lst)
 	{
 		child = children_lst->content;
-		if (child->current_path != path)
+		if (child->current_path != path && !child->is_closed)
 		{
 			next_room = check_room(child, next_room);
 		}
@@ -62,7 +63,7 @@ static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 	while (children_lst)
 	{
 		child = children_lst->content;
-		if (child->current_path != path)
+		if (child->current_path != path && !child->is_closed)
 		{
 			next_room = check_room(child, next_room);
 		}
@@ -81,23 +82,24 @@ static void		erase_current_path(t_path *path)
 		room = room_lst->content;
 		room_lst = room_lst->next;
 		room->current_path = NULL;
+		room->is_closed = 0;
 	}
 }
 
-static int		try_path(t_lem *lem, t_path **path)
+static int		try_path(t_lem *lem, t_path **path, t_room *room)
 {
-	t_room	*room;
-
 	if (!(*path = alloc_new_path()))
 		return (0);
 	if (!ft_lstadd_new((*path)->rooms, lem->end))
 		return (0);
 	lem->end->current_path = *path;
-	room = get_next_room(lem, *path, lem->end);
+	//room = get_next_room(lem, *path, lem->end);
 	if (!update_room(room, *path))
 		return (0);
 	while ((room = get_next_room(lem, *path, room)))
 	{
+		ft_printf("next room:\n");
+		print_room(room);
 		if (!update_room(room, *path))
 			return (0);
 		if (room == lem->start)
@@ -113,28 +115,62 @@ static int		try_path(t_lem *lem, t_path **path)
 	return (-1);
 }
 
+void			unprotect_rooms(t_config *config)
+{
+	t_lst	*path_elem;
+	t_path	*path;
+	t_lst	*room_elem;
+	t_room	*room;
+
+	path_elem = config->paths->first;
+	while (path_elem)
+	{
+		path = path_elem->content;
+		room_elem = path->rooms->first;
+		while (room_elem)
+		{
+			room = room_elem->content;
+			room->is_closed = 0;
+			room_elem = room_elem->next;
+		}
+		path_elem = path_elem->next;
+	}
+}
+
 int				seek_paths(t_lem *lem)
 {
 	t_path		*path;
 	int			check_alloc;
+	t_lst		*end_parent;
 
 	lem->max_lives = lem->end->parents->size + lem->end->dist * lem->nb_tubes;
 	if (lem->max_lives > LIVES_LIMIT)
 		lem->max_lives = LIVES_LIMIT;
 	lem->lives = lem->max_lives;
-	path = NULL;
 	if (!(lem->current_config = alloc_new_config())
 		|| !(lem->best_config = alloc_new_config()))
 		return (0);
-	while (lem->lives)
+	end_parent = lem->end->parents->first;
+	lem->start_parent = end_parent;
+	while (lem->lives && end_parent)
 	{
-		if (!(check_alloc = try_path(lem, &path)))
+		if (end_parent == lem->loop_limit)
+		{
+			unprotect_rooms(lem->current_config);
+			end_parent = end_parent->next ? end_parent->next : lem->end->parents->first;
+			lem->start_parent = end_parent;
+		}
+		ft_printf("starting from room:\n");
+		print_room(end_parent->content);
+		if (!(check_alloc = try_path(lem, &path, end_parent->content)))
 			return (0);
 		else if (check_alloc == 1)
 		{
+			lem->loop_limit = end_parent;
 			if (!manage_valid_path(lem, path))
 				return (0);
 		}
+		end_parent = end_parent->next ? end_parent->next : lem->end->parents->first;
 	}
 	return (1);
 }

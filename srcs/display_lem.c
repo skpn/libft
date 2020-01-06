@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:36:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 16:50:15 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 20:19:29 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ void			nb_walked_rooms_per_lvl(t_lem *lem)
 			}
 			index++;
 		}
-		ft_printf("lvl %u: at walk = 0 : %u / %u\n"
-			, lvl, lvl_not_walked, lvl_rooms);
+		if (lvl_rooms > 0)
+			ft_printf("lvl %u: at walk = 0 : %u / %u\n", lvl, lvl_not_walked, lvl_rooms);
 		lvl--;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:14:09 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 15:41:21 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/06 20:19:30 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_relatives(t_room *room)
 	while (elem)
 	{
 		child = elem->content;
-		ft_printf("%s (d %u, w %u) -- ", child->name, child->dist, child->walk);
+		ft_printf("%s (d %u, w %u, c %u) -- ", child->name, child->dist, child->walk, child->is_closed);
 		elem = elem->next;
 	}
 	ft_printf("\n");
@@ -32,7 +32,7 @@ void	print_relatives(t_room *room)
 	while (elem)
 	{
 		child = elem->content;
-		ft_printf("%s (d %u, w %u) -- ", child->name, child->dist, child->walk);
+		ft_printf("%s (d %u, w %u, c %u) -- ", child->name, child->dist, child->walk, child->is_closed);
 		elem = elem->next;
 	}
 }
@@ -43,9 +43,9 @@ void	print_room(t_room *room)
 		return ;
 	ft_printf("PRINTING ROOM\n");
 	ft_printf("room '%s': %p\n", room->name, room);
-	ft_printf("\tdist %u\n", room->dist);
-	ft_printf("\thas_lvl %u\n", room->has_lvl);
-	ft_printf("\twalk %u\n", room->walk);
+	ft_printf("	dist		%u\n", room->dist);
+	ft_printf("	has_lvl		%u\n", room->has_lvl);
+	ft_printf("	walk		%u\n", room->walk);
 	print_relatives(room);
 	ft_printf("\n");
 }
