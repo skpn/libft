@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:52:16 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:02:08 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 18:42:19 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ void	free_table_room(void **void_room)
 	t_room	**room;
 
 	room = (t_room **)void_room;
-	ft_lstfree(&(*room)->parents, FREE_LINKS, FREE_HEAD);
-	ft_lstfree(&(*room)->children, FREE_LINKS, FREE_HEAD);
+	ft_lstfree(&(*room)->sisters, FREE_LINKS, FREE_HEAD);
 	easyfree((void **)room);
 }
 

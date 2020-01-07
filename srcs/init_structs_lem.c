@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 22:15:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 11:42:23 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 18:41:56 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ t_room		*alloc_new_room(void)
 
 	if (!(room = (t_room *)easymalloc(sizeof(*room))))
 		return (NULL);
-	if (!(room->parents = ft_lstnew_head(NULL, NULL)))
-		return (NULL);
-	if (!(room->children = ft_lstnew_head(NULL, NULL)))
+	if (!(room->sisters = ft_lstnew_head(NULL, NULL)))
 		return (NULL);
 	room->dist = 0xFFFFFFFF;
 	return (room);

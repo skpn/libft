@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 18:30:18 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 19:05:08 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ typedef struct		s_room
 	char			*name;
 	t_path			*previous_path;
 	t_path			*current_path;
-	t_head			*parents;
-	t_head			*children;
+	t_head			*sisters;
 }					t_room;
 
 typedef struct		s_lvl
@@ -87,16 +86,16 @@ typedef struct		s_lem
 {
 	unsigned		nb_ants;
 	unsigned		nb_rooms;
-	unsigned		max_paths;
-	unsigned		most_paths;
+//	unsigned		max_paths;
+//	unsigned		most_paths;
 	unsigned		shortest;
-	unsigned		max_dist;
+//	unsigned		max_dist;
 	unsigned		turns;
 	unsigned		nb_tubes;
 	unsigned		max_lives;
 	unsigned		lives;
 	unsigned		anthill_size;
-	unsigned		scramble_flip;
+//	unsigned		scramble_flip;
 	unsigned		pos;
 	char			*anthill;
 	char			*copy;
@@ -122,7 +121,6 @@ t_lvl				*alloc_new_lvl(void);
 t_display			*alloc_new_display(unsigned total_rooms);
 int					parse_input(t_lem *lem);
 void				set_next_lvl_dists(t_lvl *lvl);
-void				set_next_lvl_families(t_lvl *lvl, t_room *end);
 void				kill_dead_rooms(t_lem *lem, t_room *dead_room);
 void				kill_end_children(t_room *end, unsigned max_dist);
 int					seek_paths(t_lem *lem);

@@ -6,32 +6,33 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:45:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 16:10:09 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 19:05:06 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
 
-void	kill_end_children(t_room *end, unsigned max_dist)
+void	kill_end_dangling_rooms(t_room *end, unsigned max_dist)
 {
-	t_lst	*child_elem;
-	t_lst	*transfer;
-	t_room	*child;
+	t_lst	*popped_room_lst;
+	t_lst	*sister_lst;
+	t_room	*sister;
 
-	child_elem = end->children->first;
-	while (child_elem)
+	sisters_lst = end->sisters_lst->first;
+	while (sisters_lst)
 	{
-		child = child_elem->content;
-		child_elem = child_elem->next;
-		transfer = ft_lstpop(end->children, child);
-		if (child->dist <= max_dist)
+		sister = sisters_lst->content;
+		sisters_lst = sisters_lst->next;
+		if (sister->sisters->disttransfer = ft_lstpop(end->sisterren, sister);
+		if (sister->dist <= max_dist)
 			ft_lstadd(end->parents, transfer);
 		else
 			ft_lstfree_elem(&transfer, FREE_LINKS);
 	}
 }
 
+/*
 void	kill_dead_rooms(t_lem *lem, t_room *dead_room)
 {
 	t_lst		*parents_lst;
@@ -39,9 +40,9 @@ void	kill_dead_rooms(t_lem *lem, t_room *dead_room)
 	t_room		*parent;
 	t_h_elem	*dead_room_hash_elem;
 
-	if (dead_room == lem->start)
-		lem->start = NULL;
-	if (dead_room->children->first != NULL || dead_room->parents->size > 1)
+//	if (dead_room == lem->start)
+//		lem->start = NULL;
+	if (dead_room->sisters->size > 1)
 		return ;
 	parents_lst = dead_room->parents->first;
 	while (parents_lst)
@@ -59,3 +60,4 @@ void	kill_dead_rooms(t_lem *lem, t_room *dead_room)
 		return ;
 	ft_hash_free_elem(lem->table, dead_room_hash_elem, FREE_BOTH);
 }
+*/
