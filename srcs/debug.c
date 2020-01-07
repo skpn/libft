@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:14:09 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 20:19:30 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 10:32:23 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,19 @@ void	print_path(t_path *path)
 
 	if (DEBUG == 0)
 		return ;
+	(void)room;
 	//ft_printf("PRINTING PATH\n");
 	path_rooms = path->rooms->first;
 	//ft_printf("path_address = %p, \n", path);
-	ft_printf("path->load = %u, path->room->size = %u\n"
-		, path->load, path->rooms->size);
-	while (path_rooms)
+	room = path->rooms->last->prev->content;
+	ft_printf("path->room->size = %u, end_parent = %s, is_closed = %u\n", path->rooms->size, room->name, room->is_closed);
+	/*while (path_rooms)
 	{
 		room = path_rooms->content;
 		ft_printf("%s (d %u, w %u) -- ", room->name, room->dist, room->walk);
 		path_rooms = path_rooms->next;
 	}
-	ft_printf("\n");
+	ft_printf("\n");*/
 }
 
 void	print_paths(t_head *paths)

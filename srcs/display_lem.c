@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:36:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 20:19:29 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 10:53:44 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void			start_joined_to_end(t_lem *lem)
 	ft_printf("\n");
 }
 
-
+/*
 static void		print_ant(t_display *display, t_ant *ant)
 {
 	t_room		*room;
@@ -72,7 +72,7 @@ static void		print_ants(t_display *display)
 	}
 	ft_printf("\n");
 }
-
+*/
 
 void			nb_walked_rooms_per_lvl(t_lem *lem)
 {
@@ -125,19 +125,19 @@ int				display_lem(t_lem *lem)
 	lem->display = display;
 	
 	//write(1, lem->anthill, ft_strlen(lem->anthill));
-	while (display->turn < lem->turns)
+	/*while (display->turn < lem->turns)
 	{
 		display->first_print = 1;
 		print_ants(display);
 		display->turn++;
-	}
+	}*/
 	
 	print_room(lem->start);
 	ft_printf("start children: %u\n", lem->start->children->size);
 	print_room(lem->end);
 	ft_printf("end parents: %u\n", lem->end->parents->size);
-	ft_printf("scrambled: %u\n", lem->scramble_ctr);
-	nb_walked_rooms_per_lvl(lem);
+	ft_printf("max lives: %u\n", lem->max_lives);
+	//nb_walked_rooms_per_lvl(lem);
 	ft_printf("nb_paths = %u\n", lem->best_config->paths->size);
 	ft_printf("turns: %u\n", lem->turns);
 	return (1);

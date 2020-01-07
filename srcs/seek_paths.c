@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 20:19:31 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 10:57:39 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,29 @@ static void		erase_current_path(t_path *path)
 	}
 }
 
+void			unprotect_rooms(t_config *config)
+{
+	t_lst	*path_elem;
+	t_path	*path;
+	t_lst	*room_elem;
+	t_room	*room;
+
+	path_elem = config->paths->first;
+	while (path_elem)
+	{
+		path = path_elem->content;
+		room_elem = path->rooms->first;
+		ft_printf("Unprotecting paths, room->is_closed = %u\n", ((t_room *)room_elem->content)->is_closed);
+		while (room_elem)
+		{
+			room = room_elem->content;
+			room->is_closed = 0;
+			room_elem = room_elem->next;
+		}
+		path_elem = path_elem->next;
+	}
+}
+
 static int		try_path(t_lem *lem, t_path **path, t_room *room)
 {
 	if (!(*path = alloc_new_path()))
@@ -98,8 +121,8 @@ static int		try_path(t_lem *lem, t_path **path, t_room *room)
 		return (0);
 	while ((room = get_next_room(lem, *path, room)))
 	{
-		ft_printf("next room:\n");
-		print_room(room);
+		//ft_printf("next room:\n");
+		//print_room(room);
 		if (!update_room(room, *path))
 			return (0);
 		if (room == lem->start)
@@ -115,28 +138,6 @@ static int		try_path(t_lem *lem, t_path **path, t_room *room)
 	return (-1);
 }
 
-void			unprotect_rooms(t_config *config)
-{
-	t_lst	*path_elem;
-	t_path	*path;
-	t_lst	*room_elem;
-	t_room	*room;
-
-	path_elem = config->paths->first;
-	while (path_elem)
-	{
-		path = path_elem->content;
-		room_elem = path->rooms->first;
-		while (room_elem)
-		{
-			room = room_elem->content;
-			room->is_closed = 0;
-			room_elem = room_elem->next;
-		}
-		path_elem = path_elem->next;
-	}
-}
-
 int				seek_paths(t_lem *lem)
 {
 	t_path		*path;
@@ -144,25 +145,17 @@ int				seek_paths(t_lem *lem)
 	t_lst		*end_parent;
 
 	lem->max_lives = lem->end->parents->size + lem->end->dist * lem->nb_tubes;
-	if (lem->max_lives > LIVES_LIMIT)
-		lem->max_lives = LIVES_LIMIT;
+	if (lem->max_lives > LIVES_UPPER_LIMIT)
+		lem->max_lives = LIVES_UPPER_LIMIT;
+	else if (lem->max_lives < LIVES_LOWER_LIMIT)
+		lem->max_lives = LIVES_LOWER_LIMIT;
 	lem->lives = lem->max_lives;
 	if (!(lem->current_config = alloc_new_config())
 		|| !(lem->best_config = alloc_new_config()))
 		return (0);
-	end_parent = lem->end->parents->first;
-	lem->start_parent = end_parent;
 	while (lem->lives && end_parent)
 	{
-		if (end_parent == lem->loop_limit)
-		{
-			unprotect_rooms(lem->current_config);
-			end_parent = end_parent->next ? end_parent->next : lem->end->parents->first;
-			lem->start_parent = end_parent;
-		}
-		ft_printf("starting from room:\n");
-		print_room(end_parent->content);
-		if (!(check_alloc = try_path(lem, &path, end_parent->content)))
+		if (!(check_alloc = try_path(lem, &path)))
 			return (0);
 		else if (check_alloc == 1)
 		{
@@ -170,7 +163,7 @@ int				seek_paths(t_lem *lem)
 			if (!manage_valid_path(lem, path))
 				return (0);
 		}
-		end_parent = end_parent->next ? end_parent->next : lem->end->parents->first;
+		end_parent = get_next_end_parent(lem, end_parent);
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 20:19:32 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 10:58:19 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # define PARENT 1
 # define BROTHER 2
 # define CHILD 3
-# define LIVES_LIMIT 200
+# define LIVES_UPPER_LIMIT 2000
+# define LIVES_LOWER_LIMIT 2000
 # define DEBUG 1 
 
 typedef struct		s_path

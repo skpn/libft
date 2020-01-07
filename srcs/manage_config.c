@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 20:19:34 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 10:26:35 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static int	add_path(t_lem *lem, t_path *new_path)
 	unsigned	new_path_size;
 
 	lem->lives--;
-	//print_path(new_path);
 	new_path_size = new_path->rooms->size;
 	if (!(new_path_lst = ft_lstnew_elem(new_path)))
 		return (0);
@@ -64,13 +63,15 @@ static int	add_path(t_lem *lem, t_path *new_path)
 
 int			manage_valid_path(t_lem *lem, t_path *path)
 {
+	//ft_printf("Current config size = %u\n", lem->current_config->paths->size);
 	print_path(path);
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);
 	if (!add_path(lem, path))
 		return (0);
-	if (lem->best_config->turns <= lem->current_config->turns)
+	if (lem->best_config->turns < lem->current_config->turns)
 		return (1);
+	ft_printf("best_config->turns = %u, current_turns = %u\n", lem->best_config->turns, lem->current_config->turns);
 	if (!update_best_config(lem))
 		return (0);
 	return (1);
