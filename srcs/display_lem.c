@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:36:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 17:14:08 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 17:37:28 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void			check_best_config_validity(t_lem *lem, t_config *best_config)
 			}
 		}
 	}
-	ft_printf("\n\n\n:)\n\n\n");
+	ft_printf("\n:)\n");
 }
 
 int				display_lem(t_lem *lem)
@@ -106,17 +106,14 @@ int				display_lem(t_lem *lem)
 	if (!(display = set_display(lem)))
 		return (0);
 	lem->display = display;
-//	write(1, lem->anthill, ft_strlen(lem->anthill));
-	/*while (display->turn < lem->turns)
+	/*write(1, lem->anthill, ft_strlen(lem->anthill));
+	while (display->turn < lem->turns)
 	{
 		display->first_print = 1;
 		print_ants(display);
 		display->turn++;
 	}*/
-//	print_room(lem->end);
-	ft_printf("\nlem turns: %u, nb paths: %u\n", lem->turns, lem->best_config->paths->size);
-	ft_printf("max paths: %u\n", lem->max_paths);
-	ft_printf("\n\n");
+	ft_printf("\nlem turns: %u, nb paths: %u\n\n", lem->turns, lem->best_config->paths->size);
 	print_config(lem->best_config);
 	check_best_config_validity(lem, lem->best_config);
 	return (1);

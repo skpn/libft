@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 16:48:50 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 18:30:16 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ static int		update_room(t_room *room, t_path *path)
 	if (room->previous_path)
 		room->previous_path->is_dead = 1;
 	room->current_path = path;
-//	if (room->parents->first)
-//		room->is_closed = 1;
 	if (!ft_lstadd_new(path->rooms, room))
 		return (0);
 	return (1);
@@ -59,7 +57,7 @@ static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 	{
 		child_room = child->content;
 		if (child_room->dist + path->rooms->size <= lem->current_config->turns
-			&& child_room->current_path != path && !child_room->is_closed)
+			&& child_room->current_path != path)
 		{
 			next_room = check_room(child_room, next_room);
 		}
@@ -70,7 +68,7 @@ static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 	{
 		child_room = child->content;
 		if (child_room->dist + path->rooms->size <= lem->current_config->turns
-			&& child_room->current_path != path && !child_room->is_closed)
+			&& child_room->current_path != path)
 		{
 			next_room = check_room(child_room, next_room);
 		}
@@ -97,7 +95,6 @@ static void		erase_current_path(t_path *path)
 		room->previous_path = NULL;
 		if (room->current_path)
 			room->current_path->is_dead = 0;
-//		room->is_closed = 0;
 	}
 }
 
@@ -108,8 +105,8 @@ void			reopen_rooms(t_config *current_config)
 	t_lst	*room_lst;
 	t_room	*room;
 
-	ft_printf("reopening rooms with config:\n");
-	print_config(current_config);
+//	ft_printf("reopening rooms with config:\n");
+//	print_config(current_config);
 	path_lst = current_config->paths->first;
 	while (path_lst)
 	{
@@ -120,7 +117,6 @@ void			reopen_rooms(t_config *current_config)
 		{
 			room = room_lst->content;
 			room_lst = room_lst->next;
-			room->is_closed = 0;
 		}
 	}
 }
@@ -136,11 +132,7 @@ static int		try_path(t_lem *lem, t_path **path)
 	if (!ft_lstadd_new((*path)->rooms, lem->end))
 		return (0);
 	lem->end->current_path = *path;
-	if (!(room = get_next_room(lem, *path, lem->end)))
-	{
-		reopen_rooms(lem->current_config);
-		room = get_next_room(lem, *path, lem->end);
-	}
+	room = get_next_room(lem, *path, lem->end);
 	if (!update_room(room, *path))
 		return (0);
 	while ((*path)->rooms->size < max_dist

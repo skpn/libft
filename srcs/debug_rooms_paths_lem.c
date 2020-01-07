@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:17:42 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 14:14:30 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 18:01:35 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	print_room(t_room *room)
 	ft_printf("room '%s': %p\n", room->name, room);
 	ft_printf("\tdist %u\n", room->dist);
 	ft_printf("\twalk %u\n", room->walk);
-	ft_printf("\tis_closed %u\n", room->is_closed);
 	print_relatives(room);
 	ft_printf("\n");
 }

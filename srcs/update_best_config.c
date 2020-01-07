@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:08:55 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 10:41:27 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/07 17:49:17 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int				update_best_config(t_lem *lem)
 		|| lem->best_config->turns == lem->current_config->turns)
 		scramble_end_parents(lem);
 	lem->best_config->turns = lem->current_config->turns;
+	lem->best_config->size = lem->current_config->size;
 	lem->lives = lem->max_lives;
 	return (1);
 }

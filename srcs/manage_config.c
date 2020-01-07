@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 16:42:42 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 17:50:57 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static void	pop_dead_paths(t_config *config)
 		path_lst = path_lst->next;
 		if (path->is_dead)
 		{
-			ft_printf(" ---- popping path: ");
-			print_path(path);
+	//		ft_printf(" ---- popping path: ");
+	//		print_path(path);
 			dead_path_lst = ft_lstpop(config->paths, path);
 			if (dead_path_lst)
 				ft_lstfree_elem(&dead_path_lst, FREE_LINKS);
@@ -84,6 +84,7 @@ static int	add_path(t_lem *lem, t_path *new_path)
 		ft_lstinsert(lem->current_config->paths, config_path_lst, new_path_lst
 			, AFTER);
 	}
+	lem->current_config->size += new_path->rooms->size;
 	pop_dead_paths(lem->current_config);
 //	pop_dead_paths(lem, new_path);
 	balance_load(lem);
@@ -112,12 +113,13 @@ void		reset_best_paths(t_config *best_config)
 
 int			manage_valid_path(t_lem *lem, t_path *path)
 {
-	ft_printf("valid path:");
-	print_path(path);
+//	ft_printf("valid path:");
+//	print_path(path);
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);
 	if (!add_path(lem, path))
 		return (0);
+		/*
 	ft_printf("---\nconfig paths: ");
 	t_lst	*path_lst;
 	t_path	*deb_path;
@@ -129,6 +131,7 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 		ft_printf("%u -- ", deb_path->rooms->size);
 	}
 	ft_printf("\n---\n");
+	*/
 	if (lem->best_config->turns <= lem->current_config->turns)
 		return (1);
 	if (!update_best_config(lem))

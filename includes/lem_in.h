@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 16:56:53 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 18:30:18 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct		s_room
 	unsigned		has_lvl;
 	unsigned		walk;
 	unsigned		walk_2;
-	unsigned		is_closed;
 	char			*name;
 	t_path			*previous_path;
 	t_path			*current_path;
@@ -68,6 +67,7 @@ typedef struct		s_lvl
 typedef struct		s_config
 {
 	unsigned		turns;
+	unsigned		size;
 	t_head			*paths;
 }					t_config;
 
