@@ -6,14 +6,14 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 18:00:27 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 13:45:09 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 11:10:23 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
 
-static int		add_tubes(t_lem *lem, char *name_1, char *name_2)
+static int		add_links(t_lem *lem, char *name_1, char *name_2)
 {
 	t_room	*room_1;
 	t_room	*room_2;
@@ -34,7 +34,7 @@ static int		add_tubes(t_lem *lem, char *name_1, char *name_2)
 	return (1);
 }
 
-static int		get_tube_names(t_lem *lem, char **name_1, char **name_2)
+static int		get_link_names(t_lem *lem, char **name_1, char **name_2)
 {
 	*name_1 = lem->copy + lem->pos;
 	if (!ft_strcmp(*name_1, "\n"))
@@ -63,11 +63,11 @@ int				get_tubes(t_lem *lem, char *anthill_copy)
 	check_start_end = REJECT_START_END;
 	while (anthill_copy[lem->pos] == '#')
 		manage_com(lem, anthill_copy, &check_start_end);
-	if ((ret = get_tube_names(lem, &name_1, &name_2)) < 1)
+	if ((ret = get_link_names(lem, &name_1, &name_2)) < 1)
 		return (ret);
 	else if (ret == END)
 		return (0);
-	if ((ret = add_tubes(lem, name_1, name_2)) < 1)
+	if ((ret = add_links(lem, name_1, name_2)) < 1)
 		return (ret);
 	if (!lem->copy[lem->pos])
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/19 15:41:30 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 13:45:23 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 11:10:34 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ int				get_rooms(t_lem *lem, char *anthill_copy)
 		if (manage_com(lem, anthill_copy, &check_start_end) == PARSING_ERROR)
 			return (PARSING_ERROR);
 	if ((ret = get_name(lem, &name)) < 1)
+	{
 		return (ret);
+	}
 	if (check_same_name(lem, name) <= 0)
 		return (PARSING_ERROR);
 	if (!(room = alloc_new_room()))

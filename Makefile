@@ -6,13 +6,13 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/01/06 14:00:11 by sikpenou         ###   ########.fr        #
+#    Updated: 2020/01/07 14:02:58 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3# -fsanitize=address
 
 NAME = lem-in
 
@@ -20,7 +20,7 @@ SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 SRC_FILES =	main_lem.c							\
 			init_structs_lem.c					\
-			init_structs_display_lem.c			\
+			init_display_structs_lem.c			\
 			exit_lem.c							\
 			free_lem_paths.c					\
 			parser_lem.c						\
@@ -31,7 +31,8 @@ SRC_FILES =	main_lem.c							\
 			manage_config.c						\
 			update_best_config.c				\
 			load_balancing.c					\
-			debug.c								\
+			debug_display_config_lem_lvl_lem.c	\
+			debug_rooms_paths_lem.c				\
 			set_display.c						\
 			display_lem.c						\
 			get_anthill.c						\

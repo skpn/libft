@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:36:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 10:53:44 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 17:14:08 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void			start_joined_to_end(t_lem *lem)
 	ft_printf("\n");
 }
 
-/*
-static void		print_ant(t_display *display, t_ant *ant)
+/*static void		print_ant(t_display *display, t_ant *ant)
 {
 	t_room		*room;
 
@@ -71,50 +70,34 @@ static void		print_ants(t_display *display)
 		print_cell++;
 	}
 	ft_printf("\n");
-}
-*/
+}*/
 
-void			nb_walked_rooms_per_lvl(t_lem *lem)
+void			check_best_config_validity(t_lem *lem, t_config *best_config)
 {
-	unsigned	index;
-	t_lst		*index_lst;
-	t_h_elem	*h_elem;
-	t_room		*room;
-	unsigned	lvl_not_walked;
-	unsigned	lvl_rooms;
-	unsigned	lvl;
+	t_lst	*path_lst;
+	t_lst	*room_lst;
+	t_room	*room;
 
-	index = 0;
-	lvl = 131;
-	while (lvl >= 0 && lvl < 10000000)
+	path_lst = best_config->paths->first;
+	while (path_lst->next)
 	{
-		lvl_not_walked = 0;
-		lvl_rooms = 0;
-		index = 0;
-		while (index < lem->table->size)
+		room_lst = ((t_path *)path_lst->content)->rooms->first;
+		path_lst = path_lst->next;
+		while (room_lst)
 		{
-			if (lem->table->array[index].first)
+			room = room_lst->content;
+			room_lst = room_lst->next;
+			if (room != lem->start && room != lem->end)
+				room->walk_2++;
+			if (room->walk_2 > 1)
 			{
-				index_lst = lem->table->array[index].first;
-				while (index_lst)
-				{
-					h_elem = index_lst->content;
-					index_lst = index_lst->next;
-					room = h_elem->content;
-					if (room->dist == lvl)
-						lvl_rooms++;
-					if (!room->walk && room->dist == lvl)
-						lvl_not_walked++;
-				}
+				ft_printf("\n\n\nroom %s has walk %u :(\n\n\n"
+					, room->name, room->walk_2);
 			}
-			index++;
 		}
-		if (lvl_rooms > 0)
-			ft_printf("lvl %u: at walk = 0 : %u / %u\n", lvl, lvl_not_walked, lvl_rooms);
-		lvl--;
 	}
+	ft_printf("\n\n\n:)\n\n\n");
 }
-
 
 int				display_lem(t_lem *lem)
 {
@@ -123,22 +106,18 @@ int				display_lem(t_lem *lem)
 	if (!(display = set_display(lem)))
 		return (0);
 	lem->display = display;
-	
-	//write(1, lem->anthill, ft_strlen(lem->anthill));
+//	write(1, lem->anthill, ft_strlen(lem->anthill));
 	/*while (display->turn < lem->turns)
 	{
 		display->first_print = 1;
 		print_ants(display);
 		display->turn++;
 	}*/
-	
-	print_room(lem->start);
-	ft_printf("start children: %u\n", lem->start->children->size);
-	print_room(lem->end);
-	ft_printf("end parents: %u\n", lem->end->parents->size);
-	ft_printf("max lives: %u\n", lem->max_lives);
-	//nb_walked_rooms_per_lvl(lem);
-	ft_printf("nb_paths = %u\n", lem->best_config->paths->size);
-	ft_printf("turns: %u\n", lem->turns);
+//	print_room(lem->end);
+	ft_printf("\nlem turns: %u, nb paths: %u\n", lem->turns, lem->best_config->paths->size);
+	ft_printf("max paths: %u\n", lem->max_paths);
+	ft_printf("\n\n");
+	print_config(lem->best_config);
+	check_best_config_validity(lem, lem->best_config);
 	return (1);
 }

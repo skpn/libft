@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 10:58:19 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 16:56:53 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define CHILD 3
 # define LIVES_UPPER_LIMIT 2000
 # define LIVES_LOWER_LIMIT 2000
-# define DEBUG 1 
+# define DEBUG 1
 
 typedef struct		s_path
 {
@@ -50,8 +50,10 @@ typedef struct		s_room
 	unsigned		dist;
 	unsigned		has_lvl;
 	unsigned		walk;
+	unsigned		walk_2;
 	unsigned		is_closed;
 	char			*name;
+	t_path			*previous_path;
 	t_path			*current_path;
 	t_head			*parents;
 	t_head			*children;
@@ -83,10 +85,10 @@ typedef struct		s_display
 
 typedef struct		s_lem
 {
-	unsigned		scramble_ctr;
 	unsigned		nb_ants;
 	unsigned		nb_rooms;
 	unsigned		max_paths;
+	unsigned		most_paths;
 	unsigned		shortest;
 	unsigned		max_dist;
 	unsigned		turns;
@@ -102,8 +104,6 @@ typedef struct		s_lem
 	t_room			*end;
 	t_h_table		*table;
 	t_head			*paths;
-	t_lst			*loop_limit;
-	t_lst			*start_parent;
 	t_config		*best_config;
 	t_config		*current_config;
 	t_display		*display;
