@@ -6,29 +6,29 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:45:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 19:05:06 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 21:59:26 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
 
-void	kill_end_dangling_rooms(t_room *end, unsigned max_dist)
+void	kill_end_unreached_rooms(t_room *end)
 {
-	t_lst	*popped_room_lst;
-	t_lst	*sister_lst;
+	t_lst	*popped_sister_lst;
+	t_lst	*sisters_lst;
 	t_room	*sister;
 
-	sisters_lst = end->sisters_lst->first;
+	sisters_lst = end->sisters->first;
 	while (sisters_lst)
 	{
 		sister = sisters_lst->content;
 		sisters_lst = sisters_lst->next;
-		if (sister->sisters->disttransfer = ft_lstpop(end->sisterren, sister);
-		if (sister->dist <= max_dist)
-			ft_lstadd(end->parents, transfer);
-		else
-			ft_lstfree_elem(&transfer, FREE_LINKS);
+		if (sister->dist == 0xFFFFFFFF && end->dist != 0)
+		{
+			popped_sister_lst = ft_lstpop(end->sisters, sister);
+			ft_lstfree_elem(&popped_sister_lst, FREE_LINKS);
+		}
 	}
 }
 

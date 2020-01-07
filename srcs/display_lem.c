@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:36:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 17:37:28 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 22:02:19 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,16 @@ void			check_best_config_validity(t_lem *lem, t_config *best_config)
 		{
 			room = room_lst->content;
 			room_lst = room_lst->next;
-			if (room != lem->start && room != lem->end)
-				room->walk_2++;
-			if (room->walk_2 > 1)
+			if (room->dist && room != lem->end)
+				room->dist = 0;
+			else if (room != lem->start && room != lem->end)
 			{
-				ft_printf("\n\n\nroom %s has walk %u :(\n\n\n"
-					, room->name, room->walk_2);
+				ft_printf("\n\n\nroom %s used %d times :(\n\n\n"
+					, room->name, (int)room->dist * -1 + 1);
 			}
 		}
 	}
-	ft_printf("\n:)\n");
+	ft_printf("\n:)\n\n");
 }
 
 int				display_lem(t_lem *lem)
@@ -113,7 +113,7 @@ int				display_lem(t_lem *lem)
 		print_ants(display);
 		display->turn++;
 	}*/
-	ft_printf("\nlem turns: %u, nb paths: %u\n\n", lem->turns, lem->best_config->paths->size);
+	ft_printf("\nmax lives %u, lem turns: %u, nb paths: %u\n\n", lem->max_lives, lem->turns, lem->best_config->paths->size);
 	print_config(lem->best_config);
 	check_best_config_validity(lem, lem->best_config);
 	return (1);

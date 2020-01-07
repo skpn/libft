@@ -6,12 +6,25 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 21:05:19 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 19:05:05 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 22:32:28 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
+
+void		kill_dead_rooms(t_room *dead_room)
+{
+	t_room	*older_sister;
+	t_lst	*popped_room;
+
+	older_sister = dead_room->sisters->first->content;
+	popped_room = ft_lstpop(older_sister->sisters, dead_room);
+	if (popped_room)
+		ft_lstfree_elem(&popped_room, FREE_LINKS);
+	if (older_sister->sisters->size == 1)
+		kill_dead_rooms(older_sister);
+}
 
 static int	add_sisters_to_next_lvl(t_head *rooms, t_head *sisters)
 {
@@ -22,38 +35,36 @@ static int	add_sisters_to_next_lvl(t_head *rooms, t_head *sisters)
 	while (sisters_lst)
 	{
 		sister = sisters_lst->content;
-		if (!sister->has_lvl)
+		sisters_lst = sisters_lst->next;
+		if (sister->sisters->size == 1)
+			kill_dead_rooms(sister);
+		else if (!sister->has_lvl)
 		{
 			sister->has_lvl = 1;
 			if (!(ft_lstadd_new(rooms, sister)))
 				return (0);
 		}
-		sisters = sisters_lst->next;
 	}
 	return (1);
 }
 
 static int	get_next_lvl_rooms(t_lem *lem, t_lvl *lvl)
 {
-	t_lst	*current_rooms;
+	t_lst	*current_rooms_lst;
 	t_lst	*tmp;
-	t_room	*parent;
+	t_room	*current_room;
 
-	current_rooms = lvl->rooms->first;
+	(void)lem;
+	current_rooms_lst = lvl->rooms->first;
 	lvl->rooms->first = NULL;
 	lvl->rooms->last = NULL;
-	while (current_rooms)
+	while (current_rooms_lst)
 	{
-		parent = current_rooms->content;
-		if (parent->sisters->first != NULL)
-		{
-			if (!add_sisters_to_next_lvl(lvl->rooms, parent->sisters))
-				return (0);
-		}
-//		else if (parent != lem->end)
-//			kill_dead_rooms(lem, parent);
-		tmp = current_rooms;
-		current_rooms = current_rooms->next;
+		current_room = current_rooms_lst->content;
+		if (!add_sisters_to_next_lvl(lvl->rooms, current_room->sisters))
+			return (0);
+		tmp = current_rooms_lst;
+		current_rooms_lst = current_rooms_lst->next;
 		ft_lstfree_elem(&tmp, FREE_LINKS);
 	}
 	return (1);
@@ -61,14 +72,13 @@ static int	get_next_lvl_rooms(t_lem *lem, t_lvl *lvl)
 
 static int	set_lvls(t_lem *lem, t_lvl *lvl)
 {
-	t_lst	*end_elem;
+	unsigned	max_dist;
+	t_lst		*end_elem;
 
-	while (lvl->dist < lem->max_dist && lvl->rooms->first)
+	max_dist = 0xFFFFFFFF;
+	while (lvl->dist < max_dist && lvl->rooms->first)
 	{
 		set_next_lvl_dists(lvl);
-		if (lvl->rooms->size < lem->max_paths && lvl->dist > 0
-			&& (lvl->dist < lem->end->dist || lvl->dist == 1))
-			lem->max_paths = lvl->rooms->size;
 		if (!get_next_lvl_rooms(lem, lvl))
 		{
 			free_lvl(&lvl);
@@ -79,7 +89,7 @@ static int	set_lvls(t_lem *lem, t_lvl *lvl)
 			if ((end_elem = ft_lstpop(lvl->rooms, lem->end)))
 				ft_lstfree_elem(&end_elem, FREE_LINKS);
 			lem->shortest = lvl->dist + 2;
-			lem->max_dist = lem->shortest + lem->nb_ants - 1;
+			max_dist = lem->shortest + lem->nb_ants - 1;
 		}
 		lvl->dist++;
 	}
@@ -111,14 +121,12 @@ int			set_graph(t_lem *lem)
 		free_lvl(&lvl);
 		return (0);
 	}
-	if ((lem->max_paths < 1 || lem->max_paths > lem->table->elems
-		|| lem->shortest != lem->end->dist + 1)
-			&& !ft_lstfind(lem->start->children, lem->end))
+	if (lem->shortest != lem->end->dist + 1 && lem->end->dist != 1)
 	{
 		free_lvl(&lvl);
 		return (PARSING_ERROR);
 	}
-	kill_end_dangling_rooms(lem->end, lem->max_dist);
+	kill_end_unreached_rooms(lem->end);
 	free_lvl(&lvl);
 	return (1);
 }

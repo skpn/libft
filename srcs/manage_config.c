@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 17:50:57 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 20:23:48 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	pop_dead_paths(t_config *config)
 	t_lst	*path_lst;
 	t_lst	*dead_path_lst;
 	t_path	*path;
+
 	path_lst = config->paths->first;
 	while (path_lst)
 	{
@@ -33,33 +34,6 @@ static void	pop_dead_paths(t_config *config)
 		}
 	}
 }
-/*
-static void	pop_dead_paths(t_lem *lem, t_path *new_path)
-{
-	t_lst		*popped_path;
-	t_lst		*room_lst;
-	t_room		*room;
-
-	room_lst = new_path->rooms->first;
-	while (room_lst)
-	{
-		room = room_lst->content;
-		room_lst = room_lst->next;
-		if (room->previous_path)
-		{
-			ft_printf("path %p, room %p current path: %p\n", new_path, room, room->current_path);
-			popped_path = ft_lstpop(lem->current_config->paths
-				, room->previous_path);
-			if (popped_path)
-			{
-				ft_lstfree_elem(&popped_path, FREE_LINKS);
-			}
-		}
-		room->current_path = new_path;
-	}
-	print_config(lem->current_config);
-}
-*/
 
 static int	add_path(t_lem *lem, t_path *new_path)
 {
@@ -84,9 +58,7 @@ static int	add_path(t_lem *lem, t_path *new_path)
 		ft_lstinsert(lem->current_config->paths, config_path_lst, new_path_lst
 			, AFTER);
 	}
-	lem->current_config->size += new_path->rooms->size;
 	pop_dead_paths(lem->current_config);
-//	pop_dead_paths(lem, new_path);
 	balance_load(lem);
 	return (1);
 }
@@ -119,25 +91,10 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 		return (0);
 	if (!add_path(lem, path))
 		return (0);
-		/*
-	ft_printf("---\nconfig paths: ");
-	t_lst	*path_lst;
-	t_path	*deb_path;
-	path_lst = lem->current_config->paths->first;
-	while (path_lst)
-	{
-		deb_path = path_lst->content;
-		path_lst = path_lst->next;
-		ft_printf("%u -- ", deb_path->rooms->size);
-	}
-	ft_printf("\n---\n");
-	*/
 	if (lem->best_config->turns <= lem->current_config->turns)
 		return (1);
 	if (!update_best_config(lem))
 		return (0);
-	if (lem->best_config->paths->size > lem->most_paths)
-		lem->most_paths = lem->best_config->paths->size;
 	reset_best_paths(lem->best_config);
 	return (1);
 }

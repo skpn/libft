@@ -6,29 +6,29 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 18:30:16 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 21:19:34 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "libft.h"
 
-static t_room	*check_room(t_room *child, t_room *next_room)
+static t_room	*check_room(t_room *sister, t_room *next_room)
 {
 	if (!next_room)
 	{
-		return (child);
+		return (sister);
 	}
 	/*
-	if (child->walk < next_room->walk || (child->walk == next_room->walk
-		&& child->dist < next_room->dist))
+	if (sister->walk < next_room->walk || (sister->walk == next_room->walk
+		&& sister->dist < next_room->dist))
 	{
-		return (child);
+		return (sister);
 	}
 	*/
-	if (child->walk + child->dist <= next_room->walk + next_room->dist)
+	if (sister->walk + sister->dist <= next_room->walk + next_room->dist)
 	{
-		return (child);
+		return (sister);
 	}
 	return (next_room);
 }
@@ -48,35 +48,20 @@ static int		update_room(t_room *room, t_path *path)
 static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 {
 	t_room	*next_room;
-	t_lst	*child;
-	t_room	*child_room;
+	t_lst	*sister;
+	t_room	*sister_room;
 
 	next_room = NULL;
-	child = room->parents->first;
-	while (child)
+	sister = room->sisters->first;
+	while (sister)
 	{
-		child_room = child->content;
-		if (child_room->dist + path->rooms->size <= lem->current_config->turns
-			&& child_room->current_path != path)
+		sister_room = sister->content;
+		if (sister_room->dist + path->rooms->size <= lem->current_config->turns
+			&& sister_room->current_path != path)
 		{
-			next_room = check_room(child_room, next_room);
+			next_room = check_room(sister_room, next_room);
 		}
-		child = child->next;
-	}
-	child = room->children->first;
-	while (child)
-	{
-		child_room = child->content;
-		if (child_room->dist + path->rooms->size <= lem->current_config->turns
-			&& child_room->current_path != path)
-		{
-			next_room = check_room(child_room, next_room);
-		}
-		child = child->next;
-	}
-	if (next_room)
-	{
-		//ft_printf("choosing room %s, closed: %u\n", next_room->name, next_room->is_closed);
+		sister = sister->next;
 	}
 	return (next_room);
 }
@@ -95,29 +80,6 @@ static void		erase_current_path(t_path *path)
 		room->previous_path = NULL;
 		if (room->current_path)
 			room->current_path->is_dead = 0;
-	}
-}
-
-void			reopen_rooms(t_config *current_config)
-{
-	t_lst	*path_lst;
-	t_path	*path;
-	t_lst	*room_lst;
-	t_room	*room;
-
-//	ft_printf("reopening rooms with config:\n");
-//	print_config(current_config);
-	path_lst = current_config->paths->first;
-	while (path_lst)
-	{
-		path = path_lst->content;
-		path_lst = path_lst->next;
-		room_lst = path->rooms->first;
-		while (room_lst)
-		{
-			room = room_lst->content;
-			room_lst = room_lst->next;
-		}
 	}
 }
 
@@ -158,7 +120,7 @@ int				seek_paths(t_lem *lem)
 	t_path		*path;
 	int			check_alloc;
 
-	lem->max_lives = lem->end->parents->size + lem->end->dist * lem->nb_tubes;
+	lem->max_lives = lem->end->sisters->size + lem->end->dist * lem->nb_tubes;
 	if (lem->max_lives > LIVES_UPPER_LIMIT)
 		lem->max_lives = LIVES_UPPER_LIMIT;
 	else if (lem->max_lives < LIVES_LOWER_LIMIT)

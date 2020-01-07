@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:14:09 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:22:35 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 19:42:24 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	print_lvl(t_lvl *lvl)
 	print_rooms(lvl->rooms);
 }
 
-void	print_config(t_config *config)
+void	print_config_paths(t_config *config)
 {
 	if (DEBUG == 0)
 		return ;
@@ -79,5 +79,25 @@ void	print_config(t_config *config)
 	ft_printf("config turns   : %u\n", config->turns);
 	ft_printf("config nb_paths: %u\n", config->paths->size);
 	print_paths(config->paths);
+	ft_printf("\n");
+}
+void	print_config(t_config *config)
+{
+	t_lst	*path_lst;
+	t_path	*path;
+
+	if (DEBUG == 0)
+		return ;
+	ft_printf("PRINTING CONFIG\n");
+	ft_printf("config turns   : %u\n", config->turns);
+	ft_printf("config nb_paths: %u\n", config->paths->size);
+	ft_printf("config paths lens: \n", config->paths->size);
+	path_lst = config->paths->first;
+	while (path_lst)
+	{
+		path = path_lst->content;
+		path_lst = path_lst->next;
+		ft_printf("%u -- ", path->rooms->size);
+	}
 	ft_printf("\n");
 }

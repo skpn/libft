@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:08:55 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 17:49:17 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 20:23:52 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,34 +47,13 @@ static int		copy_current_paths(t_lem *lem)
 	return (1);
 }
 
-static void		scramble_end_parents(t_lem *lem)
-{
-	if (lem->end->parents->size < 2)
-		return ;
-	if (lem->scramble_flip == 1)
-	{
-		lem->scramble_flip = 0;
-		ft_lstswap_contents(lem->end->parents->last
-			, lem->end->parents->last->prev);
-	}
-	else
-	{
-		lem->scramble_flip = 1;
-		ft_lstswap_contents(lem->end->parents->last, lem->end->parents->first);
-	}
-}
-
 int				update_best_config(t_lem *lem)
 {
 	if (lem->best_config->paths->first)
 		ft_lstfree(&lem->best_config->paths, FREE_LINKS, KEEP_HEAD);
 	if (!copy_current_paths(lem))
 		return (0);
-	if (!lem->best_config->turns
-		|| lem->best_config->turns == lem->current_config->turns)
-		scramble_end_parents(lem);
 	lem->best_config->turns = lem->current_config->turns;
-	lem->best_config->size = lem->current_config->size;
 	lem->lives = lem->max_lives;
 	return (1);
 }

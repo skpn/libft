@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 19:05:08 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/07 22:42:44 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define PARENT 1
 # define BROTHER 2
 # define CHILD 3
-# define LIVES_UPPER_LIMIT 2000
-# define LIVES_LOWER_LIMIT 2000
+# define LIVES_UPPER_LIMIT 5000
+# define LIVES_LOWER_LIMIT 5000
 # define DEBUG 1
 
 typedef struct		s_path
@@ -50,7 +50,6 @@ typedef struct		s_room
 	unsigned		dist;
 	unsigned		has_lvl;
 	unsigned		walk;
-	unsigned		walk_2;
 	char			*name;
 	t_path			*previous_path;
 	t_path			*current_path;
@@ -66,7 +65,6 @@ typedef struct		s_lvl
 typedef struct		s_config
 {
 	unsigned		turns;
-	unsigned		size;
 	t_head			*paths;
 }					t_config;
 
@@ -86,16 +84,12 @@ typedef struct		s_lem
 {
 	unsigned		nb_ants;
 	unsigned		nb_rooms;
-//	unsigned		max_paths;
-//	unsigned		most_paths;
 	unsigned		shortest;
-//	unsigned		max_dist;
 	unsigned		turns;
 	unsigned		nb_tubes;
 	unsigned		max_lives;
 	unsigned		lives;
 	unsigned		anthill_size;
-//	unsigned		scramble_flip;
 	unsigned		pos;
 	char			*anthill;
 	char			*copy;
@@ -121,8 +115,8 @@ t_lvl				*alloc_new_lvl(void);
 t_display			*alloc_new_display(unsigned total_rooms);
 int					parse_input(t_lem *lem);
 void				set_next_lvl_dists(t_lvl *lvl);
-void				kill_dead_rooms(t_lem *lem, t_room *dead_room);
-void				kill_end_children(t_room *end, unsigned max_dist);
+void				kill_dead_rooms(t_room *dead_room);
+void				kill_end_unreached_rooms(t_room *end);
 int					seek_paths(t_lem *lem);
 int					manage_valid_path(t_lem *lem, t_path *path);
 int					update_best_config(t_lem *lem);
