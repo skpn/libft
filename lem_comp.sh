@@ -1,5 +1,10 @@
 
 
+if [ "$@"=="" ]; then
+	echo "missing arguments"
+	exit 1
+fi
+
 exec="${1}"
 
 echo "testing $exec"
