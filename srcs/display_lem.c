@@ -116,5 +116,6 @@ int				display_lem(t_lem *lem)
 	ft_printf("\nmax lives %u, lem turns: %u, nb paths: %u\n\n", lem->max_lives, lem->turns, lem->best_config->paths->size);
 	print_config(lem->best_config);
 	check_best_config_validity(lem, lem->best_config);
+	ft_printf("\n#Here is the number of lines obtained: %u\n", lem->turns);
 	return (1);
 }

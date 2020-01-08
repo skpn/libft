@@ -63,22 +63,71 @@ static int	add_path(t_lem *lem, t_path *new_path)
 	return (1);
 }
 
-void		reset_best_paths(t_config *best_config)
+t_lst		*get_room_lst(t_lst *path_lst)
+{
+	unsigned	highest_walk;
+	t_lst		*highest_room;
+	t_lst		*first_room_lst;
+	t_room		*first_room;
+
+	highest_walk = 0;
+	while (path_lst)
+	{
+		first_room_lst = ((t_path *)path_lst->content)->rooms->first->next;
+		first_room = first_room_lst->content;
+		if (first_room->walk > highest_walk)
+			highest_room = first_room_lst;
+		path_lst = path_lst->next;
+	}
+	return (highest_room);
+}
+
+void		reset_path(t_lst *room_lst)
+{
+	t_room		*room;
+
+	while (room_lst)
+	{
+		room = room_lst->content;
+		room->walk = 0;
+		room_lst = room_lst->next;
+	}
+}
+
+void		reset_highest_path(t_lem *lem)
+{
+	t_lst		*room_lst;
+	t_room		*room;
+
+	room_lst = get_room_lst(lem->best_config->paths->first);
+	while (room_lst)
+	{
+		room = room_lst->content;
+		room->walk = 0;
+		room_lst = room_lst->next;
+	}
+}
+
+void		reset_paths(t_lem *lem)
 {
 	t_lst	*path_lst;
-	t_lst	*room_lst;
-	t_room	*room;
 
-	path_lst = best_config->paths->first;
-	while (path_lst->next)
+	lem->reset_flip = (lem->reset_flip + 1) % 3;
+	path_lst = lem->best_config->paths->first;
+	if (lem->reset_flip == 3)
+		reset_highest_path(lem);
+	else
 	{
-		room_lst = ((t_path *)path_lst->content)->rooms->first;
-		path_lst = path_lst->next;
-		while (room_lst)
+		if (!lem->reset_flip == 0)
+			path_lst = path_lst->next;
+		while (path_lst->next)
 		{
-			room = room_lst->content;
-			room_lst = room_lst->next;
-			room->walk = 0;
+			reset_path(((t_path *)path_lst->content)->rooms->first);
+			path_lst = path_lst->next;
+		}
+		if (!lem->reset_flip)
+		{
+			reset_path(((t_path *)path_lst->content)->rooms->first);
 		}
 	}
 }
@@ -91,10 +140,11 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 		return (0);
 	if (!add_path(lem, path))
 		return (0);
-	if (lem->best_config->turns <= lem->current_config->turns)
+	if (lem->best_config->turns < lem->current_config->turns)
 		return (1);
 	if (!update_best_config(lem))
 		return (0);
-	reset_best_paths(lem->best_config);
+	if (lem->best_config->paths->size > 1 && lem->lives < LIVES_UPPER_LIMIT / 2)
+		reset_paths(lem);
 	return (1);
 }

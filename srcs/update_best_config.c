@@ -53,7 +53,8 @@ int				update_best_config(t_lem *lem)
 		ft_lstfree(&lem->best_config->paths, FREE_LINKS, KEEP_HEAD);
 	if (!copy_current_paths(lem))
 		return (0);
+	if (lem->best_config->turns != lem->current_config->turns)
+		lem->lives = lem->max_lives;
 	lem->best_config->turns = lem->current_config->turns;
-	lem->lives = lem->max_lives;
 	return (1);
 }

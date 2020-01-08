@@ -89,6 +89,7 @@ typedef struct		s_lem
 	unsigned		nb_tubes;
 	unsigned		max_lives;
 	unsigned		lives;
+	unsigned		reset_flip;
 	unsigned		anthill_size;
 	unsigned		pos;
 	char			*anthill;
