@@ -97,5 +97,7 @@ int		parse_input(t_lem *lem)
 		;
 	if (ret < 0)
 		return (ret);
+	while (lem->anthill[lem->pos])
+		lem->pos++;
 	return (1);
 }

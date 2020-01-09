@@ -54,7 +54,10 @@ int				update_best_config(t_lem *lem)
 	if (!copy_current_paths(lem))
 		return (0);
 	if (lem->best_config->turns != lem->current_config->turns)
+	{
 		lem->lives = lem->max_lives;
+		lem->reset_flip = 0;
+	}
 	lem->best_config->turns = lem->current_config->turns;
 	return (1);
 }

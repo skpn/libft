@@ -63,12 +63,12 @@ static int	add_path(t_lem *lem, t_path *new_path)
 	return (1);
 }
 
-t_lst		*get_room_lst(t_lst *path_lst)
+t_path		*get_highest_path(t_lst *path_lst)
 {
 	unsigned	highest_walk;
-	t_lst		*highest_room;
 	t_lst		*first_room_lst;
 	t_room		*first_room;
+	t_path		*highest_path;
 
 	highest_walk = 0;
 	while (path_lst)
@@ -76,30 +76,18 @@ t_lst		*get_room_lst(t_lst *path_lst)
 		first_room_lst = ((t_path *)path_lst->content)->rooms->first->next;
 		first_room = first_room_lst->content;
 		if (first_room->walk > highest_walk)
-			highest_room = first_room_lst;
+			highest_path = path_lst->content;
 		path_lst = path_lst->next;
 	}
-	return (highest_room);
+	return (highest_path);
 }
 
-void		reset_path(t_lst *room_lst)
+void		reset_path(t_path *path)
 {
-	t_room		*room;
+	t_lst	*room_lst;
+	t_room	*room;
 
-	while (room_lst)
-	{
-		room = room_lst->content;
-		room->walk = 0;
-		room_lst = room_lst->next;
-	}
-}
-
-void		reset_highest_path(t_lem *lem)
-{
-	t_lst		*room_lst;
-	t_room		*room;
-
-	room_lst = get_room_lst(lem->best_config->paths->first);
+	room_lst = path->rooms->first;
 	while (room_lst)
 	{
 		room = room_lst->content;
@@ -112,25 +100,58 @@ void		reset_paths(t_lem *lem)
 {
 	t_lst	*path_lst;
 
-	lem->reset_flip = (lem->reset_flip + 1) % 3;
-	path_lst = lem->best_config->paths->first;
-	if (lem->reset_flip == 3)
-		reset_highest_path(lem);
+	if (lem->reset_flip == 2)
+		reset_path(get_highest_path(lem->best_config->paths->first));
 	else
 	{
-		if (!lem->reset_flip == 0)
-			path_lst = path_lst->next;
-		while (path_lst->next)
+		if (lem->reset_flip != 1 || lem->reset_flip != 3)
+			reset_path(lem->best_config->paths->first->content);
+		path_lst = lem->best_config->paths->first->next;
+		if (lem->reset_flip != 4)
 		{
-			reset_path(((t_path *)path_lst->content)->rooms->first);
-			path_lst = path_lst->next;
+			while (path_lst->next)
+			{
+				reset_path(path_lst->content);
+				path_lst = path_lst->next;
+			}
 		}
-		if (!lem->reset_flip)
+		if (lem->reset_flip == 1 || lem->reset_flip == 4)
 		{
-			reset_path(((t_path *)path_lst->content)->rooms->first);
+			reset_path(lem->best_config->paths->last->content);
 		}
 	}
+	lem->reset_flip = (lem->reset_flip + 1) % 2;
 }
+/*
+void		reset_path(t_path *path)
+{
+	t_lst	*room_lst;
+	t_room	*room;
+
+	room_lst = path->rooms->first;
+	while (room_lst)
+	{
+		room = room_lst->content;
+		room->walk = 0;
+		room_lst = room_lst->next;
+	}
+}
+
+void		reset_paths(t_lem *lem)
+{
+	t_lst	*path_lst;
+
+	lem->reset_flip = (!lem->reset_flip);
+		path_lst = lem->best_config->paths->first;
+		while (path_lst->next)
+		{
+			reset_path(path_lst->content);
+			path_lst = path_lst->next;
+		}
+		if (lem->reset_flip)
+			reset_path(lem->best_config->paths->last->content);
+}
+*/
 
 int			manage_valid_path(t_lem *lem, t_path *path)
 {
@@ -140,11 +161,11 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 		return (0);
 	if (!add_path(lem, path))
 		return (0);
-	if (lem->best_config->turns < lem->current_config->turns)
+	if (lem->best_config->turns <= lem->current_config->turns)
 		return (1);
 	if (!update_best_config(lem))
 		return (0);
-	if (lem->best_config->paths->size > 1 && lem->lives < LIVES_UPPER_LIMIT / 2)
-		reset_paths(lem);
+//	if (lem->best_config->paths->size > 1 && lem->lives < LIVES_UPPER_LIMIT / 2)
+//		reset_paths(lem);
 	return (1);
 }

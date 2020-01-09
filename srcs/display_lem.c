@@ -18,7 +18,7 @@ void			start_joined_to_end(t_lem *lem)
 {
 	unsigned	ant;
 
-	write(1, lem->anthill, ft_strlen(lem->anthill));
+	write(1, lem->anthill, lem->pos);
 	ant = 1;
 	ft_printf("L%u-end", ant);
 	while (++ant <= lem->nb_ants)
@@ -106,16 +106,18 @@ int				display_lem(t_lem *lem)
 	if (!(display = set_display(lem)))
 		return (0);
 	lem->display = display;
-	/*write(1, lem->anthill, ft_strlen(lem->anthill));
+	/*
+	write(1, lem->anthill, lem->pos);
 	while (display->turn < lem->turns)
 	{
 		display->first_print = 1;
 		print_ants(display);
 		display->turn++;
-	}*/
-	ft_printf("\nmax lives %u, lem turns: %u, nb paths: %u\n\n", lem->max_lives, lem->turns, lem->best_config->paths->size);
-	print_config(lem->best_config);
-	check_best_config_validity(lem, lem->best_config);
-	ft_printf("\n#Here is the number of lines obtained: %u\n", lem->turns);
+	}
+	*/
+//	ft_printf("\nmax lives %u, lem turns: %u, nb paths: %u\n\n", lem->max_lives, lem->turns, lem->best_config->paths->size);
+//	print_config(lem->best_config);
+//	check_best_config_validity(lem, lem->best_config);
+	ft_printf("obtained: %u\n", lem->turns);
 	return (1);
 }

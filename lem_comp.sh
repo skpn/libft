@@ -1,6 +1,5 @@
 
-
-if [ "$@"=="" ]; then
+if [ $# -lt 1 ]; then
 	echo "missing arguments"
 	exit 1
 fi
@@ -15,7 +14,7 @@ for ((i=2; i<=$#; i++)); do
 		echo "$file does not exist"
 		exit 1
 	else
-		echo -e "\n		TESTING MAP: -- $file --"
+		echo -ne "\n ----  $file  ----  "
 		./$exec < $file
 		grep -m 1 "required" $file
 	fi
