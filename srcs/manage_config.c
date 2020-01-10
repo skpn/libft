@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 20:23:48 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:15:31 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	pop_dead_paths(t_config *config)
 	t_lst	*path_lst;
 	t_lst	*dead_path_lst;
 	t_path	*path;
-
 	path_lst = config->paths->first;
 	while (path_lst)
 	{
@@ -26,14 +25,41 @@ static void	pop_dead_paths(t_config *config)
 		path_lst = path_lst->next;
 		if (path->is_dead)
 		{
-	//		ft_printf(" ---- popping path: ");
-	//		print_path(path);
+			//ft_printf(" ---- popping path: ");
+			//print_path(path);
 			dead_path_lst = ft_lstpop(config->paths, path);
 			if (dead_path_lst)
 				ft_lstfree_elem(&dead_path_lst, FREE_LINKS);
 		}
 	}
 }
+/*
+static void	pop_dead_paths(t_lem *lem, t_path *new_path)
+{
+	t_lst		*popped_path;
+	t_lst		*room_lst;
+	t_room		*room;
+
+	room_lst = new_path->rooms->first;
+	while (room_lst)
+	{
+		room = room_lst->content;
+		room_lst = room_lst->next;
+		if (room->previous_path)
+		{
+			ft_printf("path %p, room %p current path: %p\n", new_path, room, room->current_path);
+			popped_path = ft_lstpop(lem->current_config->paths
+				, room->previous_path);
+			if (popped_path)
+			{
+				ft_lstfree_elem(&popped_path, FREE_LINKS);
+			}
+		}
+		room->current_path = new_path;
+	}
+	print_config(lem->current_config);
+}
+*/
 
 static int	add_path(t_lem *lem, t_path *new_path)
 {
@@ -59,113 +85,86 @@ static int	add_path(t_lem *lem, t_path *new_path)
 			, AFTER);
 	}
 	pop_dead_paths(lem->current_config);
+//	pop_dead_paths(lem, new_path);
 	balance_load(lem);
 	return (1);
 }
 
-t_path		*get_highest_path(t_lst *path_lst)
+void		reset_best_paths(t_config *best_config)
 {
-	unsigned	highest_walk;
-	t_lst		*first_room_lst;
-	t_room		*first_room;
-	t_path		*highest_path;
-
-	highest_walk = 0;
-	while (path_lst)
-	{
-		first_room_lst = ((t_path *)path_lst->content)->rooms->first->next;
-		first_room = first_room_lst->content;
-		if (first_room->walk > highest_walk)
-			highest_path = path_lst->content;
-		path_lst = path_lst->next;
-	}
-	return (highest_path);
-}
-
-void		reset_path(t_path *path)
-{
+	t_lst	*path_lst;
 	t_lst	*room_lst;
 	t_room	*room;
 
-	room_lst = path->rooms->first;
-	while (room_lst)
+	path_lst = best_config->paths->first;
+	while (path_lst->next)
 	{
-		room = room_lst->content;
-		room->walk = 0;
-		room_lst = room_lst->next;
+		room_lst = ((t_path *)path_lst->content)->rooms->first;
+		path_lst = path_lst->next;
+		while (room_lst)
+		{
+			room = room_lst->content;
+			room_lst = room_lst->next;
+			room->walk = 0;
+		}
 	}
 }
 
-void		reset_paths(t_lem *lem)
+void			reset_room(t_lem *lem, t_room *room)
 {
-	t_lst	*path_lst;
+	if (lem->algo_flip == EACH
+		|| lem->reset_flip == 0 || lem->reset_flip == lem->end->dist
+		|| (lem->algo_flip == DIFF && room->dist != lem->reset_flip)
+		|| (lem->algo_flip == SUP && room->dist > lem->reset_flip)
+		|| (lem->algo_flip == INF && room->dist < lem->reset_flip)
+		|| (lem->algo_flip == SUP_EQUAL && room->dist >= lem->reset_flip)
+		|| (lem->algo_flip == INF_EQUAL && room->dist <= lem->reset_flip))
+		room->walk = 0;
+}
 
-	if (lem->reset_flip == 2)
-		reset_path(get_highest_path(lem->best_config->paths->first));
-	else
+int				reset_upper_graph(t_lem *lem)
+{
+	unsigned	index;
+	t_lst		*index_lst;
+	t_room		*room;
+	t_h_table	*table;
+
+	lem->reset_flip = (lem->reset_flip + 1) % lem->max_dist;
+	index = 0;
+	table = lem->table;
+	while (index < table->size)
 	{
-		if (lem->reset_flip != 1 || lem->reset_flip != 3)
-			reset_path(lem->best_config->paths->first->content);
-		path_lst = lem->best_config->paths->first->next;
-		if (lem->reset_flip != 4)
+		if (table->array[index].first)
 		{
-			while (path_lst->next)
+			index_lst = table->array[index].first;
+			while (index_lst)
 			{
-				reset_path(path_lst->content);
-				path_lst = path_lst->next;
+				room = ((t_h_elem *)index_lst->content)->content;
+				reset_room(lem, room);
+				index_lst = index_lst->next;
 			}
 		}
-		if (lem->reset_flip == 1 || lem->reset_flip == 4)
-		{
-			reset_path(lem->best_config->paths->last->content);
-		}
+		index++;
 	}
-	lem->reset_flip = (lem->reset_flip + 1) % 2;
+	return (1);
 }
-/*
-void		reset_path(t_path *path)
-{
-	t_lst	*room_lst;
-	t_room	*room;
-
-	room_lst = path->rooms->first;
-	while (room_lst)
-	{
-		room = room_lst->content;
-		room->walk = 0;
-		room_lst = room_lst->next;
-	}
-}
-
-void		reset_paths(t_lem *lem)
-{
-	t_lst	*path_lst;
-
-	lem->reset_flip = (!lem->reset_flip);
-		path_lst = lem->best_config->paths->first;
-		while (path_lst->next)
-		{
-			reset_path(path_lst->content);
-			path_lst = path_lst->next;
-		}
-		if (lem->reset_flip)
-			reset_path(lem->best_config->paths->last->content);
-}
-*/
 
 int			manage_valid_path(t_lem *lem, t_path *path)
 {
-//	ft_printf("valid path:");
-//	print_path(path);
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);
 	if (!add_path(lem, path))
 		return (0);
+//	ft_printf("current = %u\n", lem->current_config->turns);
 	if (lem->best_config->turns <= lem->current_config->turns)
 		return (1);
+//	ft_printf("				best    = %u\n", lem->best_config->turns);
+//	ft_printf("				current = %u\n", lem->current_config->turns);
 	if (!update_best_config(lem))
 		return (0);
-//	if (lem->best_config->paths->size > 1 && lem->lives < LIVES_UPPER_LIMIT / 2)
-//		reset_paths(lem);
+	if (lem->best_config->paths->size > lem->most_paths)
+		lem->most_paths = lem->best_config->paths->size;
+	reset_upper_graph(lem);
+//	reset_best_paths(lem->best_config);
 	return (1);
 }

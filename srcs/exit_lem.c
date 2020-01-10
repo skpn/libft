@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:52:16 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 18:42:19 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:15:30 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	free_table_room(void **void_room)
 	t_room	**room;
 
 	room = (t_room **)void_room;
-	ft_lstfree(&(*room)->sisters, FREE_LINKS, FREE_HEAD);
+	ft_lstfree(&(*room)->parents, FREE_LINKS, FREE_HEAD);
+	ft_lstfree(&(*room)->children, FREE_LINKS, FREE_HEAD);
 	easyfree((void **)room);
 }
 
@@ -67,8 +68,13 @@ int		exit_lem(t_lem **lem, char *msg, int ret)
 		free_paths(&((*lem)->paths));
 	if ((*lem)->best_config)
 		free_config(&((*lem)->best_config));
+		POS;
+	if ((*lem)->final_config)
+		free_config(&((*lem)->best_config));
+		POS;
 	if ((*lem)->current_config)
 		free_config(&(*lem)->current_config);
+		POS;
 	if ((*lem)->display)
 		free_display(&(*lem)->display);
 	msg ? ft_putstr(msg) : 0;

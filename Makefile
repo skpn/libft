@@ -6,13 +6,13 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/01/07 14:02:58 by sikpenou         ###   ########.fr        #
+#    Updated: 2020/01/10 17:26:27 by hehlinge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address -fsanitize=leak
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 NAME = lem-in
 

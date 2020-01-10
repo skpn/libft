@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 22:42:44 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:21:31 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,17 @@
 # define PARENT 1
 # define BROTHER 2
 # define CHILD 3
-# define LIVES_UPPER_LIMIT 5000
-# define LIVES_LOWER_LIMIT 5000
+
+# define EACH 0u
+# define DIFF 1u
+# define SUP 2u
+# define INF 3u
+# define INF_EQUAL 4u
+# define SUP_EQUAL 5u
+# define NB_ALGO_LAUNCHS 6u
+
+# define LIVES_UPPER_LIMIT 500
+# define LIVES_LOWER_LIMIT 500
 # define DEBUG 1
 
 typedef struct		s_path
@@ -50,10 +59,12 @@ typedef struct		s_room
 	unsigned		dist;
 	unsigned		has_lvl;
 	unsigned		walk;
+	unsigned		walk_2;
 	char			*name;
 	t_path			*previous_path;
 	t_path			*current_path;
-	t_head			*sisters;
+	t_head			*parents;
+	t_head			*children;
 }					t_room;
 
 typedef struct		s_lvl
@@ -84,20 +95,26 @@ typedef struct		s_lem
 {
 	unsigned		nb_ants;
 	unsigned		nb_rooms;
+	unsigned		max_paths;
+	unsigned		most_paths;
 	unsigned		shortest;
+	unsigned		max_dist;
 	unsigned		turns;
 	unsigned		nb_tubes;
 	unsigned		max_lives;
 	unsigned		lives;
-	unsigned		reset_flip;
 	unsigned		anthill_size;
+	unsigned		scramble_flip;
 	unsigned		pos;
+	unsigned		algo_flip;
+	unsigned		reset_flip;
 	char			*anthill;
 	char			*copy;
 	t_room			*start;
 	t_room			*end;
 	t_h_table		*table;
 	t_head			*paths;
+	t_config		*final_config;
 	t_config		*best_config;
 	t_config		*current_config;
 	t_display		*display;
@@ -116,8 +133,9 @@ t_lvl				*alloc_new_lvl(void);
 t_display			*alloc_new_display(unsigned total_rooms);
 int					parse_input(t_lem *lem);
 void				set_next_lvl_dists(t_lvl *lvl);
-void				kill_dead_rooms(t_room *dead_room);
-void				kill_end_unreached_rooms(t_room *end);
+void				set_next_lvl_families(t_lvl *lvl, t_room *end);
+void				kill_dead_rooms(t_lem *lem, t_room *dead_room);
+void				kill_end_children(t_room *end, unsigned max_dist);
 int					seek_paths(t_lem *lem);
 int					manage_valid_path(t_lem *lem, t_path *path);
 int					update_best_config(t_lem *lem);
@@ -133,6 +151,7 @@ void				free_paths(t_head **path);
 void				free_lvl(t_lvl **lvl);
 void				print_anthill(char *lem);
 void				print_lem(t_lem *lem, char *args);
+int					print_room_elem(t_h_elem *room_elem);
 void				print_room(t_room *room);
 void				print_config(t_config *config);
 void				print_path(t_path *path);

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:03:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/11/03 20:07:55 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/10 18:15:29 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ void	ft_lstfree(t_head **head, int opt_elems, int opt_head)
 {
 	t_lst	*elem;
 
-	if (*head && (elem = (*head)->first))
+	if (
+	if (*head)
+	{
+		if ((elem = (*head)->first))
 	{
 		while (elem->next)
 		{
@@ -25,10 +28,14 @@ void	ft_lstfree(t_head **head, int opt_elems, int opt_head)
 		}
 		ft_lstfree_elem(&(elem), opt_elems);
 	}
-	(*head)->first = 0;
-	(*head)->last = 0;
-	(*head)->size = 0;
 	if (opt_head == FREE_HEAD)
 		ft_lstfree_head(head);
+	else
+	{
+		(*head)->first = 0;
+		(*head)->last = 0;
+		(*head)->size = 0;
+	}
+	}
 	return ;
 }

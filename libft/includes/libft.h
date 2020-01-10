@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 16:18:41 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:17:02 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ typedef struct			s_h_elem
 	char				*key;
 	void				*content;
 }						t_h_elem;
+
+typedef int				(*t_h_iter_func)(t_h_elem *);
 
 typedef unsigned		(*t_h_hash_func)(char *);
 
@@ -259,6 +261,7 @@ void					ft_hash_free_elem(t_h_table *table, t_h_elem *hash_elem
 	, int opt);
 t_h_elem				*ft_hash_pop_elem(t_h_table *table, char *key);
 void					ft_hash_free_table(t_h_table *table, int opt);
+int						ft_hash_iter(t_h_table *table, t_h_iter_func iter_func);
 void					hash_print_elem(t_h_elem *elem);
 void					hash_print_index(t_h_table *table, unsigned index
 	, int opt);

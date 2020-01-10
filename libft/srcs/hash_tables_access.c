@@ -6,11 +6,34 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:47:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:47:38 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:34:47 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+int				ft_hash_iter(t_h_table *table, t_h_iter_func iter_func)
+{
+	unsigned	index;
+	t_lst		*index_lst;
+
+	index = 0;
+	while (index < table->size)
+	{
+		if (table->array[index].first)
+		{
+			index_lst = table->array[index].first;
+			while (index_lst)
+			{
+				if (!(iter_func(index_lst->content)))
+					return (0);
+				index_lst = index_lst->next;
+			}
+		}
+		index++;
+	}
+	return (1);
+}
 
 t_h_elem	*ft_hash_get_elem(t_h_table *table, char *key)
 {

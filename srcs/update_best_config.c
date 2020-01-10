@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   copy_config.c                                      :+:      :+:    :+:   */
+/*   update_best_config.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hehlinge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/03 14:08:55 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 20:23:52 by sikpenou         ###   ########.fr       */
+/*   Created: 2020/01/10 17:54:28 by hehlinge          #+#    #+#             */
+/*   Updated: 2020/01/10 18:15:26 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ static int		copy_current_paths(t_lem *lem)
 
 int				update_best_config(t_lem *lem)
 {
+//	ft_printf("algo_flip = %u, lives: %u\n", lem->algo_flip, lem->lives);
 	if (lem->best_config->paths->first)
 		ft_lstfree(&lem->best_config->paths, FREE_LINKS, KEEP_HEAD);
 	if (!copy_current_paths(lem))
 		return (0);
-	if (lem->best_config->turns != lem->current_config->turns)
-	{
-		lem->lives = lem->max_lives;
-		lem->reset_flip = 0;
-	}
+	//if (!lem->best_config->turns
+		//|| lem->best_config->turns == lem->current_config->turns)
+		//scramble_end_parents(lem);
 	lem->best_config->turns = lem->current_config->turns;
+	lem->lives = lem->max_lives;
 	return (1);
 }

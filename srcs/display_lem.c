@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:36:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/07 22:02:19 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/10 15:30:04 by hehlinge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void			start_joined_to_end(t_lem *lem)
 	ft_printf("\n");
 }
 
-/*static void		print_ant(t_display *display, t_ant *ant)
+/*
+static void		print_ant(t_display *display, t_ant *ant)
 {
 	t_room		*room;
 
@@ -70,7 +71,8 @@ static void		print_ants(t_display *display)
 		print_cell++;
 	}
 	ft_printf("\n");
-}*/
+}
+*/
 
 void			check_best_config_validity(t_lem *lem, t_config *best_config)
 {
@@ -87,16 +89,16 @@ void			check_best_config_validity(t_lem *lem, t_config *best_config)
 		{
 			room = room_lst->content;
 			room_lst = room_lst->next;
-			if (room->dist && room != lem->end)
-				room->dist = 0;
-			else if (room != lem->start && room != lem->end)
+			if (room != lem->start && room != lem->end)
+				room->walk_2++;
+			if (room->walk_2 > 1)
 			{
-				ft_printf("\n\n\nroom %s used %d times :(\n\n\n"
-					, room->name, (int)room->dist * -1 + 1);
+				ft_printf("\n\n\nroom %s has walk %u :(\n\n\n"
+					, room->name, room->walk_2);
 			}
 		}
 	}
-	ft_printf("\n:)\n\n");
+	ft_printf("\n\n\n:)\n\n\n");
 }
 
 int				display_lem(t_lem *lem)
@@ -106,8 +108,8 @@ int				display_lem(t_lem *lem)
 	if (!(display = set_display(lem)))
 		return (0);
 	lem->display = display;
-	/*
-	write(1, lem->anthill, lem->pos);
+//	write(1, lem->anthill, lem->pos);
+/*
 	while (display->turn < lem->turns)
 	{
 		display->first_print = 1;
@@ -115,9 +117,9 @@ int				display_lem(t_lem *lem)
 		display->turn++;
 	}
 	*/
-//	ft_printf("\nmax lives %u, lem turns: %u, nb paths: %u\n\n", lem->max_lives, lem->turns, lem->best_config->paths->size);
+//	print_room(lem->end);
+	ft_printf("\nmax dist %u, lem turns: %u, nb paths: %u\n", lem->max_dist, lem->turns, lem->best_config->paths->size);
 //	print_config(lem->best_config);
 //	check_best_config_validity(lem, lem->best_config);
-	ft_printf("obtained: %u\n", lem->turns);
 	return (1);
 }
