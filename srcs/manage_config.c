@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 14:15:35 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:14:24 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	pop_dead_paths(t_config *config)
 	t_lst	*path_lst;
 	t_lst	*dead_path_lst;
 	t_path	*path;
+
 	path_lst = config->paths->first;
 	while (path_lst)
 	{
@@ -56,7 +57,6 @@ static int	add_path(t_lem *lem, t_path *new_path)
 			, AFTER);
 	}
 	pop_dead_paths(lem->current_config);
-//	pop_dead_paths(lem, new_path);
 	balance_load(lem);
 	return (1);
 }
@@ -81,19 +81,17 @@ void		reset_best_paths(t_config *best_config)
 	}
 }
 
-void			reset_room(t_lem *lem, t_room *room)
+void		reset_room(t_lem *lem, t_room *room)
 {
 	if (lem->algo_flip == EACH
 		|| lem->reset_flip == 0 || lem->reset_flip == lem->end->dist
-		|| (lem->algo_flip % 6 == DIFF && room->dist != lem->reset_flip)
-		|| (lem->algo_flip % 6 == SUP && room->dist > lem->reset_flip)
-		|| (lem->algo_flip % 6 == INF && room->dist < lem->reset_flip)
-		|| (lem->algo_flip % 6 == SUP_EQUAL && room->dist >= lem->reset_flip)
-		|| (lem->algo_flip % 6 == INF_EQUAL && room->dist <= lem->reset_flip))
+		|| (lem->algo_flip % 4 == DIFF && room->dist != lem->reset_flip)
+		|| (lem->algo_flip % 4 == SUP && room->dist > lem->reset_flip)
+		|| (lem->algo_flip % 4 == INF && room->dist < lem->reset_flip))
 		room->walk = 0;
 }
 
-int				reset_upper_graph(t_lem *lem)
+int			reset_upper_graph(t_lem *lem)
 {
 	unsigned	index;
 	t_lst		*index_lst;
@@ -126,16 +124,12 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 		return (0);
 	if (!add_path(lem, path))
 		return (0);
-//	ft_printf("current = %u\n", lem->current_config->turns);
 	if (lem->best_config->turns <= lem->current_config->turns)
 		return (1);
-//	ft_printf("				best    = %u\n", lem->best_config->turns);
-//	ft_printf("				current = %u\n", lem->current_config->turns);
 	if (!update_best_config(lem))
 		return (0);
 	if (lem->best_config->paths->size > lem->most_paths)
 		lem->most_paths = lem->best_config->paths->size;
 	reset_upper_graph(lem);
-//	reset_best_paths(lem->best_config);
 	return (1);
 }

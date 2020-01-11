@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 14:17:27 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:22:37 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ static t_room	*check_room(t_lem *lem, t_room *child, t_room *next_room)
 {
 	if (!next_room)
 		return (child);
-	if (lem->algo_flip <= 11 && lem->algo_flip >= 6
+	if (lem->algo_flip <= 8 && lem->algo_flip >= 4
 		&& (child->walk + child->dist <= next_room->walk + next_room->dist))
 		return (child);
-	else if (lem->algo_flip <= 5
+	else if (lem->algo_flip >= 9
 		&& ((child->walk << 1) + child->dist <= (next_room->walk << 1)
 		+ next_room->dist))
 		return (child);
-	else if (lem->algo_flip >= 12
-		&&	child->walk + 3 * child->dist <= next_room->walk
+	else if (lem->algo_flip <= 3
+		&& child->walk + 3 * child->dist <= next_room->walk
 		+ 3 * next_room->dist)
 		return (child);
 	return (next_room);
@@ -56,9 +56,7 @@ static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 		child = child_lst->content;
 		if (child->current_path != path
 			&& child->dist + path->rooms->size <= lem->current_config->turns)
-		{
 			next_room = check_room(lem, child, next_room);
-		}
 		child_lst = child_lst->next;
 	}
 	child_lst = room->children->first;
@@ -67,9 +65,7 @@ static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 		child = child_lst->content;
 		if (child->current_path != path
 			&& child->dist + path->rooms->size <= lem->current_config->turns)
-		{
 			next_room = check_room(lem, child, next_room);
-		}
 		child_lst = child_lst->next;
 	}
 	return (next_room);
@@ -89,7 +85,6 @@ static void		erase_current_path(t_path *path)
 		room->previous_path = NULL;
 		if (room->current_path)
 			room->current_path->is_dead = 0;
-//		room->is_closed = 0;
 	}
 }
 
@@ -99,9 +94,8 @@ static int		try_path(t_lem *lem, t_path **path)
 	unsigned	max_dist;
 
 	max_dist = lem->best_config ? lem->best_config->turns : 0xFFFFFFFF;
-	if (!(*path = alloc_new_path()))
-		return (0);
-	if (!ft_lstadd_new((*path)->rooms, lem->end))
+	if (!(*path = alloc_new_path())
+		|| !ft_lstadd_new((*path)->rooms, lem->end))
 		return (0);
 	lem->end->current_path = *path;
 	room = get_next_room(lem, *path, lem->end);
@@ -129,7 +123,6 @@ int				reset_room_relaunch(t_h_elem *room_h_elem)
 {
 	t_room *room;
 
-	//ft_printf("RESET ROOM RELAUNCH FDP\n");
 	room = room_h_elem->content;
 	room->walk = 0;
 	room->current_path = NULL;
@@ -159,15 +152,11 @@ int				clean_after_algo(t_lem *lem)
 	}
 	ft_lstfree(&lem->best_config->paths, FREE_LINKS, KEEP_HEAD);
 	lem->best_config->turns = 0xFFFFFFFF;
-//	ft_hash_iter(lem->table, &print_room_elem);
 	return (1);
 }
 
-int				seek_paths(t_lem *lem)
+int				set_algo(t_lem *lem)
 {
-	t_path		*path;
-	int			check_alloc;
-	
 	lem->max_lives = lem->end->parents->size + lem->end->dist * lem->nb_tubes;
 	if (lem->max_lives > LIVES_UPPER_LIMIT)
 		lem->max_lives = LIVES_UPPER_LIMIT;
@@ -176,6 +165,16 @@ int				seek_paths(t_lem *lem)
 	if (!(lem->current_config = alloc_new_config())
 		|| !(lem->best_config = alloc_new_config())
 		|| !(lem->final_config = alloc_new_config()))
+		return (0);
+	return (1);
+}
+
+int				seek_paths(t_lem *lem)
+{
+	t_path		*path;
+	int			check_alloc;
+
+	if (!set_algo(lem))
 		return (0);
 	while (lem->algo_flip < NB_ALGO_LAUNCHS)
 	{

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:17:42 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/10 17:38:09 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:12:59 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,16 @@ void	print_path(t_path *path)
 
 	if (DEBUG == 0)
 		return ;
-	//ft_printf("PRINTING PATH\n");
+	ft_printf("PRINTING PATH\n");
 	path_rooms = path->rooms->first;
-	//ft_printf("path_address = %p, \n", path);
-	//ft_printf("path->load = %u, path->room->size = %u\n"
-	//	, path->load, path->rooms->size);
+	ft_printf("path_address = %p, \n", path);
+	ft_printf("path->load = %u, path->room->size = %u\n"
+		, path->load, path->rooms->size);
 	ft_printf("path->size = %u, load = %u /// ", path->rooms->size, path->load);
 	while (path_rooms)
 	{
 		room = path_rooms->content;
-		//ft_printf("%s (d %u, w %u) -- ", room->name, room->dist, room->walk);
+		ft_printf("%s (d %u, w %u) -- ", room->name, room->dist, room->walk);
 		ft_printf("%s -- ", room->name);
 		path_rooms = path_rooms->next;
 	}

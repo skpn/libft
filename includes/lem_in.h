@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 14:17:00 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/11 16:53:29 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define INF 3u
 # define INF_EQUAL 4u
 # define SUP_EQUAL 5u
-# define NB_ALGO_LAUNCHS 18u
+# define NB_ALGO_LAUNCHS 12u
 
 # define LIVES_UPPER_LIMIT 500
 # define LIVES_LOWER_LIMIT 500

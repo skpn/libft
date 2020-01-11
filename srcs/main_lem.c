@@ -6,13 +6,12 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 13:17:30 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 14:07:46 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:13:38 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
-#include <unistd.h>
 
 int		check_enough_info(t_lem *lem)
 {
@@ -26,7 +25,6 @@ int		main(void)
 	t_lem	*lem;
 	int		ret;
 
-//	sleep(10);
 	if (!(lem = alloc_new_lem()))
 		return (exit_lem(&lem, "init failed\n", 1));
 	if ((ret = parse_input(lem)) == MALLOC_ERROR)

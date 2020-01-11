@@ -6,13 +6,13 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:47:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/10 17:34:47 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:07:55 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int				ft_hash_iter(t_h_table *table, t_h_iter_func iter_func)
+int			ft_hash_iter(t_h_table *table, t_h_iter_func iter_func)
 {
 	unsigned	index;
 	t_lst		*index_lst;

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/10 17:17:02 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:08:47 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@
 # include <stdarg.h>
 # include <stddef.h>
 # include <stdio.h>
-
-#define POS printf("%s - %s - %d\n", __FILE__, __func__, __LINE__); fflush(0);
 
 typedef struct			s_lst
 {
