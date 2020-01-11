@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:34:41 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 10:49:25 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/11 13:45:55 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ t_display		*set_display(t_lem *lem)
 	unsigned	total_rooms;
 	t_display	*display;
 
-	total_rooms = get_total_rooms(lem->best_config);
+	total_rooms = get_total_rooms(lem->final_config);
 	if (!(display = alloc_new_display(total_rooms)))
 		return (NULL);
-	display->best = lem->best_config;
+	display->best = lem->final_config;
 	display->nb_ants = lem->nb_ants;
 	display->lem_turns = lem->turns;
 	set_tab(display, total_rooms);

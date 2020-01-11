@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:36:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/10 15:30:04 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/11 13:45:30 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int				display_lem(t_lem *lem)
 	}
 	*/
 //	print_room(lem->end);
-	ft_printf("\nmax dist %u, lem turns: %u, nb paths: %u\n", lem->max_dist, lem->turns, lem->best_config->paths->size);
+	ft_printf("\nmax dist %u, lem turns: %u, nb paths: %u\n", lem->max_dist, lem->turns, lem->final_config->paths->size);
 //	print_config(lem->best_config);
 //	check_best_config_validity(lem, lem->best_config);
 	return (1);

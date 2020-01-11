@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/10 18:15:31 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/11 14:15:35 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,41 +25,12 @@ static void	pop_dead_paths(t_config *config)
 		path_lst = path_lst->next;
 		if (path->is_dead)
 		{
-			//ft_printf(" ---- popping path: ");
-			//print_path(path);
 			dead_path_lst = ft_lstpop(config->paths, path);
 			if (dead_path_lst)
 				ft_lstfree_elem(&dead_path_lst, FREE_LINKS);
 		}
 	}
 }
-/*
-static void	pop_dead_paths(t_lem *lem, t_path *new_path)
-{
-	t_lst		*popped_path;
-	t_lst		*room_lst;
-	t_room		*room;
-
-	room_lst = new_path->rooms->first;
-	while (room_lst)
-	{
-		room = room_lst->content;
-		room_lst = room_lst->next;
-		if (room->previous_path)
-		{
-			ft_printf("path %p, room %p current path: %p\n", new_path, room, room->current_path);
-			popped_path = ft_lstpop(lem->current_config->paths
-				, room->previous_path);
-			if (popped_path)
-			{
-				ft_lstfree_elem(&popped_path, FREE_LINKS);
-			}
-		}
-		room->current_path = new_path;
-	}
-	print_config(lem->current_config);
-}
-*/
 
 static int	add_path(t_lem *lem, t_path *new_path)
 {
@@ -114,11 +85,11 @@ void			reset_room(t_lem *lem, t_room *room)
 {
 	if (lem->algo_flip == EACH
 		|| lem->reset_flip == 0 || lem->reset_flip == lem->end->dist
-		|| (lem->algo_flip == DIFF && room->dist != lem->reset_flip)
-		|| (lem->algo_flip == SUP && room->dist > lem->reset_flip)
-		|| (lem->algo_flip == INF && room->dist < lem->reset_flip)
-		|| (lem->algo_flip == SUP_EQUAL && room->dist >= lem->reset_flip)
-		|| (lem->algo_flip == INF_EQUAL && room->dist <= lem->reset_flip))
+		|| (lem->algo_flip % 6 == DIFF && room->dist != lem->reset_flip)
+		|| (lem->algo_flip % 6 == SUP && room->dist > lem->reset_flip)
+		|| (lem->algo_flip % 6 == INF && room->dist < lem->reset_flip)
+		|| (lem->algo_flip % 6 == SUP_EQUAL && room->dist >= lem->reset_flip)
+		|| (lem->algo_flip % 6 == INF_EQUAL && room->dist <= lem->reset_flip))
 		room->walk = 0;
 }
 

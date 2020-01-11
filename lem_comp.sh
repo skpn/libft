@@ -15,7 +15,7 @@ for ((i=2; i<=$#; i++)); do
 		exit 1
 	else
 		echo -ne "\n ----  $file  ----  "
-		./$exec < $file
+		time -p ./$exec < $file
 		grep -m 1 "required" $file
 	fi
 done

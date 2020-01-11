@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:52:16 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/10 18:15:30 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/11 12:27:22 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,10 @@ int		exit_lem(t_lem **lem, char *msg, int ret)
 		free_paths(&((*lem)->paths));
 	if ((*lem)->best_config)
 		free_config(&((*lem)->best_config));
-		POS;
 	if ((*lem)->final_config)
-		free_config(&((*lem)->best_config));
-		POS;
+		free_config(&((*lem)->final_config));
 	if ((*lem)->current_config)
 		free_config(&(*lem)->current_config);
-		POS;
 	if ((*lem)->display)
 		free_display(&(*lem)->display);
 	msg ? ft_putstr(msg) : 0;

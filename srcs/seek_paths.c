@@ -6,30 +6,28 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/10 18:15:28 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/11 14:17:27 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "libft.h"
 
-static t_room	*check_room(t_room *child, t_room *next_room)
+static t_room	*check_room(t_lem *lem, t_room *child, t_room *next_room)
 {
 	if (!next_room)
-	{
 		return (child);
-	}
-	/*
-	if (child->walk < next_room->walk || (child->walk == next_room->walk
-		&& child->dist < next_room->dist))
-	{
+	if (lem->algo_flip <= 11 && lem->algo_flip >= 6
+		&& (child->walk + child->dist <= next_room->walk + next_room->dist))
 		return (child);
-	}
-	*/
-	if (child->walk + child->dist <= next_room->walk + next_room->dist)
-	{
+	else if (lem->algo_flip <= 5
+		&& ((child->walk << 1) + child->dist <= (next_room->walk << 1)
+		+ next_room->dist))
 		return (child);
-	}
+	else if (lem->algo_flip >= 12
+		&&	child->walk + 3 * child->dist <= next_room->walk
+		+ 3 * next_room->dist)
+		return (child);
 	return (next_room);
 }
 
@@ -48,31 +46,31 @@ static int		update_room(t_room *room, t_path *path)
 static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 {
 	t_room	*next_room;
-	t_lst	*child;
-	t_room	*child_room;
+	t_lst	*child_lst;
+	t_room	*child;
 
 	next_room = NULL;
-	child = room->parents->first;
-	while (child)
+	child_lst = room->parents->first;
+	while (child_lst)
 	{
-		child_room = child->content;
-		if (child_room->dist + path->rooms->size <= lem->current_config->turns
-			&& child_room->current_path != path)
+		child = child_lst->content;
+		if (child->current_path != path
+			&& child->dist + path->rooms->size <= lem->current_config->turns)
 		{
-			next_room = check_room(child_room, next_room);
+			next_room = check_room(lem, child, next_room);
 		}
-		child = child->next;
+		child_lst = child_lst->next;
 	}
-	child = room->children->first;
-	while (child)
+	child_lst = room->children->first;
+	while (child_lst)
 	{
-		child_room = child->content;
-		if (child_room->dist + path->rooms->size <= lem->current_config->turns
-			&& child_room->current_path != path)
+		child = child_lst->content;
+		if (child->current_path != path
+			&& child->dist + path->rooms->size <= lem->current_config->turns)
 		{
-			next_room = check_room(child_room, next_room);
+			next_room = check_room(lem, child, next_room);
 		}
-		child = child->next;
+		child_lst = child_lst->next;
 	}
 	return (next_room);
 }
@@ -145,8 +143,6 @@ int				best_to_final(t_lem *lem)
 	ft_lstfree(&lem->final_config->paths, FREE_LINKS, KEEP_HEAD);
 	if (!(lem->final_config->paths = ft_lstcpy(lem->best_config->paths)))
 		return (0);
-	ft_lstfree(&lem->best_config->paths, FREE_LINKS, KEEP_HEAD);
-	lem->best_config->turns = 0xFFFFFFFF;
 	return (1);
 }
 
@@ -161,8 +157,10 @@ int				clean_after_algo(t_lem *lem)
 		if (!(best_to_final(lem)))
 			return (0);
 	}
+	ft_lstfree(&lem->best_config->paths, FREE_LINKS, KEEP_HEAD);
+	lem->best_config->turns = 0xFFFFFFFF;
+//	ft_hash_iter(lem->table, &print_room_elem);
 	return (1);
-	//ft_hash_iter(lem->table, &print_room_elem);
 }
 
 int				seek_paths(t_lem *lem)
@@ -179,12 +177,10 @@ int				seek_paths(t_lem *lem)
 		|| !(lem->best_config = alloc_new_config())
 		|| !(lem->final_config = alloc_new_config()))
 		return (0);
-	lem->final_config->turns = 0xFFFFFFFF;
-	ft_printf("firs ttrn, current config: %u\n", lem->current_config->turns);
 	while (lem->algo_flip < NB_ALGO_LAUNCHS)
 	{
-		ft_printf("algo_flip = %u\n", lem->algo_flip);
 		lem->lives = lem->max_lives;
+		lem->reset_flip = 0;
 		path = NULL;
 		while (lem->lives)
 		{
@@ -196,7 +192,6 @@ int				seek_paths(t_lem *lem)
 					return (0);
 			}
 		}
-		ft_printf("End of turn %u, best_config->turns = %u\n", lem->algo_flip, lem->best_config->turns);
 		if (!(clean_after_algo(lem)))
 			return (0);
 	}
