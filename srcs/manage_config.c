@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 18:14:24 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:25:55 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,6 @@ int			manage_valid_path(t_lem *lem, t_path *path)
 		return (1);
 	if (!update_best_config(lem))
 		return (0);
-	if (lem->best_config->paths->size > lem->most_paths)
-		lem->most_paths = lem->best_config->paths->size;
 	reset_upper_graph(lem);
 	return (1);
 }

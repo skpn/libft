@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 16:53:29 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/11 18:25:33 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct		s_room
 	unsigned		dist;
 	unsigned		has_lvl;
 	unsigned		walk;
-	unsigned		walk_2;
 	char			*name;
 	t_path			*previous_path;
 	t_path			*current_path;
@@ -96,7 +95,6 @@ typedef struct		s_lem
 	unsigned		nb_ants;
 	unsigned		nb_rooms;
 	unsigned		max_paths;
-	unsigned		most_paths;
 	unsigned		shortest;
 	unsigned		max_dist;
 	unsigned		turns;
@@ -104,7 +102,6 @@ typedef struct		s_lem
 	unsigned		max_lives;
 	unsigned		lives;
 	unsigned		anthill_size;
-	unsigned		scramble_flip;
 	unsigned		pos;
 	unsigned		algo_flip;
 	unsigned		reset_flip;
