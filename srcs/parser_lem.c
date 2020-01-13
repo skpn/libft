@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 15:28:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/10 14:25:31 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/13 14:23:54 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ int		manage_start_end(t_lem *lem, char *anthill, int *opt)
 		return (PARSING_ERROR);
 	else if (!ft_strncmp(anthill + lem->pos, "start\n", 6))
 	{
-		if (lem->start)
+		if (lem->start || *(anthill + lem->pos + 6) == '#')
 			return (PARSING_ERROR);
 		*opt = START;
 		lem->pos += 6;
 	}
 	else if (!ft_strncmp(anthill + lem->pos, "end\n", 4))
 	{
-		if (lem->end)
+		if (lem->end || *(anthill + lem->pos + 4) == '#')
 			return (PARSING_ERROR);
 		*opt = END;
 		lem->pos += 4;
@@ -95,9 +95,9 @@ int		parse_input(t_lem *lem)
 		return (ret);
 	while ((ret = get_tubes(lem, lem->copy)) > 0)
 		;
-	if (ret < 0)
-		return (ret);
 	while (lem->anthill[lem->pos])
 		lem->pos++;
+	if (ret < 0)
+		return (ret);
 	return (1);
 }

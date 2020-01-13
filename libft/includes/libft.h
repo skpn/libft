@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 10:34:10 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:19:09 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define COLLISIONS_REJECTION_FACTOR 10
 # define QUIET 0
 # define VERBOSE 1
-# define BLOCK 5000
+# define BLOCK 64
 # define ALL "-+ 0#hlL.123456789*"
 # define FLAGS "-+ 0#"
 # define MINUS 1u

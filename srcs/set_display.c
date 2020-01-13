@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:34:41 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 13:45:55 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:01:46 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void		path_to_tab(t_display *display, t_path *path, unsigned *cell)
 	room_count = 0;
 	while (++room_count < path->rooms->size)
 	{
-		if (display->last_id < display->nb_ants)
+		if (display->last_id <= display->nb_ants)
 		{
 			display->ants_tab[*cell]->wait = wait++;
 			display->ants_tab[*cell]->max = path->load;
