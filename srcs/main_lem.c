@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 13:17:30 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 10:37:15 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 11:56:16 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		main(void)
 	t_lem	*lem;
 	int		ret;
 
-//	sleep(10);
 	if (!(lem = alloc_new_lem()))
 		return (exit_lem(&lem, "init failed\n", 1));
 	if ((ret = parse_input(lem)) == MALLOC_ERROR)

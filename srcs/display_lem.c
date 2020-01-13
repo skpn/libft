@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:36:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 11:34:05 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 11:52:26 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void			start_joined_to_end(t_lem *lem)
 	ft_printf("\n");
 }
 
-/*
 static void		print_ant(t_display *display, t_ant *ant)
 {
 	t_room		*room;
@@ -72,34 +71,6 @@ static void		print_ants(t_display *display)
 	}
 	ft_printf("\n");
 }
-*/
-
-void			check_best_config_validity(t_lem *lem, t_config *best_config)
-{
-	t_lst	*path_lst;
-	t_lst	*room_lst;
-	t_room	*room;
-
-	path_lst = best_config->paths->first;
-	while (path_lst->next)
-	{
-		room_lst = ((t_path *)path_lst->content)->rooms->first;
-		path_lst = path_lst->next;
-		while (room_lst)
-		{
-			room = room_lst->content;
-			room_lst = room_lst->next;
-			if (room != lem->start && room != lem->end)
-				room->walk_2++;
-			if (room->walk_2 > 1)
-			{
-				ft_printf("\n\n\nroom %s has walk %u :(\n\n\n"
-					, room->name, room->walk_2);
-			}
-		}
-	}
-	ft_printf("\n\n\n:)\n\n\n");
-}
 
 int				display_lem(t_lem *lem)
 {
@@ -108,16 +79,12 @@ int				display_lem(t_lem *lem)
 	if (!(display = set_display(lem)))
 		return (0);
 	lem->display = display;
-//	write(1, lem->anthill, lem->pos);
-	/*while (display->turn < lem->turns)
+	write(1, lem->anthill, lem->pos);
+	while (display->turn < lem->turns)
 	{
 		display->first_print = 1;
 		print_ants(display);
 		display->turn++;
-	}*/
-//	print_room(lem->end);
-	ft_printf("\nmax dist %u, lem turns: %u, nb paths: %u\n", lem->max_dist, lem->turns, lem->final_config->paths->size);
-//	print_config(lem->final_config);
-	//check_best_config_validity(lem, lem->final_config);
+	}
 	return (1);
 }

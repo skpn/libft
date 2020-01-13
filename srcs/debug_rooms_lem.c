@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:17:42 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/10 17:38:09 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/13 12:04:58 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,41 +57,6 @@ void	print_room(t_room *room)
 	ft_printf("\twalk %u\n", room->walk);
 	print_relatives(room);
 	ft_printf("\n");
-}
-
-void	print_path(t_path *path)
-{
-	t_lst	*path_rooms;
-	t_room	*room;
-
-	if (DEBUG == 0)
-		return ;
-	//ft_printf("PRINTING PATH\n");
-	path_rooms = path->rooms->first;
-	ft_printf("path->size = %u, load = %u /// ", path->rooms->size, path->load);
-	while (path_rooms)
-	{
-		room = path_rooms->content;
-		//ft_printf("%s (d %u, w %u) -- ", room->name, room->dist, room->walk);
-		ft_printf("%s -- ", room->name);
-		path_rooms = path_rooms->next;
-	}
-	ft_printf("\n");
-}
-
-void	print_paths(t_head *paths)
-{
-	t_lst		*path_list;
-
-	if (DEBUG == 0)
-		return ;
-	ft_printf("PRINTING ALL PATHS\n");
-	path_list = paths->first;
-	while (path_list)
-	{
-		print_path(path_list->content);
-		path_list = path_list->next;
-	}
 }
 
 void	print_lem(t_lem *lem, char *args)

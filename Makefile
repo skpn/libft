@@ -6,13 +6,13 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/01/10 17:26:27 by hehlinge         ###   ########.fr        #
+#    Updated: 2020/01/13 12:06:56 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 
 NAME = lem-in
 
@@ -32,7 +32,8 @@ SRC_FILES =	main_lem.c							\
 			update_best_config.c				\
 			load_balancing.c					\
 			debug_display_config_lem_lvl_lem.c	\
-			debug_rooms_paths_lem.c				\
+			debug_rooms_lem.c				\
+			debug_paths.c						\
 			set_display.c						\
 			display_lem.c						\
 			get_anthill.c						\

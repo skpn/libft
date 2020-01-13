@@ -6,14 +6,15 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 11:00:06 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/10 14:24:05 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/13 11:55:35 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "lem_in.h"
 
-static void	calculate_main_load(t_lem *lem, unsigned *ants, t_path *longest_path)
+static void	calculate_main_load(t_lem *lem, unsigned *ants,
+	t_path *longest_path)
 {
 	unsigned	ants_to_all;
 	unsigned	nb_paths;

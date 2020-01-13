@@ -6,32 +6,12 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/31 14:36:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 11:33:17 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 12:09:07 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "libft.h"
-
-void	print_generic_path(t_lem *lem)
-{
-	t_lst	*path_rooms;
-	t_room	*room;
-
-	if (DEBUG == 0)
-		return ;
-	path_rooms = lem->generic_room_lst;
-	//ft_printf("path->size = %u, load = %u /// ", path->rooms->size, path->load);
-	while (path_rooms)
-	{
-		room = path_rooms->content;
-//		ft_printf("%s (d %u, w %u) -- ", room->name, room->dist, room->walk);
-		path_rooms = path_rooms->next;
-		if (room == lem->end)
-			break ;
-	}
-	ft_printf("\n");
-}
 
 static int		check_room(t_lem *lem, t_room *child, t_room *next_room)
 {
@@ -48,35 +28,11 @@ static int		check_room(t_lem *lem, t_room *child, t_room *next_room)
 		&& (child->walk + child->dist <= next_room->walk + next_room->dist))
 		return (1);
 	else if (lem->algo_flip <= 3
-		&&	child->walk + 3 * child->dist <= next_room->walk
+		&& child->walk + 3 * child->dist <= next_room->walk
 		+ 3 * next_room->dist)
 		return (1);
 	return (0);
 }
-
-/*
-static t_room	*check_room(t_lem *lem, t_room *child, t_room *next_room)
-{
-	if (child->active_path == lem->generic_path
-		|| child->dist + lem->generic_path_size > lem->current_config->turns)
-		return (0);
-	if (!next_room)
-		return (child);
-	if (lem->algo_flip <= 3
-		&& (child->walk + child->dist <= next_room->walk + next_room->dist))
-		return (child);
-	else if (lem->algo_flip >= 4 && lem->algo_flip <= 7
-		&& ((child->walk << 1) + child->dist <= (next_room->walk << 1)
-		+ next_room->dist))
-		return (child);
-	else if (lem->algo_flip >= 8
-		&& child->walk + 3 * child->dist <= next_room->walk
-		+ 3 * next_room->dist)
-		return (child);
-	return (next_room);
-}
-*/
-
 
 static int		update_room(t_lem *lem, t_room *room)
 {
@@ -85,11 +41,7 @@ static int		update_room(t_lem *lem, t_room *room)
 	room->walk++;
 	room->previous_path = room->active_path;
 	if (room != lem->start && room != lem->end && room->previous_path)
-	{
-//		ft_printf("at room '%s', killed path:\n", room->name);
-//		print_path(room->previous_path);
 		room->previous_path->is_dead = 1;
-	}
 	room->active_path = lem->generic_path;
 	if (!lem->generic_room_lst)
 	{
@@ -112,14 +64,9 @@ static t_room	*get_next_room(t_lem *lem, t_room *room)
 
 	next_room = NULL;
 	child_lst = room->parents->first;
-//	ft_printf("seeking room with algo flip: %u\n", lem->algo_flip);
-//	print_generic_path(lem);
-//	print_room(room);
 	while (child_lst)
 	{
 		child = child_lst->content;
-//		ft_printf("parent %s active path = %p, path = %p, walk %u\n",
-//		child->name, child->active_path, lem->generic_path, child->walk);
 		if (check_room(lem, child, next_room))
 			next_room = child;
 		child_lst = child_lst->next;
@@ -128,14 +75,10 @@ static t_room	*get_next_room(t_lem *lem, t_room *room)
 	while (child_lst)
 	{
 		child = child_lst->content;
-//		ft_printf("parent %s active path = %p, path = %p, walk %u\n",
-//		child->name, child->active_path, lem->generic_path, child->walk);
 		if (check_room(lem, child, next_room))
 			next_room = child;
 		child_lst = child_lst->next;
 	}
-//	if (next_room)
-//		ft_printf("next room: %s\n", next_room->name);
 	return (next_room);
 }
 
@@ -143,7 +86,7 @@ static void		erase_active_path(t_lem *lem)
 {
 	t_lst	*room_lst;
 	t_room	*room;
-	
+
 	if (!lem->generic_path->rooms->last)
 		return ;
 	room_lst = lem->generic_path->rooms->last->prev;
@@ -181,7 +124,6 @@ static int		try_path(t_lem *lem)
 		}
 	}
 	erase_active_path(lem);
-//	ft_printf("\n");
 	return (-1);
 }
 
@@ -189,7 +131,6 @@ int				reset_room_relaunch(t_h_elem *room_h_elem)
 {
 	t_room *room;
 
-	////ft_printf("RESET ROOM RELAUNCH FDP\n");
 	room = room_h_elem->content;
 	room->walk = 0;
 	room->active_path = NULL;
@@ -218,7 +159,6 @@ int				clean_after_algo(t_lem *lem)
 	}
 	ft_lstfree(&lem->best_config->paths, FREE_LINKS, KEEP_HEAD);
 	lem->best_config->turns = 0xFFFFFFFF;
-//	ft_hash_iter(lem->table, &print_room_elem);
 	return (1);
 }
 
@@ -235,7 +175,7 @@ int				set_generic_path(t_lem *lem)
 int				seek_paths(t_lem *lem)
 {
 	int			check_alloc;
-	
+
 	lem->max_lives = lem->end->parents->size + lem->end->dist * lem->nb_tubes;
 	if (lem->max_lives > LIVES_UPPER_LIMIT)
 		lem->max_lives = LIVES_UPPER_LIMIT;
@@ -249,23 +189,18 @@ int				seek_paths(t_lem *lem)
 		return (0);
 	while (lem->algo_flip < NB_ALGO_LAUNCHS)
 	{
-//		POS;
 		lem->lives = lem->max_lives;
 		lem->reset_flip = 0;
 		while (lem->lives)
 		{
 			lem->lives--;
-//		ft_printf("lives: %u\n", lem->lives);
 			if (!(check_alloc = try_path(lem)))
 				return (0);
 			else if (check_alloc == 1)
 			{
-//	POS;
 				if (!manage_valid_path(lem))
 					return (0);
-//	POS;
 			}
-//	POS;
 		}
 		if (!(clean_after_algo(lem)))
 			return (0);
