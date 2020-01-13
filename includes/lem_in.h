@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 18:25:33 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 10:54:50 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@
 # define SUP_EQUAL 5u
 # define NB_ALGO_LAUNCHS 12u
 
-# define LIVES_UPPER_LIMIT 6
-# define LIVES_LOWER_LIMIT 6
+# define LIVES_UPPER_LIMIT 1000
+# define LIVES_LOWER_LIMIT 1000
 # define DEBUG 1
+
+#define POS ft_printf("%s %s %u\n", __FILE__, __func__, __LINE__)
 
 typedef struct		s_path
 {
@@ -59,9 +61,10 @@ typedef struct		s_room
 	unsigned		dist;
 	unsigned		has_lvl;
 	unsigned		walk;
+	unsigned		walk_2;
 	char			*name;
 	t_path			*previous_path;
-	t_path			*current_path;
+	t_path			*active_path;
 	t_head			*parents;
 	t_head			*children;
 }					t_room;
@@ -105,6 +108,7 @@ typedef struct		s_lem
 	unsigned		pos;
 	unsigned		algo_flip;
 	unsigned		reset_flip;
+	unsigned		generic_path_size;
 	char			*anthill;
 	char			*copy;
 	t_room			*start;
@@ -114,6 +118,8 @@ typedef struct		s_lem
 	t_config		*final_config;
 	t_config		*best_config;
 	t_config		*current_config;
+	t_path			*generic_path;
+	t_lst			*generic_room_lst;
 	t_display		*display;
 }					t_lem;
 
@@ -134,7 +140,7 @@ void				set_next_lvl_families(t_lvl *lvl, t_room *end);
 void				kill_dead_rooms(t_lem *lem, t_room *dead_room);
 void				kill_end_children(t_room *end, unsigned max_dist);
 int					seek_paths(t_lem *lem);
-int					manage_valid_path(t_lem *lem, t_path *path);
+int					manage_valid_path(t_lem *lem);
 int					update_best_config(t_lem *lem);
 void				balance_load(t_lem *lem);
 void				start_joined_to_end(t_lem *lem);

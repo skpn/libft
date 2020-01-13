@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 18:08:47 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 10:34:10 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ void					ft_lstadd_sorted(t_head *head, t_lst *newl
 	, int (*cmp)(t_lst *, t_lst *));
 void					ft_lstadd_back(t_head *head, t_lst *newl);
 t_lst					*ft_lstadd_new(t_head *head, void *content);
+t_lst					*ft_lstadd_back_new(t_head *head, void *content);
 t_lst					*ft_lstpop(t_head *head, void *match);
 void					ft_lsttransfer(t_head *head_from, t_head *heaad_to
 	, t_lst *elem);

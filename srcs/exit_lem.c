@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/24 14:52:16 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 12:27:22 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/11 19:19:27 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int		exit_lem(t_lem **lem, char *msg, int ret)
 		easyfree((void **)&(*lem)->anthill);
 	if ((*lem)->copy)
 		easyfree((void **)&(*lem)->copy);
+	if ((*lem)->generic_path)
+		free_path(&((*lem)->generic_path));
 	if ((*lem)->paths)
 		free_paths(&((*lem)->paths));
 	if ((*lem)->best_config)

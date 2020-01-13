@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 22:15:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 18:26:03 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 10:30:48 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ t_lem		*alloc_new_lem(void)
 	if (!(lem = (t_lem *)easymalloc(sizeof(*lem))))
 		return (NULL);
 	if (!(lem->paths = ft_lstnew_head(NULL, NULL)))
+		return (NULL);
+	if (!(lem->generic_path = alloc_new_path()))
 		return (NULL);
 	if (!(lem->table = ft_hash_new_table()))
 		return (0);

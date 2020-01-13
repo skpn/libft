@@ -6,7 +6,7 @@
 /*   By: hehlinge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 17:54:28 by hehlinge          #+#    #+#             */
-/*   Updated: 2020/01/11 18:14:56 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 10:37:06 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,14 @@ static int		copy_current_paths(t_lem *lem)
 
 int				update_best_config(t_lem *lem)
 {
+//	ft_printf("algo_flip = %u, lives: %u\n", lem->algo_flip, lem->lives);
 	if (lem->best_config->paths->first)
 		ft_lstfree(&lem->best_config->paths, FREE_LINKS, KEEP_HEAD);
 	if (!copy_current_paths(lem))
 		return (0);
+	//if (!lem->best_config->turns
+		//|| lem->best_config->turns == lem->current_config->turns)
+		//scramble_end_parents(lem);
 	lem->best_config->turns = lem->current_config->turns;
 	lem->lives = lem->max_lives;
 	return (1);
