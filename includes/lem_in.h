@@ -34,8 +34,8 @@
 # define SUP_EQUAL 5u
 # define NB_ALGO_LAUNCHS 12u
 
-# define LIVES_UPPER_LIMIT 500
-# define LIVES_LOWER_LIMIT 500
+# define LIVES_UPPER_LIMIT 6
+# define LIVES_LOWER_LIMIT 6
 # define DEBUG 1
 
 typedef struct		s_path

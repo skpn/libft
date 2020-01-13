@@ -17,14 +17,14 @@ static t_room	*check_room(t_lem *lem, t_room *child, t_room *next_room)
 {
 	if (!next_room)
 		return (child);
-	if (lem->algo_flip <= 8 && lem->algo_flip >= 4
+	if (lem->algo_flip <= 3
 		&& (child->walk + child->dist <= next_room->walk + next_room->dist))
 		return (child);
-	else if (lem->algo_flip >= 9
+	else if (lem->algo_flip >= 4 && lem->algo_flip <= 7
 		&& ((child->walk << 1) + child->dist <= (next_room->walk << 1)
 		+ next_room->dist))
 		return (child);
-	else if (lem->algo_flip <= 3
+	else if (lem->algo_flip >= 8
 		&& child->walk + 3 * child->dist <= next_room->walk
 		+ 3 * next_room->dist)
 		return (child);
@@ -50,6 +50,9 @@ static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 	t_room	*child;
 
 	next_room = NULL;
+	ft_printf("seeking room with algo flip: %u\n", lem->algo_flip);
+	print_path(path);
+	print_room(room);
 	child_lst = room->parents->first;
 	while (child_lst)
 	{
@@ -68,6 +71,8 @@ static t_room	*get_next_room(t_lem *lem, t_path *path, t_room *room)
 			next_room = check_room(lem, child, next_room);
 		child_lst = child_lst->next;
 	}
+	if (next_room)
+		ft_printf("next room: %s\n", next_room->name);
 	return (next_room);
 }
 
@@ -97,6 +102,7 @@ static int		try_path(t_lem *lem, t_path **path)
 	if (!(*path = alloc_new_path())
 		|| !ft_lstadd_new((*path)->rooms, lem->end))
 		return (0);
+	ft_printf("lives: %u\n", lem->lives);
 	lem->end->current_path = *path;
 	room = get_next_room(lem, *path, lem->end);
 	if (!update_room(room, *path))
@@ -108,6 +114,7 @@ static int		try_path(t_lem *lem, t_path **path)
 			return (0);
 		if (room == lem->start)
 		{
+			ft_printf("\n");
 			lem->start->walk = 0;
 			lem->start->current_path = NULL;
 			lem->end->current_path = NULL;
@@ -116,6 +123,7 @@ static int		try_path(t_lem *lem, t_path **path)
 	}
 	erase_current_path(*path);
 	free_path(path);
+	ft_printf("no path found\n\n");
 	return (-1);
 }
 
@@ -133,7 +141,7 @@ int				reset_room_relaunch(t_h_elem *room_h_elem)
 int				best_to_final(t_lem *lem)
 {
 	lem->final_config->turns = lem->best_config->turns;
-	ft_lstfree(&lem->final_config->paths, FREE_LINKS, KEEP_HEAD);
+	ft_lstfree(&lem->final_config->paths, FREE_LINKS, FREE_HEAD);
 	if (!(lem->final_config->paths = ft_lstcpy(lem->best_config->paths)))
 		return (0);
 	return (1);
