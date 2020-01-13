@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:14:09 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 12:02:39 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:49:26 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	print_ants_tab(t_ant **tab)
 	{
 		ft_printf("id   : %u\n", tab[cell]->id);
 		ft_printf("wait : %u\n", tab[cell]->wait);
-		ft_printf("max  : %u\n", tab[cell]->max);
 		ft_printf("path : %p\n", tab[cell]->path);
 		ft_printf("first: %p\n", tab[cell]->path->rooms->first);
 		ft_printf("room : %p\n\n", tab[cell]->current_room);

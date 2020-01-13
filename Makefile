@@ -6,7 +6,7 @@
 #    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/01/13 12:06:56 by sikpenou         ###   ########.fr        #
+#    Updated: 2020/01/13 15:33:24 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC_FILES =	main_lem.c							\
 			set_lvl.c							\
 			clean_graph.c						\
 			seek_paths.c 						\
+			try_path.c	 						\
 			manage_config.c						\
 			update_best_config.c				\
 			load_balancing.c					\

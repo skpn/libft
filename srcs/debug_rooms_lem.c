@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:17:42 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 12:04:58 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:53:51 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	print_lem(t_lem *lem, char *args)
 	ft_printf("---\nLEM\n---\n");
 	ft_printf("nb_ants   : %u\n", lem->nb_ants);
 	ft_printf("nb_rooms  : %u\n", lem->nb_rooms);
-	ft_printf("max_paths : %u\n", lem->max_paths);
 	ft_printf("shortest  : %u\n", lem->shortest);
 	ft_printf("max_dist  : %u\n", lem->max_dist);
 }

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 15:02:02 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:57:03 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@
 # define LIVES_LOWER_LIMIT 1000
 # define DEBUG 1
 
-#define POS ft_printf("%s %s %u\n", __FILE__, __func__, __LINE__)
-
 typedef struct		s_path
 {
 	unsigned		load;
@@ -51,7 +49,6 @@ typedef struct		s_ant
 {
 	unsigned		id;
 	unsigned		wait;
-	unsigned		max;
 	t_path			*path;
 	t_lst			*current_room;
 }					t_ant;
@@ -61,7 +58,6 @@ typedef struct		s_room
 	unsigned		dist;
 	unsigned		has_lvl;
 	unsigned		walk;
-	unsigned		walk_2;
 	char			*name;
 	t_path			*previous_path;
 	t_path			*active_path;
@@ -97,15 +93,14 @@ typedef struct		s_lem
 {
 	unsigned		nb_ants;
 	unsigned		nb_rooms;
-	unsigned		max_paths;
+	unsigned		nb_tubes;
 	unsigned		shortest;
 	unsigned		max_dist;
 	unsigned		turns;
-	unsigned		nb_tubes;
 	unsigned		max_lives;
 	unsigned		lives;
-	unsigned		anthill_size;
 	unsigned		pos;
+	unsigned		anthill_size;
 	unsigned		algo_flip;
 	unsigned		reset_flip;
 	unsigned		generic_path_size;
@@ -140,8 +135,11 @@ void				set_next_lvl_families(t_lvl *lvl, t_room *end);
 void				kill_dead_rooms(t_lem *lem, t_room *dead_room);
 void				kill_end_children(t_room *end, unsigned max_dist);
 int					seek_paths(t_lem *lem);
+int					try_path(t_lem *lem);
+t_path				*copy_generic_path(t_lem *lem);
 int					manage_valid_path(t_lem *lem);
 int					update_best_config(t_lem *lem);
+int					best_to_final(t_lem *lem);
 void				balance_load(t_lem *lem);
 void				start_joined_to_end(t_lem *lem);
 t_display			*set_display(t_lem *lem);

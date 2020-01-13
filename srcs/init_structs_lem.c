@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 22:15:39 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 10:30:48 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:52:05 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_lem		*alloc_new_lem(void)
 	lem->table->free_func = &free_table_room;
 	lem->shortest = 0xFFFFFFFF;
 	lem->max_dist = 0xFFFFFFFF;
-	lem->max_paths = 0xFFFFFFFF;
 	lem->turns = 0xFFFFFFFF;
 	return (lem);
 }

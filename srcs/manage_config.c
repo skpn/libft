@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 11:57:34 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:38:09 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,26 +60,6 @@ static int	add_path(t_lem *lem, t_path *new_path)
 	return (1);
 }
 
-void		reset_best_paths(t_config *best_config)
-{
-	t_lst	*path_lst;
-	t_lst	*room_lst;
-	t_room	*room;
-
-	path_lst = best_config->paths->first;
-	while (path_lst->next)
-	{
-		room_lst = ((t_path *)path_lst->content)->rooms->first;
-		path_lst = path_lst->next;
-		while (room_lst)
-		{
-			room = room_lst->content;
-			room_lst = room_lst->next;
-			room->walk = 0;
-		}
-	}
-}
-
 void		reset_room(t_lem *lem, t_room *room)
 {
 	if (lem->algo_flip == EACH
@@ -115,24 +95,6 @@ int			reset_upper_graph(t_lem *lem)
 		index++;
 	}
 	return (1);
-}
-
-t_path		*copy_generic_path(t_lem *lem)
-{
-	t_path	*copy_path;
-	t_lst	*copy_room_lst;
-
-	if (!(copy_path = alloc_new_path()))
-		return (0);
-	copy_room_lst = lem->generic_room_lst;
-	while (copy_room_lst)
-	{
-		if (!(ft_lstadd_back_new(copy_path->rooms, copy_room_lst->content)))
-			return (0);
-		((t_room *)copy_room_lst->content)->active_path = copy_path;
-		copy_room_lst = copy_room_lst->next;
-	}
-	return (copy_path);
 }
 
 int			manage_valid_path(t_lem *lem)

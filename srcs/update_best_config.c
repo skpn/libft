@@ -6,7 +6,7 @@
 /*   By: hehlinge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 17:54:28 by hehlinge          #+#    #+#             */
-/*   Updated: 2020/01/13 11:58:13 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:38:11 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,15 @@ static int		copy_current_paths(t_lem *lem)
 			return (0);
 		}
 	}
+	return (1);
+}
+
+int				best_to_final(t_lem *lem)
+{
+	lem->final_config->turns = lem->best_config->turns;
+	ft_lstfree(&lem->final_config->paths, FREE_LINKS, FREE_HEAD);
+	if (!(lem->final_config->paths = ft_lstcpy(lem->best_config->paths)))
+		return (0);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 21:05:19 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/10 15:57:37 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/13 15:59:12 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ static int	set_lvls(t_lem *lem, t_lvl *lvl)
 	{
 		set_next_lvl_dists(lvl);
 		set_next_lvl_families(lvl, lem->end);
-		if (lvl->rooms->size < lem->max_paths && lvl->dist > 0
-			&& (lvl->dist < lem->end->dist || lvl->dist == 1))
-			lem->max_paths = lvl->rooms->size;
 		if (!get_next_lvl_rooms(lem, lvl))
 		{
 			free_lvl(&lvl);
@@ -112,9 +109,8 @@ int			set_graph(t_lem *lem)
 		free_lvl(&lvl);
 		return (0);
 	}
-	if ((lem->max_paths < 1 || lem->max_paths > lem->table->elems
-		|| lem->shortest != lem->end->dist + 1)
-			&& !ft_lstfind(lem->start->children, lem->end))
+	if (lem->shortest != lem->end->dist + 1
+		&& !ft_lstfind(lem->start->children, lem->end))
 	{
 		free_lvl(&lvl);
 		return (PARSING_ERROR);
