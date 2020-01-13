@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/14 10:27:02 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 18:14:24 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/11 19:51:03 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static void	pop_dead_paths(t_config *config)
 		path_lst = path_lst->next;
 		if (path->is_dead)
 		{
+//			ft_printf("POP DEAD PATH\n");
+//			print_path(path);
 			dead_path_lst = ft_lstpop(config->paths, path);
 			if (dead_path_lst)
 				ft_lstfree_elem(&dead_path_lst, FREE_LINKS);
@@ -39,7 +41,7 @@ static int	add_path(t_lem *lem, t_path *new_path)
 	t_lst		*new_path_lst;
 	unsigned	new_path_size;
 
-	lem->lives--;
+//	lem->lives--;
 	new_path_size = new_path->rooms->size;
 	if (!(new_path_lst = ft_lstnew_elem(new_path)))
 		return (0);
@@ -81,7 +83,7 @@ void		reset_best_paths(t_config *best_config)
 	}
 }
 
-void		reset_room(t_lem *lem, t_room *room)
+void			reset_room(t_lem *lem, t_room *room)
 {
 	if (lem->algo_flip == EACH
 		|| lem->reset_flip == 0 || lem->reset_flip == lem->end->dist
@@ -91,7 +93,7 @@ void		reset_room(t_lem *lem, t_room *room)
 		room->walk = 0;
 }
 
-int			reset_upper_graph(t_lem *lem)
+int				reset_upper_graph(t_lem *lem)
 {
 	unsigned	index;
 	t_lst		*index_lst;
@@ -118,19 +120,43 @@ int			reset_upper_graph(t_lem *lem)
 	return (1);
 }
 
-int			manage_valid_path(t_lem *lem, t_path *path)
+t_path		*copy_generic_path(t_lem *lem)
 {
+	t_path	*copy_path;
+	t_lst	*copy_room_lst;
+
+	if (!(copy_path = alloc_new_path()))
+		return (0);
+	copy_room_lst = lem->generic_room_lst->next;
+	while (copy_room_lst)
+	{
+		if (!(ft_lstadd_back_new(copy_path->rooms, copy_room_lst->content)))
+			return (0);
+		((t_room *)copy_room_lst->content)->active_path = copy_path;
+		copy_room_lst = copy_room_lst->next;
+	}
+	return (copy_path);
+}
+
+int			manage_valid_path(t_lem *lem)
+{
+	t_path	*path;
+
+	if (!(path = copy_generic_path(lem)))
+		return (0);
+//	ft_printf("VALID PATH\n");
+//	print_path(path);
 	if (!ft_lstadd_new(lem->paths, path))
 		return (0);
 	if (!add_path(lem, path))
 		return (0);
+//	ft_printf("\n");
 	if (lem->best_config->turns <= lem->current_config->turns)
 		return (1);
-	ft_printf("UPDATING BEST\n\n\n");
+//	ft_printf("\n\nUPDATING BEST\nUPDATING BEST\n\n");
 	if (!update_best_config(lem))
 		return (0);
-	if (lem->best_config->paths->size > lem->most_paths)
-		lem->most_paths = lem->best_config->paths->size;
+//	print_config(lem->best_config);
 	reset_upper_graph(lem);
 	return (1);
 }
