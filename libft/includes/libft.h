@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 15:19:09 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/14 19:34:24 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,5 +265,6 @@ void					hash_print_elem(t_h_elem *elem);
 void					hash_print_index(t_h_table *table, unsigned index
 	, int opt);
 void					hash_print_table(t_h_table *table, int opt);
+void					hash_print_table_data(t_h_table *table);
 
 #endif

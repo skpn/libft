@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 15:57:03 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/14 14:31:44 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void				free_path(t_path **path);
 void				free_paths(t_head **path);
 void				free_lvl(t_lvl **lvl);
 void				print_anthill(char *lem);
-void				print_lem(t_lem *lem, char *args);
+void				print_lem(t_lem *lem);
 int					print_room_elem(t_h_elem *room_elem);
 void				print_room(t_room *room);
 void				print_config(t_config *config);

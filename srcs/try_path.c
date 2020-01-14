@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/13 15:31:01 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 15:34:47 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/14 19:31:58 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ static int		update_room(t_lem *lem, t_room *room)
 	}
 	return (1);
 }
+
+/*
+** add an algo turn where we don't loop on the parents
+*/
 
 static t_room	*get_next_room(t_lem *lem, t_room *room)
 {

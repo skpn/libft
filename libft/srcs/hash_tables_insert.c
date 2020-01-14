@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:48:23 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/06 10:47:58 by hehlinge         ###   ########.fr       */
+/*   Updated: 2020/01/14 19:38:56 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	transfer_hash_elems(t_h_table *table, unsigned new_size
 			transfer = ft_lstpop(index_head, index_head->first->content);
 			hash_elem = transfer->content;
 			rehashed_index_head = &(table->array[hash_elem->hash % new_size]);
+			if (rehashed_index_head->size > 0)
+				table->collisions++;
 			ft_lstadd(rehashed_index_head, transfer);
 		}
 		index++;

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:47:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:48:12 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/14 19:34:05 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,11 @@ void	hash_print_table(t_h_table *table, int opt)
 		hash_print_index(table, index, opt);
 		index++;
 	}
+}
+
+void	hash_print_table_data(t_h_table *table)
+{
+	ft_printf("printing hash table %p\nsize : %u\nelems: %u\ncoll : %u\n"
+		"limit: %u\n", table, table->size, table->elems, table->collisions
+		, table->collisions_limit);	
 }

@@ -6,7 +6,7 @@
 /*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 21:05:19 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/13 15:59:12 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/01/14 14:38:36 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int	get_next_lvl_rooms(t_lem *lem, t_lvl *lvl)
 	current_rooms = lvl->rooms->first;
 	lvl->rooms->first = NULL;
 	lvl->rooms->last = NULL;
+	lvl->rooms->size = 0;
 	while (current_rooms)
 	{
 		parent = current_rooms->content;
@@ -72,6 +73,7 @@ static int	set_lvls(t_lem *lem, t_lvl *lvl)
 			free_lvl(&lvl);
 			return (0);
 		}
+		ft_printf("lvl %u, %u rooms\n", lvl->dist, lvl->rooms->size);
 		if (lvl->dist + 1 == lem->end->dist)
 		{
 			if ((end_elem = ft_lstpop(lvl->rooms, lem->end)))
