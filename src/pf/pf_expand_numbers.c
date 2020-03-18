@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pf_expand_numbers.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <sikpenou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 19:07:31 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/02/26 13:54:13 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/03/17 11:29:10 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,19 @@ void	print_number_in_base(t_pf *pf, t_pf_arg *arg
 	pf->pos += arg->base_len;
 }
 
-int		expand_type_unsigned(t_pf *pf, t_pf_arg *arg)
+int		pf_expand_type_unsigned(t_pf *pf, t_pf_arg *arg)
 {
 	unsigned long	print_nb;
 	unsigned long	b_len;
 
 	get_nb_len(arg, &print_nb, &b_len);
-	get_padding(pf, arg);
+	pf_get_padding(pf, arg);
 	print_padding(pf, arg);
 	print_number_in_base(pf, arg, print_nb, b_len);
 	return (EXIT_SUCCESS);
 }
 
-int		expand_type_signed(t_pf *pf, t_pf_arg *arg)
+int		pf_expand_type_signed(t_pf *pf, t_pf_arg *arg)
 {
 	if (arg->field == FIELD_HH && arg->value.ch < 0)
 	{
@@ -96,5 +96,5 @@ int		expand_type_signed(t_pf *pf, t_pf_arg *arg)
 		arg->is_neg = 1;
 		arg->value.lu = (arg->value.ld + 1) * -1 + 1;
 	}
-	return (expand_type_unsigned(pf, arg));
+	return (pf_expand_type_unsigned(pf, arg));
 }

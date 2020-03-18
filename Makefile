@@ -6,7 +6,7 @@
 #    By: sikpenou <sikpenou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/03/04 18:12:12 by sikpenou         ###   ########.fr        #
+#    Updated: 2020/02/27 15:27:55 by sikpenou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,10 +100,7 @@ SRCS += \
 SRCS += \
 			ft_itoa.c \
 			ft_itoa_base.c \
-			ft_strchr.c \
 			ft_strchr_pos.c \
-			ft_strcmp.c \
-			ft_strncmp.c \
 			ft_strcmp_heap.c \
 			ft_strcpy.c \
 			ft_strcpy_heap.c \
@@ -126,9 +123,9 @@ vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 vpath %.h $(foreach dir, $(INC_DIR), $(dir):)
 vpath %.a $(foreach dir, $(LIB_DIR), $(dir):)
 
-all: $(NAME) Makefile
+all: $(NAME)
 
-$(NAME): $(INCS) $(LIBS) $(OBJS)
+$(NAME): $(INCS) $(LIBS) $(OBJS) Makefile
 	/bin/echo compiling $(NAME)
 	ar rc $(NAME) $(OBJS)
 

@@ -6,7 +6,7 @@
 /*   By: sikpenou <sikpenou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:56:29 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/03 14:50:38 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/02/27 18:33:14 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,13 @@ static int	read_loop(t_file *file)
 	return (ret < 0 ? ERROR_READ : ERROR_FILE_TOO_LARGE);
 }
 
-int			read_file(t_file *file, char *file_name)
+int			read_file(t_file **target_file, char *file_name)
 {
 	int		ret;
+	t_file	*file;
 
+	if (!(file = (t_file *)easymalloc(sizeof(*file))))
+		return (ERROR_MALLOC);
 	file->fd = open(file_name, O_RDONLY);
 	if (file->fd < 3)
 		return (ERROR_OPEN_FD);
@@ -59,6 +62,6 @@ int			read_file(t_file *file, char *file_name)
 	file->size = 0;
 	if ((ret = read_loop(file)) != EXIT_SUCCESS)
 		return (ret);
-	close(file->fd);
+	*target_file = file;
 	return (EXIT_SUCCESS);
 }

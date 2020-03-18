@@ -6,7 +6,7 @@
 /*   By: sikpenou <sikpenou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/07 12:37:05 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/02/27 18:31:53 by sikpenou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 # include <stdarg.h>
 # include <stddef.h>
 # include <stdio.h>
-#define POS printf("%s %s %d\n", __FILE__, __func__, __LINE__); fflush(0)
+
 typedef struct			s_ft_file
 {
 	int					fd;
@@ -118,8 +118,6 @@ typedef struct			s_d_array
 	void				***parent_array;
 }						t_d_array;
 
-# include "ft_printf.h"
-
 void					*easymalloc(size_t size);
 void					easyfree(void **match);
 
@@ -127,7 +125,6 @@ unsigned long long		ft_ato_ull(const char *str, int *pos);
 int						ft_abs(int a);
 int						ft_atoi(const char *str);
 int						ft_atoi_base(char *nbr, char *base_from);
-int						ft_atoi_deref(char **str);
 
 int						ft_check_base(char *str, char *base);
 char					*ft_convert_base(char *nbr, char *base_from,
@@ -217,6 +214,7 @@ int						ft_min(int a, int b);
 long long int			ft_pow(long long int nb, long long int pow);
 void					ft_print_error(t_error_tab *tab, unsigned error);
 void					ft_print_error_tab(t_error_tab *tab);
+int						ft_printf(char *format, ...);
 void					ft_putnbr(long long n);
 void					ft_putnbr_fd(int n, int fd);
 
@@ -226,7 +224,6 @@ int						ft_realloc(char **zone, long curr_size_in_octs,
 int						ft_set_error_tab(t_error_tab **tab, unsigned fd);
 int						ft_set_error(t_error_tab *tab, unsigned error_nb,
 	char *msg);
-char					*ft_strchr(char *str, int c);
 int						ft_strchr_pos(char *str, int c);
 int						ft_strcmp(char *s1, char *s2);
 int						ft_strcmp_heap(char *s1, char *s2);
@@ -237,7 +234,7 @@ char					*ft_strjoin(char *s1, char *s2);
 char					*ft_strjoin_free(char **s1, char **s2, int opt);
 size_t					ft_strlen(const char *s);
 size_t					ft_strlen_heap(const char *s);
-int						ft_strncmp(char *s1, char *s2, size_t n);
+int						ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t					ft_strncpy(char *dst, const char *src, size_t len);
 char					*ft_strrchr(const char *str, int c);
 char					*ft_strrev(char *str);
@@ -263,8 +260,6 @@ void					h_print_index(t_h_table *table, unsigned index,
 	int opt);
 void					h_print_table(t_h_table *table, int opt);
 void					h_print_table_data(t_h_table *table);
-
-int						read_file(t_file *target_file, char *file_name);
 
 void					set_stack_errors_lol(t_error_tab *error_tab);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pf_parsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <sikpenou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 17:38:50 by skpn              #+#    #+#             */
-/*   Updated: 2020/02/26 13:54:41 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/03/17 11:27:25 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-int		parse_pf_arg_type(t_pf *pf, t_pf_arg *arg, unsigned char c)
+int		pf_parse_arg_type(t_pf *pf, t_pf_arg *arg, unsigned char c)
 {
 	arg->type_char = c;
 	if (c == 'c')
@@ -37,7 +37,7 @@ int		parse_pf_arg_type(t_pf *pf, t_pf_arg *arg, unsigned char c)
 	return (pf->func[arg->type](pf, arg));
 }
 
-void	parse_pf_arg_size(t_pf *pf, t_pf_arg *arg, unsigned *size
+void	pf_parse_arg_size(t_pf *pf, t_pf_arg *arg, unsigned *size
 	, unsigned char c)
 {
 	if (c == '.')
@@ -64,9 +64,8 @@ void	parse_pf_arg_size(t_pf *pf, t_pf_arg *arg, unsigned *size
 		*size = 0;
 }
 
-void	parse_pf_arg_flag(t_pf *pf, t_pf_arg *arg, unsigned char c)
+void	pf_parse_arg_flag(t_pf_arg *arg, unsigned char c)
 {
-	(void)pf;
 	if (c == '+')
 		arg->flag[FLAG_P] = 1;
 	else if (c == '-')
@@ -79,7 +78,7 @@ void	parse_pf_arg_flag(t_pf *pf, t_pf_arg *arg, unsigned char c)
 		arg->flag[FLAG_S] = 1;
 }
 
-void	parse_pf_arg_field(t_pf *pf, t_pf_arg *arg, unsigned char c)
+void	pf_parse_arg_field(t_pf *pf, t_pf_arg *arg, unsigned char c)
 {
 	if (c == 'h')
 	{

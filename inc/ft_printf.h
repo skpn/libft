@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <sikpenou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 18:00:55 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/04 15:53:16 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/03/18 10:36:41 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FT_PRINTF_H
 
 # include "libft.h"
-# include <stdarg.h>
+# include "stdarg.h"
 
 # define TYPE_C 0
 # define TYPE_S 1
@@ -101,31 +101,27 @@ struct				s_pf
 	t_func_pf		*func;
 };
 
-int					core_pf_2(t_pf *pf);
+int					pf_core(t_pf *pf);
 
-void				exit_pf(t_pf *pf);
-int					expand_pf_arg(t_head *args, t_lst *lst_arg);
-int					expand_pf_format(t_pf *pf);
-int					expand_type_c(t_pf *pf, t_pf_arg *arg);
-int					expand_type_s(t_pf *pf, t_pf_arg *arg);
-int					expand_type_signed(t_pf *pf, t_pf_arg *arg);
-int					expand_type_unsigned(t_pf *pf, t_pf_arg *arg);
+void				pf_exit(t_pf *pf);
+int					pf_expand_arg(t_head *args, t_lst *lst_pf_arg);
+int					pf_expand_format(t_pf *pf);
+int					pf_expand_type_c(t_pf *pf, t_pf_arg *arg);
+int					pf_expand_type_s(t_pf *pf, t_pf_arg *arg);
+int					pf_expand_type_signed(t_pf *pf, t_pf_arg *arg);
+int					pf_expand_type_unsigned(t_pf *pf, t_pf_arg *arg);
 
-int					ft_printf(char *format, ...);
-int					ft_sprintf(char **str, char *format, ...);
-int					ft_dprintf(int fd, char *format, ...);
+int					pf_get_padding(t_pf *pf, t_pf_arg *arg);
 
-int					get_padding(t_pf *pf, t_pf_arg *arg);
-
-void				parse_pf_arg_field(t_pf *pf, t_pf_arg *arg,
+void				pf_parse_arg_field(t_pf *pf, t_pf_arg *arg,
 	unsigned char c);
-void				parse_pf_arg_flag(t_pf *pf, t_pf_arg *arg, unsigned char c);
-void				parse_pf_arg_size(t_pf *pf, t_pf_arg *arg, unsigned *size
-	, unsigned char c);
-int					parse_pf_arg_type(t_pf *pf, t_pf_arg *arg, unsigned char c);
-int					parse_pf_arg_value(t_pf *pf, t_pf_arg *arg);
+void				pf_parse_arg_flag(t_pf_arg *arg, unsigned char c);
+void				pf_parse_arg_size(t_pf *pf, t_pf_arg *arg, unsigned *size,
+	unsigned char c);
+int					pf_parse_arg_type(t_pf *pf, t_pf_arg *arg, unsigned char c);
+int					pf_parse_arg_value(t_pf *pf, t_pf_arg *arg);
 
-int					print_pf_arg(t_pf_arg *arg);
-void				print_pf_args(t_pf *pf);
+// int					pf_print_arg(t_pf_arg *arg);
+// void				pf_print_args(t_pf *pf);
 
 #endif
