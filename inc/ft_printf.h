@@ -121,7 +121,4 @@ void				pf_parse_arg_size(t_pf *pf, t_pf_arg *arg, unsigned *size,
 int					pf_parse_arg_type(t_pf *pf, t_pf_arg *arg, unsigned char c);
 int					pf_parse_arg_value(t_pf *pf, t_pf_arg *arg);
 
-// int					pf_print_arg(t_pf_arg *arg);
-// void				pf_print_args(t_pf *pf);
-
 #endif
