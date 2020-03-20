@@ -6,11 +6,16 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:47:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/02/10 12:18:44 by skpn             ###   ########.fr       */
+/*   Updated: 2020/03/19 19:10:13 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+/*
+** these functions can pop an element or its contents, return it, or iter over
+** the table
+*/
 
 int			ft_h_iter(t_h_table *table, t_func_h_iter iter_func)
 {
@@ -41,7 +46,7 @@ t_h_elem	*ft_h_get_elem(t_h_table *table, char *key)
 	t_h_elem	*hash_elem;
 	t_lst		*index_lst;
 
-	index = table->hash_func(key) % table->size;
+	index = table->func_hash(key) % table->size;
 	index_lst = table->array[index].first;
 	while (index_lst)
 	{
@@ -70,7 +75,7 @@ t_h_elem	*ft_h_pop_elem(t_h_table *table, char *key)
 	t_lst		*popped_lst;
 	t_h_elem	*popped_elem;
 
-	index = table->hash_func(key) % table->size;
+	index = table->func_hash(key) % table->size;
 	index_head = &(table->array[index]);
 	if (index_head)
 	{

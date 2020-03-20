@@ -3,16 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   hash_tables_display.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <sikpenou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:47:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/02/26 17:59:50 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/03/19 19:07:32 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	hash_print_elem(t_h_elem *elem)
+/*
+** this is a small set of simple display functions
+** if your elements contain structures with complex printing patterns you can
+** modify the h_elem_free function or directly reassign your own function to the
+** t_h_table func_free variable
+*/
+
+void	h_elem_print(t_h_elem *elem)
 {
 	ft_printf("printing hash elem %p\nkey    : %s\nhash   : %u, content: %p\n"
 			, elem, elem->key, elem->hash, elem->content);
@@ -30,7 +37,7 @@ void	hash_print_index(t_h_table *table, unsigned index, int opt)
 		ft_printf("table %p, index %u (%p):\n", table, index, index_head);
 		while (hash_elem_lst)
 		{
-			hash_print_elem(hash_elem_lst->content);
+			table->func_print(hash_elem_lst->content);
 			hash_elem_lst = hash_elem_lst->next;
 		}
 		ft_printf("\n");
