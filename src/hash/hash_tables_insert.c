@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:48:23 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/20 16:05:44 by skpn             ###   ########.fr       */
+/*   Updated: 2020/03/27 11:20:36 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 ** operation and a list add
 */
 
-static void	transfer_hash_elems(t_h_table *table, unsigned new_size
+static void	transfer_hash_array(t_h_table *table, unsigned new_size
 		, unsigned old_size, t_head *old_array)
 {
 	unsigned	index;
@@ -68,7 +68,7 @@ int			ft_h_resize_array(t_h_table *table, unsigned new_size)
 	if (old_array)
 	{
 		table->collisions = 0;
-		transfer_hash_elems(table, new_size, table->size, old_array);
+		transfer_hash_array(table, new_size, table->size, old_array);
 	}
 	easyfree((void **)&old_array);
 	table->size = new_size;
@@ -130,16 +130,17 @@ int			ft_h_add_elem(t_h_table *table, char *key, void *content)
 	if (str_key_is_unique(table, key) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	if (!(new_elem = (t_h_elem *)easymalloc(sizeof(*new_elem))))
-		return (0);
+		return (EXIT_FAILURE);
+	if (!(new_elem->key = ft_strdup(key)))
+		return (EXIT_FAILURE);
 	new_elem->hash = table->func_hash(key);
 	new_elem->content = content;
-	new_elem->key = key;
 	index = new_elem->hash % table->size;
-	if (!insert_hash_elem(table, index, new_elem))
+	if (insert_hash_elem(table, index, new_elem) != EXIT_SUCCESS)
 	{
-		ft_h_free_elem(table, new_elem, FREE_LINKS);
-		return (0);
+		ft_h_free_elem(table, new_elem, FREE_STRUCT);
+		return (EXIT_FAILURE);
 	}
 	table->elems++;
-	return (1);
+	return (EXIT_SUCCESS);
 }

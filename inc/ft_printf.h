@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 18:00:55 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/18 10:36:41 by skpn             ###   ########.fr       */
+/*   Updated: 2020/03/25 12:32:03 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define FIELD_L  0xFFFFFFFFFFFFFFFFLU
 # define FIELD_LL 0xFFFFFFFFFFFFFFFFLU
 # define NB_FIELDS 5
+
+# define BASE_HEX "0123456789abcdef"
 
 # define PF_BUF_SIZE 64
 # define PF_RESULT_MAX_SIZE 2147483647
@@ -100,6 +102,8 @@ struct				s_pf
 	t_pf_arg		arg;
 	t_func_pf		*func;
 };
+
+int					ft_printf(char *format, ...);
 
 int					pf_core(t_pf *pf);
 

@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:47:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/19 19:10:13 by skpn             ###   ########.fr       */
+/*   Updated: 2020/03/27 11:20:08 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ int			ft_h_iter(t_h_table *table, t_func_h_iter iter_func)
 			index_lst = table->array[index].first;
 			while (index_lst)
 			{
-				if (!(iter_func(index_lst->content)))
-					return (0);
+				if (iter_func(index_lst->content) != EXIT_SUCCESS)
+					return (EXIT_FAILURE);
 				index_lst = index_lst->next;
 			}
 		}
 		index++;
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 t_h_elem	*ft_h_get_elem(t_h_table *table, char *key)
@@ -85,7 +85,7 @@ t_h_elem	*ft_h_pop_elem(t_h_table *table, char *key)
 		{
 			if (index_head->size > 0)
 				table->collisions--;
-			ft_lstfree_elem(&popped_lst, FREE_LINKS);
+			ft_lstfree_elem(&popped_lst, FREE_STRUCT);
 			table->elems--;
 			return (popped_elem);
 		}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclr.c                                        :+:      :+:    :+:   */
+/*   ft_lstfree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/08 18:03:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/11 12:24:17 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/03/27 10:55:31 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_lstfree(t_head **head, int opt_elems, int opt_head)
 			}
 			ft_lstfree_elem(&(elem), opt_elems);
 		}
-		if (opt_head == FREE_HEAD)
+		if (opt_head == LST_FREE_HEAD)
 			ft_lstfree_head(head);
 		else
 		{

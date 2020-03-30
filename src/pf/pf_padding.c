@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pf_padding.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <sikpenou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 17:39:27 by skpn              #+#    #+#             */
-/*   Updated: 2020/02/26 14:31:06 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/03/27 12:08:35 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	get_prefix(t_pf_arg *arg)
 	}
 }
 
-int		get_padding(t_pf *pf, t_pf_arg *arg)
+int		pf_get_padding(t_pf *pf, t_pf_arg *arg)
 {
 	get_prefix(arg);
 	get_total_len(arg);

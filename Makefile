@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sikpenou <sikpenou@student.42.fr>          +#+  +:+       +#+         #
+#    By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/02/27 15:27:55 by sikpenou         ###   ########.fr        #
+#    Updated: 2020/03/30 12:02:34 by skpn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ COMPILER = gcc
 
 COMPILATION_FLAGS = -Wall -Werror -Wextra
 
-DEBUG_FLAGS = -g3 -fsanitize=address
+DEBUG_FLAGS = -g3 -fsanitize=address -fsanitize=leak
 
 INCLUDE_FLAGS = -I $(INC_DIR)
 
@@ -31,7 +31,12 @@ OBJ_DIR = objects
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
 SRCS += \
-			dynamic_array.c \
+			dynamic_array.c
+
+SRCS += \
+			easymalloc.c
+
+SRCS += \
 			ft_abs.c \
 			ft_atoi.c \
 			ft_atoi_base.c \
@@ -46,14 +51,14 @@ SRCS += \
 			ft_putnbr.c \
 			ft_swap.c \
 			ft_tabmap.c \
-			lib_errors.c \
-			read_file.c
+			lib_errors.c
 
 SRCS += \
-			hash_tables_memory.c \
 			hash_tables_access.c \
+			hash_tables_basic_funcs.c \
+			hash_tables_display.c \
 			hash_tables_insert.c \
-			hash_tables_display.c
+			hash_tables_memory.c
 
 SRCS += \
 			ft_lstadd.c \
@@ -77,7 +82,6 @@ SRCS += \
 			ft_lstprint.c
 
 SRCS += \
-			easymalloc.c \
 			ft_free.c \
 			ft_memalloc.c \
 			ft_memchr.c \
@@ -115,9 +119,17 @@ SRCS += \
 			ft_ulltoa.c \
 			ft_ulltoa_base.c
 
+SRCS += \
+			read_file.c
+
 INCS += \
-		libft.h \
-		ft_printf.h
+		ft_dynamic_array.h \
+		ft_garbage_collector.h \
+		ft_hash_tables.h \
+		ft_lst.h \
+		ft_printf.h \
+		ft_read_file.h \
+		libft.h
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 vpath %.h $(foreach dir, $(INC_DIR), $(dir):)
@@ -129,7 +141,7 @@ $(NAME): $(INCS) $(LIBS) $(OBJS) Makefile
 	/bin/echo compiling $(NAME)
 	ar rc $(NAME) $(OBJS)
 
-$(OBJ_DIR)/%.o : %.c $(INCS) $(LIBS)
+$(OBJ_DIR)/%.o : %.c $(INCS) $(LIBS) Makefile
 	mkdir -p $(OBJ_DIR)
 	$(CC) -o $@ -c $<
 

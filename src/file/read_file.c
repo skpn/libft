@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <sikpenou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:56:29 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/02/27 18:33:14 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/03/27 11:21:42 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,22 @@
 #include <stdlib.h>
 #include "libft.h"
 
-void		free_file(t_file *file)
+/*
+** This file reader takes a t_file pointer and a file name and fills the t_file
+** structure with the correct fd, file size, and file content (malloc'ed)
+**
+** The free function takes an option to free the t_file as well in case it was
+** malloc'ed
+**
+** The reading buffer size and max file size are defined in ft_read_file.h
+*/
+
+void		free_file(t_file *file, int opt)
 {
 	if (file->content)
 		easyfree((void **)&file->content);
-	easyfree((void **)&file);
+	if (opt == FREE_STRUCT)
+		easyfree((void **)&file);
 }
 
 static int	read_loop(t_file *file)
@@ -33,7 +44,7 @@ static int	read_loop(t_file *file)
 		if (ret == READ_FILE_BUF && ft_realloc(&file->content, file->size
 			, READ_FILE_BUF) != EXIT_SUCCESS)
 		{
-			free_file(file);
+			easyfree((void **)&file->content);
 			return (ERROR_MALLOC);
 		}
 		else
@@ -42,26 +53,21 @@ static int	read_loop(t_file *file)
 			return (EXIT_SUCCESS);
 		}
 	}
-	free_file(file);
+	easyfree((void **)&file->content);
 	return (ret < 0 ? ERROR_READ : ERROR_FILE_TOO_LARGE);
 }
 
-int			read_file(t_file **target_file, char *file_name)
+int			read_file(t_file *file, char *file_name)
 {
 	int		ret;
-	t_file	*file;
 
-	if (!(file = (t_file *)easymalloc(sizeof(*file))))
-		return (ERROR_MALLOC);
-	file->fd = open(file_name, O_RDONLY);
-	if (file->fd < 3)
+	if ((file->fd = open(file_name, O_RDONLY)) < 3)
 		return (ERROR_OPEN_FD);
 	if (!(file->content = (char *)malloc(READ_FILE_BUF + 1)))
 		return (ERROR_MALLOC);
 	file->content[READ_FILE_BUF] = 0;
 	file->size = 0;
-	if ((ret = read_loop(file)) != EXIT_SUCCESS)
-		return (ret);
-	*target_file = file;
-	return (EXIT_SUCCESS);
+	ret = read_loop(file);
+	close(file->fd);
+	return (ret);
 }

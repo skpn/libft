@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memalloc.c                                      :+:      :+:    :+:   */
+/*   ft_garbage_collector.h                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/05 14:49:38 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/29 10:34:08 by skpn             ###   ########.fr       */
+/*   Created: 2020/03/25 12:22:22 by skpn              #+#    #+#             */
+/*   Updated: 2020/03/30 09:33:49 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#ifndef FT_GARBAGE_COLLECTOR_H
+# define FT_GARBAGE_COLLECTOR_H
 
-void	*ft_memalloc(size_t size)
-{
-	void	*newzone;
+# define GC_CURRENT 1
+# define GC_NEW 2
+# define GC_ALL 3
+# define GC_ON 4
+# define GC_OFF 8
+# define GC_STATE 16
+# define GC_FREE 32
 
-	if (!size)
-		return (NULL);
-	newzone = easymalloc(size);
-	if (!(newzone))
-		return (NULL);
-	ft_memset(newzone, 0, size);
-	return (newzone);
-}
+# include "ft_lst.h"
+
+void				*easymalloc(size_t size);
+void				easyfree(void **match);
+
+void				free_gc(int opt);
+
+int					get_gc(t_lst **gc_lst, int opt);
+
+#endif
