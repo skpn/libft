@@ -1,99 +1,96 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    make_lib                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/01/13 15:33:24 by sikpenou         ###   ########.fr        #
+#    Updated: 2020/03/30 12:20:06 by skpn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+NAME = libft.a
 
-CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
+CC = $(COMPILER) $(COMPILATION_FLAGS) $(DEBUG_FLAGS) $(INCLUDE_FLAGS)
 
-NAME = lem-in
+COMPILER = gcc
 
-SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
+COMPILATION_FLAGS = -Wall -Werror -Wextra
 
-SRC_FILES =	main_lem.c							\
-			init_structs_lem.c					\
-			init_display_structs_lem.c			\
-			exit_lem.c							\
-			free_lem_paths.c					\
-			parser_lem.c						\
-			set_graph.c							\
-			set_lvl.c							\
-			clean_graph.c						\
-			seek_paths.c 						\
-			try_path.c	 						\
-			manage_config.c						\
-			update_best_config.c				\
-			load_balancing.c					\
-			debug_display_config_lem_lvl_lem.c	\
-			debug_rooms_lem.c				\
-			debug_paths.c						\
-			set_display.c						\
-			display_lem.c						\
-			get_anthill.c						\
-			get_rooms.c							\
-			get_tubes.c
+DEBUG_FLAGS = -g3 -fsanitize=address -fsanitize=leak
 
-SRC_DIR = ./srcs/
+INCLUDE_FLAGS = -I $(INC_DIR)
 
-OBJS = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
+SRC_DIR = $(shell find src -type d)
 
-OBJ_FILES = $(SRC_FILES:.c=.o)
+INC_DIR = $(shell find inc -type d)
 
-OBJ_DIR = objs/
+OBJ_DIR = objects
 
-INCLS = $(INC_DIR)lem_in.h
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
-INC_DIR = includes/
+SRCS +=	main_lem.c							\
+		init_structs_lem.c					\
+		init_display_structs_lem.c			\
+		exit_lem.c							\
+		free_lem_paths.c					\
+		parser_lem.c						\
+		set_graph.c							\
+		set_lvl.c							\
+		clean_graph.c						\
+		seek_paths.c 						\
+		try_path.c	 						\
+		manage_config.c						\
+		update_best_config.c				\
+		load_balancing.c					\
+		debug_display_config_lem_lvl_lem.c	\
+		debug_rooms_lem.c				\
+		debug_paths.c						\
+		set_display.c						\
+		display_lem.c						\
+		get_anthill.c						\
+		get_rooms.c							\
+		get_tubes.c
 
-LIB = $(addprefix $(LIB_DIR), libft.a)
+INCS += \
+		lem_in.h \
+		libft.h
 
-LIB_INCLS = $(LIB_DIR)$(INC_DIR)
-
-LIB_DIR = libft/
+vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
+vpath %.h $(foreach dir, $(INC_DIR), $(dir):)
+vpath %.a $(foreach dir, $(LIB_DIR), $(dir):)
 
 all: $(NAME)
 
-$(NAME): $(INCLS) $(LIB_INCLS) $(SRCS) $(LIB) Makefile
-	@/bin/echo "make $(notdir $(NAME))"
-	@rm -f auteur
-	@echo sikpenou > auteur
-	@echo hehlinge >> auteur
-	@mkdir -p objs
-	@make -j --no-print-directory objects
-	@$(CC) $(CFLAGS) -I $(INC_DIR) -o $@ $(OBJS) $(LIB)
+$(NAME): $(INCS) $(LIBS) $(OBJS) Makefile
+	/bin/echo compiling $(NAME)
+	ar rc $(NAME) $(OBJS)
 
-$(LIB): FORCE
-	@make -j --no-print-directory -C $(LIB_DIR)
+$(OBJ_DIR)/%.o : %.c $(INCS) $(LIBS) Makefile
+	mkdir -p $(OBJ_DIR)
+	$(CC) -o $@ -c $<
 
-objects: $(OBJS)
-
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INCLS)
-	@$(CC) $(CFLAGS) -I $(INC_DIR) -I $(LIB_INCLS) -o $@ -c $<
+$(LIBS): FORCE
+	make -C $(LIB_DIR)
 
 clean: FORCE
-	@/bin/echo "make clean $(notdir $(NAME))"
-	@rm -rf $(OBJ_DIR)
-	@make clean -j --no-print-directory -C $(LIB_DIR)
+	rm -rf $(OBJS)
 
-fclean: clean
-	@/bin/echo "make fclean $(notdir $(NAME))"
-	@make fclean -j --no-print-directory -C $(LIB_DIR)
-	@rm -f $(NAME)
+fclean: clean FORCE
+	rm -rf $(NAME)
 
+re: fclean all FORCE
 
-re: FORCE
-	@/bin/echo "make re $(notdir $(NAME))"
-	@make -j --no-print-directory fclean
-	@make -j --no-print-directory all
+show:
+	echo "comp   : $(CC)\n"
+	echo "src_dir: $(SRC_DIR)\n"
+	echo "inc_dir: $(INC_DIR)\n"
+	echo "lib_dir: $(LIB_DIR)\n"
+	echo "srcs   : $(SRCS)\n"
+	echo "incs   : $(INCS)\n"
+	echo "libs   : $(LIBS)\n"
 
 FORCE:
 
-#.SILENT:
+.SILENT:
