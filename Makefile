@@ -26,7 +26,7 @@ SRC_DIR = $(shell find src -type d)
 
 INC_DIR = $(shell find inc -type d)
 
-OBJ_DIR = objects
+OBJ_DIR = obj
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
