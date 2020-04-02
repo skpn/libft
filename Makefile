@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    make_lib                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/03/30 12:20:06 by skpn             ###   ########.fr        #
+#    Updated: 2020/04/02 10:44:26 by skpn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,27 +30,27 @@ OBJ_DIR = objects
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
-SRCS +=	main_lem.c							\
-		init_structs_lem.c					\
-		init_display_structs_lem.c			\
-		exit_lem.c							\
-		free_lem_paths.c					\
-		parser_lem.c						\
-		set_graph.c							\
-		set_lvl.c							\
-		clean_graph.c						\
-		seek_paths.c 						\
-		try_path.c	 						\
-		manage_config.c						\
-		update_best_config.c				\
-		load_balancing.c					\
-		debug_display_config_lem_lvl_lem.c	\
-		debug_rooms_lem.c				\
-		debug_paths.c						\
-		set_display.c						\
-		display_lem.c						\
-		get_anthill.c						\
-		get_rooms.c							\
+SRCS +=	main_lem.c \
+		init_structs_lem.c \
+		init_display_structs_lem.c \
+		exit_lem.c \
+		free_lem_paths.c \
+		parser_lem.c \
+		set_graph.c \
+		set_lvl.c \
+		clean_graph.c \
+		seek_paths.c \
+		try_path.c \
+		manage_config.c \
+		update_best_config.c \
+		load_balancing.c \
+		debug_display_config_lem_lvl_lem.c \
+		debug_rooms_lem.c \
+		debug_paths.c \
+		set_display.c \
+		display_lem.c \
+		get_anthill.c \
+		get_rooms.c \
 		get_tubes.c
 
 INCS += \
