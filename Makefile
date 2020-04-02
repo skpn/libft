@@ -114,6 +114,7 @@ SRCS += \
 			ft_strjoin_free.c \
 			ft_strlen.c \
 			ft_strlen_heap.c \
+			ft_strncmp.c \
 			ft_strrchr.c \
 			ft_strstr.c \
 			ft_strsub.c \
