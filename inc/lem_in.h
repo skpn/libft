@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 17:01:47 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/14 14:31:44 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/04/02 13:36:28 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LEM_IN_H
 
 # include "libft.h"
+
 # define LEM_BUFF 500000
 # define MAX_SIZE 1500000
 # define ACCEPT_START_END 1
@@ -124,7 +125,7 @@ int					get_tubes(t_lem *lem, char *anthill_copy);
 int					manage_com(t_lem *lem, char *anthill, int *opt);
 int					set_graph(t_lem *lem);
 t_lem				*alloc_new_lem(void);
-t_room				*alloc_new_room(void);
+t_room				*alloc_new_room(char *name);
 t_config			*alloc_new_config(void);
 t_path				*alloc_new_path(void);
 t_lvl				*alloc_new_lvl(void);
