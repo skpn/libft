@@ -6,7 +6,7 @@
 #    By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/03/30 12:02:34 by skpn             ###   ########.fr        #
+#    Updated: 2020/04/02 15:31:22 by skpn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,6 +105,7 @@ SRCS += \
 			ft_itoa.c \
 			ft_itoa_base.c \
 			ft_strchr_pos.c \
+			ft_strcmp.c \
 			ft_strcmp_heap.c \
 			ft_strcpy.c \
 			ft_strcpy_heap.c \

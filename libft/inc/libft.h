@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/30 09:22:51 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/02 12:31:33 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # define LEFT 1
 # define RIGHT 2
 # define BOTH 3
+
+# define BEFORE 1
+# define AFTER 2
 
 # define FREE_STRUCT 1
 # define FREE_CONTENT 2
