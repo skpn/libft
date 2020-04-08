@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lib_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <sikpenou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 15:55:14 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/02/27 18:43:51 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/04/04 11:00:07 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_free_error_tab(t_error_tab *tab)
 				ft_strlen(tab->error[error_nb]));
 		++error_nb;
 	}
-	easyfree((void **)&tab);
+	gc_free((void **)&tab);
 }
 
 int		set_error(t_error_tab *tab, unsigned error_nb, char *msg)
@@ -52,7 +52,7 @@ int		ft_set_error_tab(t_error_tab **target_tab, unsigned fd)
 {
 	t_error_tab	*tab;
 
-	if (!(tab = (t_error_tab *)easymalloc(sizeof(*tab))))
+	if (!(tab = (t_error_tab *)gc_malloc(sizeof(*tab))))
 	{
 		write(tab->fd, "Malloc error\n", 13);
 		return (EXIT_FAILURE);

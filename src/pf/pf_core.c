@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 15:16:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/27 12:22:19 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/04 10:59:22 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int		pf_core(t_pf *pf)
 		return (EXIT_FAILURE);
 	pf->func = func;
 	pf_init_func_tab(pf);
-	if (!(pf->str = (char *)easymalloc(PF_BUF_SIZE)))
+	if (!(pf->str = (char *)gc_malloc(PF_BUF_SIZE)))
 		return (ERROR_MALLOC);
 	pf->size = PF_BUF_SIZE;
 	if ((check_ret = pf_expand_format(pf)) != EXIT_SUCCESS)

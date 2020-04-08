@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 14:49:38 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/29 10:34:08 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/04 10:59:22 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*ft_memalloc(size_t size)
 
 	if (!size)
 		return (NULL);
-	newzone = easymalloc(size);
+	newzone = gc_malloc(size);
 	if (!(newzone))
 		return (NULL);
 	ft_memset(newzone, 0, size);

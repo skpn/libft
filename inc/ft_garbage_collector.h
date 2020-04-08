@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 12:22:22 by skpn              #+#    #+#             */
-/*   Updated: 2020/03/30 09:33:49 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/04 11:04:24 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 
 # include "ft_lst.h"
 
-void				*easymalloc(size_t size);
-void				easyfree(void **match);
+void				gc_free(void **match);
+void				gc_free_branch(int opt);
 
-void				free_gc(int opt);
+int					gc_get(t_lst **gc_lst, int opt);
 
-int					get_gc(t_lst **gc_lst, int opt);
+void				*gc_malloc(size_t size);
 
 #endif

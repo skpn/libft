@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:44:35 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/03 14:44:36 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/04/04 11:00:07 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ int		ft_free_tab(void **tab, size_t len)
 	while (pos < len)
 	{
 		if (tab[pos])
-			easyfree((void **)tab[pos]);
+			gc_free((void **)tab[pos]);
 		tab[pos] = NULL;
 		pos++;
 	}
-	easyfree((void **)tab);
+	gc_free((void **)tab);
 	tab = NULL;
 	return (pos);
 }

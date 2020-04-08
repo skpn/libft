@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ulltoa.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/03 13:18:08 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/04/10 17:40:11 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/04/04 10:59:22 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_ulltoa(unsigned long long n)
 	len = n;
 	while ((len /= 10))
 		pos++;
-	if (!(res = (char *)easymalloc(sizeof(*res) * (pos + 1))))
+	if (!(res = (char *)gc_malloc(sizeof(*res) * (pos + 1))))
 		return (NULL);
 	res[pos] = 0;
 	if (!n)

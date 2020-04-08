@@ -6,18 +6,15 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/25 12:33:46 by skpn              #+#    #+#             */
-/*   Updated: 2020/03/27 11:19:10 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/07 19:06:23 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_READ_FILE_H
 # define FT_READ_FILE_H
 
-# define READ_FILE_BUF 40000
-# define READ_FILE_MAX_SIZE 4000000
-# define READ_FILE_FREE_CONTENT 1
-# define READ_FILE_FREE_FILE 2
-# define READ_FILE_FREE_BOTH 3
+# define FILE_BUF 40000
+# define FILE_MAX_SIZE 4000000
 
 typedef struct	s_ft_file
 {

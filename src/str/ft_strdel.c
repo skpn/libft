@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 15:05:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/04/06 19:53:12 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/04/04 11:00:07 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ void	ft_strdel(char **as)
 {
 	if (!as)
 		return ;
-	easyfree((void **)*as);
+	gc_free((void **)*as);
 	*as = NULL;
 }

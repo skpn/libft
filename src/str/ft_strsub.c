@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 15:34:12 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/04/15 15:40:13 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/04/04 10:59:22 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	if (!(new = (char *)easymalloc(sizeof(*new) * (len + 1))))
+	if (!(new = (char *)gc_malloc(sizeof(*new) * (len + 1))))
 		return (NULL);
 	new[len] = '\0';
 	ft_memcpy(new, s + start, len);

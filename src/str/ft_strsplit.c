@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/02 19:36:00 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/04/22 11:09:19 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/04/04 10:59:22 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char		**fill_tab(char **tab, char *str, int words, char c)
 		while (*str == c && *str)
 			str++;
 		pos = -1;
-		if (!(tab[word] = (char *)easymalloc(sizeof(**tab) * ft_len_word(str, c)
+		if (!(tab[word] = (char *)gc_malloc(sizeof(**tab) * ft_len_word(str, c)
 						+ 1)))
 		{
 			ft_free_tab((void **)tab, words);
@@ -69,7 +69,7 @@ char			**ft_strsplit(const char *o_str, char c)
 	}
 	words = c == 0 ? 1 : words;
 	str = o_str;
-	if (!(tab = (char **)easymalloc(sizeof(char *) * (words + 1))))
+	if (!(tab = (char **)gc_malloc(sizeof(char *) * (words + 1))))
 		return (NULL);
 	return (fill_tab(tab, (char *)str, words, c));
 }

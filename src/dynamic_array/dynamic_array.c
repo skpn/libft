@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dyn_array.c                                        :+:      :+:    :+:   */
+/*   dynamic_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 10:44:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/01/18 17:38:21 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/04/04 11:00:07 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void		ft_d_array_free(t_d_array **d_array)
 	while (line)
 	{
 		line--;
-		easyfree((*d_array)->parent_array[line]);
+		gc_free((*d_array)->parent_array[line]);
 	}
-	easyfree(*(*d_array)->parent_array);
-	easyfree((void **)d_array);
+	gc_free(*(*d_array)->parent_array);
+	gc_free((void **)d_array);
 }
 
 static int	alloc_new_line(t_d_array *d_array)
@@ -34,19 +34,19 @@ static int	alloc_new_line(t_d_array *d_array)
 	if (d_array->parent_size + 2 < d_array->parent_size)
 		return (ERROR_D_ARRAY_SIZE);
 	old_array = d_array->parent_array;
-	d_array->parent_array = easymalloc(sizeof(void *) * ++d_array->parent_size);
+	d_array->parent_array = gc_malloc(sizeof(void *) * ++d_array->parent_size);
 	if (!(d_array->parent_array))
 	{
-		easyfree((void **)&d_array);
+		gc_free((void **)&d_array);
 		return (ERROR_MALLOC);
 	}
 	if (old_array)
 	{
 		ft_memcpy(d_array->parent_array, old_array
 			, d_array->parent_size - sizeof(void *));
-		easyfree(&old_array);
+		gc_free(&old_array);
 	}
-	d_array->parent_array[d_array->parent_size - 1] = easymalloc(sizeof(void *)
+	d_array->parent_array[d_array->parent_size - 1] = gc_malloc(sizeof(void *)
 		* D_ARRAY_LINE_SIZE);
 	if (!d_array->parent_array[d_array->parent_size - 1])
 		return (ERROR_MALLOC);
@@ -101,7 +101,7 @@ t_d_array	*ft_d_array_alloc(void)
 {
 	t_d_array	*d_array;
 
-	d_array = (t_d_array *)easymalloc(sizeof(*d_array));
+	d_array = (t_d_array *)gc_malloc(sizeof(*d_array));
 	if (!(d_array))
 		return (NULL);
 	if (alloc_new_line(d_array) != EXIT_SUCCESS)

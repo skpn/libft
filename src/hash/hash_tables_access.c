@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 14:47:21 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/27 11:20:08 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/07 15:06:41 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,27 +68,22 @@ void		*ft_h_get_content(t_h_table *table, char *key)
 	return (NULL);
 }
 
-t_h_elem	*ft_h_pop_elem(t_h_table *table, char *key)
+t_lst	*ft_h_pop_elem(t_h_table *table, t_h_elem *pop_elem)
 {
-	unsigned	index;
-	t_head		*index_head;
-	t_lst		*popped_lst;
-	t_h_elem	*popped_elem;
+	t_head		*pop_head;
 
-	index = table->func_hash(key) % table->size;
-	index_head = &(table->array[index]);
-	if (index_head)
-	{
-		popped_elem = ft_h_get_elem(table, key);
-		popped_lst = ft_lstpop(index_head, popped_elem);
-		if (popped_lst)
-		{
-			if (index_head->size > 0)
-				table->collisions--;
-			ft_lstfree_elem(&popped_lst, FREE_STRUCT);
-			table->elems--;
-			return (popped_elem);
-		}
-	}
+	pop_head = &table->array[pop_elem->hash % table->size];
+	if (pop_head->size > 1)
+		table->collisions--;
+	table->elems--;
+	return (ft_lstpop(pop_head, pop_elem));
+}
+
+t_lst	*ft_h_pop_elem_by_key(t_h_table *table, char *pop_key)
+{
+	t_h_elem	*pop_elem;
+
+	if ((pop_elem = ft_h_get_elem(table, pop_key)))
+		return (ft_h_pop_elem(table, pop_elem));
 	return (NULL);
 }

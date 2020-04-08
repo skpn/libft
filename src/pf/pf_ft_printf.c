@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 18:01:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/17 11:43:37 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/04 11:00:07 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		ft_dprintf(int fd, char *format, ...)
 		write(pf.fd, pf.str, pf.pos);
 	else
 		pf.size = -1;
-	easyfree((void **)&pf.str);
+	gc_free((void **)&pf.str);
 	return (pf.pos);
 }
 
@@ -58,6 +58,6 @@ int		ft_printf(char *format, ...)
 		write(pf.fd, pf.str, pf.pos);
 	else
 		pf.size = -1;
-	easyfree((void **)&pf.str);
+	gc_free((void **)&pf.str);
 	return (pf.pos);
 }

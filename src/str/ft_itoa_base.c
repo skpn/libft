@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sikpenou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:25:22 by sikpenou          #+#    #+#             */
-/*   Updated: 2019/04/10 17:55:21 by sikpenou         ###   ########.fr       */
+/*   Updated: 2020/04/04 10:59:22 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_itoa_base(long int n, char *base_to)
 	while (n / ft_pow(blen, pos) != 0 && pos < blen)
 		pos++;
 	pos = pos + (n < 1 ? 1 : 0);
-	if (!(res = (char *)easymalloc(sizeof(*res) * (pos + 1))))
+	if (!(res = (char *)gc_malloc(sizeof(*res) * (pos + 1))))
 		return (NULL);
 	res[pos] = '\0';
 	res[0] = n < 0 ? '-' : 0;

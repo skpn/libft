@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:56:29 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/27 11:21:42 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/07 19:05:30 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,24 @@
 void		free_file(t_file *file, int opt)
 {
 	if (file->content)
-		easyfree((void **)&file->content);
+		gc_free((void **)&file->content);
 	if (opt == FREE_STRUCT)
-		easyfree((void **)&file);
+		gc_free((void **)&file);
 }
 
 static int	read_loop(t_file *file)
 {
 	int		ret;
 
-	while ((ret = read(file->fd, file->content + file->size
-		, READ_FILE_BUF)) >= 0 && file->size < READ_FILE_MAX_SIZE)
+	while ((ret = read(file->fd, file->content + file->size, FILE_BUF)) >= 0
+		&& file->size < FILE_MAX_SIZE)
 	{
 		file->size += ret;
-		if (ret == READ_FILE_BUF && ft_realloc(&file->content, file->size
-			, READ_FILE_BUF) != EXIT_SUCCESS)
+		if (ret == FILE_BUF)
 		{
-			easyfree((void **)&file->content);
-			return (ERROR_MALLOC);
+			if (ft_realloc(&file->content, file->size, FILE_BUF)
+				!= EXIT_SUCCESS)
+				return (ERROR_MALLOC);
 		}
 		else
 		{
@@ -53,7 +53,6 @@ static int	read_loop(t_file *file)
 			return (EXIT_SUCCESS);
 		}
 	}
-	easyfree((void **)&file->content);
 	return (ret < 0 ? ERROR_READ : ERROR_FILE_TOO_LARGE);
 }
 
@@ -61,13 +60,17 @@ int			read_file(t_file *file, char *file_name)
 {
 	int		ret;
 
-	if ((file->fd = open(file_name, O_RDONLY)) < 3)
+	file->fd = 0;
+	if (file_name != NULL && (file->fd = open(file_name, O_RDONLY)) < 3)
 		return (ERROR_OPEN_FD);
-	if (!(file->content = (char *)malloc(READ_FILE_BUF + 1)))
+	if (!(file->content = (char *)malloc(FILE_BUF + 1)))
 		return (ERROR_MALLOC);
-	file->content[READ_FILE_BUF] = 0;
+	file->content[FILE_BUF] = 0;
 	file->size = 0;
 	ret = read_loop(file);
-	close(file->fd);
+	if (file->fd != 0)
+		close(file->fd);
+	if (ret != EXIT_SUCCESS)
+		gc_free((void **)&file->content);
 	return (ret);
 }

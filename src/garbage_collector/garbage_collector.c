@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   easymalloc.c                                       :+:      :+:    :+:   */
+/*   gc_malloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 23:04:53 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/03/30 12:01:58 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/03 11:09:55 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,13 @@
 ** this is a small garbage collector (gc) ; it does not keep track of unused
 ** pointers
 **
-** you can activate/desactivate it with get_gc and the GC_ON and GC_OFF options
-** (while the gc is on all allocations by libft functions will use it)
+** you can activate/desactivate it with gc_get and the GC_ON and GC_OFF options;
+** using a switch and not a calling argument avoids the need to change the
+** function calls in internal library functions;
+** if you free an element from the gc while the gc is off, only the element will
+** be freed, the gc part willl be freed with the branch  
 **
-** you can create new collection branches with the get_gc and the NEW option
+** you can create new collection branches with the gc_get and the NEW option
 ** (necessary before first use as you start with 0 branches)
 **
 ** free the gc branches with free_gc (create new branches if you need to free
@@ -55,7 +58,7 @@ int		add_sub_head(t_head *gc_main_head)
 **
 */
 
-int		get_gc(t_lst **gc_lst, int opt)
+int		gc_get(t_lst **gc_lst, int opt)
 {
 	static int		state = GC_OFF;
 	static t_head	gc_main_head = {0, NULL, NULL};
@@ -94,7 +97,7 @@ void	free_gc(int opt)
 	t_lst	*to_free;
 	t_lst	*tmp;
 
-	if (get_gc(&main_gc_lst, GC_FREE) == EXIT_FAILURE)
+	if (gc_get(&main_gc_lst, GC_FREE) == EXIT_FAILURE)
 		return ;
 	gc_head = main_gc_lst->content;
 	if (gc_head->first)
@@ -104,7 +107,8 @@ void	free_gc(int opt)
 		{
 			tmp = to_free;
 			to_free = to_free->next;
-			free(tmp->content);
+			if (tmp->content)
+				free(tmp->content);
 			free(tmp);
 		}
 	}
@@ -119,7 +123,7 @@ void	free_gc(int opt)
 ** zone from the current gc, and frees the malloc'ed zone
 */
 
-void	easyfree(void **match)
+void	gc_free(void **match)
 {
 	t_lst	*elem;
 	t_lst	*gc_lst;
@@ -127,18 +131,16 @@ void	easyfree(void **match)
 
 	if (!*match)
 		return ;
-	if (get_gc(NULL, GC_STATE) == GC_OFF)
-		free(*match);
-	else
+	if (gc_get(NULL, GC_STATE) == GC_ON)
 	{
-		if (get_gc(&gc_lst, GC_CURRENT) != EXIT_SUCCESS)
+		if (gc_get(&gc_lst, GC_CURRENT) != EXIT_SUCCESS)
 			return ;
 		gc = gc_lst->content;
 		if (!(elem = ft_lstpop(gc, *match)))
 			return ;
-		free(elem->content);
 		free(elem);
 	}
+	free(*match);
 	*match = NULL;
 }
 
@@ -146,24 +148,25 @@ void	easyfree(void **match)
 ** this function allocs a zone, and stores it in the current gc
 */
 
-void	*easymalloc(size_t size)
+void	*gc_malloc(size_t size)
 {
 	void	*new_malloc;
 	t_lst	*main_gc_lst;
 	t_lst	*gc_elem;
-	t_head	*gc;
 
-	if (get_gc(NULL, GC_STATE) == GC_OFF)
-		return (malloc(size));
-	if (get_gc(&main_gc_lst, GC_CURRENT) != EXIT_SUCCESS)
-		return (NULL);
-	gc = main_gc_lst->content;
-	if (!(gc_elem = (t_lst *)malloc(sizeof(*gc_elem))))
-		return (NULL);
-	else if (!(new_malloc = malloc(size)))
-		return (NULL);
-	ft_memset(new_malloc, 0, size);
-	gc_elem->content = new_malloc;
-	ft_lstadd(gc, gc_elem);
+	if (gc_get(NULL, GC_STATE) == GC_ON)
+	{
+		if (gc_get(&main_gc_lst, GC_CURRENT) != EXIT_SUCCESS)
+			return (NULL);
+		if (!(gc_elem = (t_lst *)malloc(sizeof(*gc_elem))))
+			return (NULL);
+		ft_lstadd((t_head *)main_gc_lst->content, gc_elem);
+		gc_elem->content = malloc(size);
+		new_malloc = gc_elem->content;
+	}
+	else
+		new_malloc = malloc(size);
+	if (new_malloc != NULL)
+		ft_memset(new_malloc, 0, size);
 	return (new_malloc);
 }
