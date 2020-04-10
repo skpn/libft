@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:42:52 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/04/07 14:44:56 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/08 18:45:11 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,16 @@
 # define FREE_CONTENT 2
 # define FREE_BOTH 3
 
-# define MAX_ERROR 100
-# define ERROR_MALLOC 1
-# define ERROR_OPEN_FD 2
-# define ERROR_READ 3
-# define ERROR_D_ARRAY_SIZE 4
-# define ERROR_MAGIC_FILE 5
-# define ERROR_WITHOUT_MSG 6
-# define ERROR_ERROR_TAB_FULL 7
-# define ERROR_ERROR_NUMBER_IS_EXIT_SUCCESS 8
-# define ERROR_ERROR_NUMBER_UNAVAILABLE 9
-# define ERROR_ERROR_NUMBER_TOO_HIGH 10
-# define USER_ERRORS_START 11
-# define ERROR_FILE_TOO_LARGE 11
-
 # include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include "ft_dynamic_array.h"
+# include "ft_errors.h"
 # include "ft_garbage_collector.h"
 # include "ft_hash_tables.h"
 # include "ft_lst.h"
 # include "ft_printf.h"
 # include "ft_read_file.h"
-
-typedef struct		s_error_tab
-{
-	unsigned		fd;
-	unsigned		max_error;
-	unsigned		user_errors_start;
-	char			*error[MAX_ERROR];
-}					t_error_tab;
 
 unsigned long long	ft_ato_ull(const char *str, int *pos);
 int					ft_abs(int a);
@@ -71,7 +51,6 @@ char				*ft_convert_base(char *nbr, char *base_from,
 int					ft_find_next_prime(unsigned long nb);
 void				ft_free(void **match);
 int					ft_free_tab(void **tab, size_t len);
-void				ft_free_error_tab(t_error_tab *tab);
 
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
@@ -97,17 +76,12 @@ void				*ft_memset(void *b, unsigned char c, size_t len);
 int					ft_min(int a, int b);
 
 long long int		ft_pow(long long int nb, long long int pow);
-void				ft_print_error(t_error_tab *tab, unsigned error);
-void				ft_print_error_tab(t_error_tab *tab);
 void				ft_putnbr(long long n);
 void				ft_putnbr_fd(int n, int fd);
 
 int					ft_realloc(char **zone, long curr_size_in_octs,
 	long to_add_in_octs);
 
-int					ft_set_error_tab(t_error_tab **tab, unsigned fd);
-int					ft_set_error(t_error_tab *tab, unsigned error_nb,
-	char *msg);
 int					ft_strchr_pos(char *str, int c);
 int					ft_strcmp(char *s1, char *s2);
 int					ft_strcmp_heap(char *s1, char *s2);
@@ -135,7 +109,5 @@ int					ft_tabmap(void **tab, unsigned size,
 char				*ft_ulltoa(unsigned long long n);
 unsigned			ft_ulltoa_base(unsigned long long n, char *base_to,
 	char *result);
-
-void				set_stack_errors(t_error_tab *error_tab);
 
 #endif

@@ -35,10 +35,10 @@ int		add_sub_head(t_head *gc_main_head)
 	t_head			*new_sub_head;
 
 	if (!(new_sub_head = (t_head *)malloc(sizeof(*new_sub_head))))
-		return (ERROR_MALLOC);
+		return (ERR_MALLOC);
 	ft_memset(new_sub_head, 0, sizeof(*new_sub_head));
 	if (!(gc_main_lst = (t_lst *)malloc(sizeof(*gc_main_lst))))
-		return (ERROR_MALLOC);
+		return (ERR_MALLOC);
 	ft_memset(gc_main_lst, 0, sizeof(*gc_main_lst));
 	gc_main_lst->content = new_sub_head;
 	ft_lstadd(gc_main_head, gc_main_lst);

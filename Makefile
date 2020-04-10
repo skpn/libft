@@ -6,7 +6,7 @@
 #    By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/04/06 11:36:24 by skpn             ###   ########.fr        #
+#    Updated: 2020/04/09 09:57:39 by skpn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = libft.a
 
 CC = $(COMPILER) $(COMPILATION_FLAGS) $(DEBUG_FLAGS) $(INCLUDE_FLAGS)
 
-COMPILER = gcc
+COMPILER = clang
 
 COMPILATION_FLAGS = -Wall -Werror -Wextra
 
@@ -48,7 +48,9 @@ SRCS += \
 			ft_putnbr.c \
 			ft_swap.c \
 			ft_tabmap.c \
-			lib_errors.c
+
+SRCS += \
+			ft_errors.c
 
 SRCS += \
 			ft_itoa.c \
@@ -126,6 +128,7 @@ SRCS += \
 
 INCS += \
 		ft_dynamic_array.h \
+		ft_errors.h \
 		ft_garbage_collector.h \
 		ft_hash_tables.h \
 		ft_lst.h \

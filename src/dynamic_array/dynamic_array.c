@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 10:44:44 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/04/04 11:00:07 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/08 18:41:44 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		ft_d_array_free(t_d_array **d_array)
 	line = (*d_array)->parent_size;
 	while (line)
 	{
-		line--;
+		--line;
 		gc_free((*d_array)->parent_array[line]);
 	}
 	gc_free(*(*d_array)->parent_array);
@@ -32,13 +32,13 @@ static int	alloc_new_line(t_d_array *d_array)
 	void		*old_array;
 
 	if (d_array->parent_size + 2 < d_array->parent_size)
-		return (ERROR_D_ARRAY_SIZE);
+		return (ft_error("d_array size overflow\n"));
 	old_array = d_array->parent_array;
 	d_array->parent_array = gc_malloc(sizeof(void *) * ++d_array->parent_size);
 	if (!(d_array->parent_array))
 	{
 		gc_free((void **)&d_array);
-		return (ERROR_MALLOC);
+		return (ft_error("could not allocate d_array parent array\n"));
 	}
 	if (old_array)
 	{
@@ -49,40 +49,17 @@ static int	alloc_new_line(t_d_array *d_array)
 	d_array->parent_array[d_array->parent_size - 1] = gc_malloc(sizeof(void *)
 		* D_ARRAY_LINE_SIZE);
 	if (!d_array->parent_array[d_array->parent_size - 1])
-		return (ERROR_MALLOC);
+		return (ft_error("could not allocate new d_array line\n"));
 	d_array->pos = 0;
 	return (EXIT_SUCCESS);
 }
-
-/*
-** void		*ft_d_array_get_by_content(t_d_array *d_array, void *content)
-** {
-** 	unsigned	col;
-** 	unsigned	line;
-**
-** 	line = d_array->parent_size;
-** 	while (line)
-** 	{
-** 		line--;
-** 		col = D_ARRAY_LINE_SIZE;
-** 		while (col)
-** 		{
-** 			col--;
-** 			if (d_array->parent_array[line][col] == content)
-** 				return (d_array->parent_array[line][col]);
-** 		}
-** 	}
-** 	return (NULL);
-** }
-*/
 
 void		*ft_d_array_get_by_index(t_d_array *d_array, unsigned index)
 {
 	if (index / D_ARRAY_LINE_SIZE >= d_array->parent_size)
 		return (NULL);
-	else
-		return (d_array->parent_array[index
-			/ D_ARRAY_LINE_SIZE][index % D_ARRAY_LINE_SIZE]);
+	return (d_array->parent_array[index / D_ARRAY_LINE_SIZE]
+		[index % D_ARRAY_LINE_SIZE]);
 }
 
 unsigned	ft_d_array_add(t_d_array *d_array, void *content)
@@ -90,7 +67,7 @@ unsigned	ft_d_array_add(t_d_array *d_array, void *content)
 	if (d_array->pos == D_ARRAY_LINE_SIZE)
 	{
 		if (!alloc_new_line(d_array))
-			return (ERROR_MALLOC);
+			return (EXIT_FAILURE);
 	}
 	d_array->parent_array[d_array->parent_size - 1][d_array->pos] = content;
 	d_array->pos++;
@@ -103,7 +80,10 @@ t_d_array	*ft_d_array_alloc(void)
 
 	d_array = (t_d_array *)gc_malloc(sizeof(*d_array));
 	if (!(d_array))
+	{
+		ft_error("could not allocate d_array\n");
 		return (NULL);
+	}
 	if (alloc_new_line(d_array) != EXIT_SUCCESS)
 		return (NULL);
 	return (d_array);

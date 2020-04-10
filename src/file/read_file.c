@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:56:29 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/04/07 19:05:30 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/08 18:50:23 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	read_loop(t_file *file)
 		{
 			if (ft_realloc(&file->content, file->size, FILE_BUF)
 				!= EXIT_SUCCESS)
-				return (ERROR_MALLOC);
+				return (ERR_MALLOC);
 		}
 		else
 		{
@@ -53,7 +53,8 @@ static int	read_loop(t_file *file)
 			return (EXIT_SUCCESS);
 		}
 	}
-	return (ret < 0 ? ERROR_READ : ERROR_FILE_TOO_LARGE);
+	ft_error(ret < 0 ? "read error\n" : "file size above limit\n");
+	return (EXIT_FAILURE);
 }
 
 int			read_file(t_file *file, char *file_name)
@@ -62,9 +63,9 @@ int			read_file(t_file *file, char *file_name)
 
 	file->fd = 0;
 	if (file_name != NULL && (file->fd = open(file_name, O_RDONLY)) < 3)
-		return (ERROR_OPEN_FD);
+		return (ERR_OPEN);
 	if (!(file->content = (char *)malloc(FILE_BUF + 1)))
-		return (ERROR_MALLOC);
+		return (ERR_MALLOC);
 	file->content[FILE_BUF] = 0;
 	file->size = 0;
 	ret = read_loop(file);

@@ -6,7 +6,7 @@
 /*   By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 15:16:51 by sikpenou          #+#    #+#             */
-/*   Updated: 2020/04/04 10:59:22 by skpn             ###   ########.fr       */
+/*   Updated: 2020/04/08 18:47:35 by skpn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		pf_expand_format(t_pf *pf)
 			if (pf->pos == PF_BUF_SIZE)
 			{
 				if (ft_realloc(&pf->str, pf->size, PF_BUF_SIZE) != EXIT_SUCCESS)
-					return (ERROR_MALLOC);
+					return (ERR_MALLOC);
 				pf->size += PF_BUF_SIZE;
 			}
 		}
@@ -89,7 +89,7 @@ int		pf_core(t_pf *pf)
 	pf->func = func;
 	pf_init_func_tab(pf);
 	if (!(pf->str = (char *)gc_malloc(PF_BUF_SIZE)))
-		return (ERROR_MALLOC);
+		return (ERR_MALLOC);
 	pf->size = PF_BUF_SIZE;
 	if ((check_ret = pf_expand_format(pf)) != EXIT_SUCCESS)
 		return (check_ret);
