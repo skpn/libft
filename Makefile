@@ -6,7 +6,7 @@
 #    By: skpn <skpn@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/02 21:32:05 by sikpenou          #+#    #+#              #
-#    Updated: 2020/04/09 09:57:39 by skpn             ###   ########.fr        #
+#    Updated: 2020/04/14 14:59:02 by skpn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,11 +20,11 @@ COMPILATION_FLAGS = -Wall -Werror -Wextra
 
 DEBUG_FLAGS = -g3 -fsanitize=address -fsanitize=leak
 
-INCLUDE_FLAGS = -I $(INC_DIR)
+INCLUDE_FLAGS = $(foreach dir, $(INC_DIR), -I $(dir)) 
+
+INC_DIR = $(shell find . -name 'inc' -type d)
 
 SRC_DIR = $(shell find src -type d)
-
-INC_DIR = $(shell find inc -type d)
 
 OBJ_DIR = obj
 
